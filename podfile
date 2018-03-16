@@ -1,0 +1,12 @@
+inhibit_all_warnings!
+target 'XKMusic' do
+platform :ios, "8.0"
+pod 'Masonry'
+pod 'ReactiveObjC'
+pod 'YYModel'
+pod 'SDCycleScrollView'
+pod 'MJRefresh'
+pod 'KTVHTTPCache'
+pod 'QMUIKit'
+pod 'YTKNetwork'
+end
