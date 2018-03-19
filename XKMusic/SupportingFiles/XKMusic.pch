@@ -21,6 +21,7 @@
 #import <YYModel/YYModel.h>
 
 #import "XKToolsMacro.h"
+#import "XKConst.h"
 #import "XKColorHelper.h"
 #import "XKCellDataAdapter.h"
 #import "XKCustomCell.h"
@@ -29,5 +30,6 @@
 #import "YTKBatchRequest+AnimatingAccessory.h"
 #import "YTKChainRequest+AnimatingAccessory.h"
 #import "NSString+Count.h"
+#import "AppDelegate+AnimationButton.h"
 
 #endif

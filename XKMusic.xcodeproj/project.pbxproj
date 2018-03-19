@@ -90,6 +90,7 @@
 		B7DC997D205F5B08002DB5C5 /* XKDailyRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC997C205F5B08002DB5C5 /* XKDailyRecommendController.m */; };
 		B7DC9982205F5C5C002DB5C5 /* XKSongListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9981205F5C5C002DB5C5 /* XKSongListController.m */; };
 		B7DC9985205F5CB7002DB5C5 /* XKLeaderboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9984205F5CB7002DB5C5 /* XKLeaderboardController.m */; };
+		B7DC998C205FA655002DB5C5 /* AppDelegate+AnimationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC998B205FA655002DB5C5 /* AppDelegate+AnimationButton.m */; };
 		B7FF369A204CD6DD005CD83E /* XKRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF3699204CD6DD005CD83E /* XKRootViewController.m */; };
 		B7FF36B7204CD9BC005CD83E /* XKComponentController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AC204CD9BC005CD83E /* XKComponentController.m */; };
 		B7FF36B8204CD9BC005CD83E /* XKCollectionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AE204CD9BC005CD83E /* XKCollectionComponent.m */; };
@@ -277,6 +278,9 @@
 		B7DC9981205F5C5C002DB5C5 /* XKSongListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSongListController.m; sourceTree = "<group>"; };
 		B7DC9983205F5CB7002DB5C5 /* XKLeaderboardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKLeaderboardController.h; sourceTree = "<group>"; };
 		B7DC9984205F5CB7002DB5C5 /* XKLeaderboardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKLeaderboardController.m; sourceTree = "<group>"; };
+		B7DC998A205FA655002DB5C5 /* AppDelegate+AnimationButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+AnimationButton.h"; sourceTree = "<group>"; };
+		B7DC998B205FA655002DB5C5 /* AppDelegate+AnimationButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+AnimationButton.m"; sourceTree = "<group>"; };
+		B7DC998D205FACA4002DB5C5 /* XKConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKConst.h; sourceTree = "<group>"; };
 		B7FF3698204CD6DD005CD83E /* XKRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKRootViewController.h; sourceTree = "<group>"; };
 		B7FF3699204CD6DD005CD83E /* XKRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKRootViewController.m; sourceTree = "<group>"; };
 		B7FF36A9204CD9BC005CD83E /* XKComponentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKComponentTableView.h; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				B74D2B1C204D17D300AD1C01 /* XKToolsMacro.h */,
+				B7DC998D205FACA4002DB5C5 /* XKConst.h */,
 			);
 			path = Define;
 			sourceTree = "<group>";
@@ -803,6 +808,7 @@
 		B7B888F9204CC4B400A7A231 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				B7DC9986205FA624002DB5C5 /* AppDelegate */,
 				B7964F5B205684E000EFACE4 /* NSString */,
 				B7FF36BC204CDCF5005CD83E /* QMUITabBarViewController */,
 				B7B888FA204CC4B400A7A231 /* QMUIAlertAction */,
@@ -899,6 +905,15 @@
 				B7DC9981205F5C5C002DB5C5 /* XKSongListController.m */,
 			);
 			path = SongList;
+			sourceTree = "<group>";
+		};
+		B7DC9986205FA624002DB5C5 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				B7DC998A205FA655002DB5C5 /* AppDelegate+AnimationButton.h */,
+				B7DC998B205FA655002DB5C5 /* AppDelegate+AnimationButton.m */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		B7FF3697204CD6A5005CD83E /* RootViewController */ = {
@@ -1279,6 +1294,7 @@
 				B7B155EF205A4F700053918B /* XKDJProgramModel.m in Sources */,
 				B7FF36BA204CD9BC005CD83E /* XKBaseComponent.m in Sources */,
 				B7A8CF4F204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m in Sources */,
+				B7DC998C205FA655002DB5C5 /* AppDelegate+AnimationButton.m in Sources */,
 				B74D111E205521930013D321 /* XKSearchHeaderView.m in Sources */,
 				B7768A7F204A9400006E8304 /* main.m in Sources */,
 				B7D906DA2059032100BAF211 /* XKNewsongComponent.m in Sources */,

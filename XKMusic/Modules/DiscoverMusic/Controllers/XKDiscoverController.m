@@ -39,7 +39,7 @@
 }
 
 - (void)configRightButtonItem {
-    self.navigationItem.rightBarButtonItem = [QMUINavigationButton barButtonItemWithImage:UIImageMake(@"cm2_topbar_icn_mic") tintColor:[UIColor whiteColor] position:QMUINavigationButtonPositionRight target:self action:@selector(handleRightBarButtonItemEvent)];
+    self.navigationItem.rightBarButtonItem = [QMUINavigationButton barButtonItemWithImage:[UIImage qmui_imageWithColor:[UIColor clearColor] size:CGSizeMake(28, 28) cornerRadius:0] tintColor:[XKColorHelper appMainColor] position:QMUINavigationButtonPositionRight target:self action:@selector(handleRightBarButtonItemEvent)];
 }
 
 - (void)handleCancel {
