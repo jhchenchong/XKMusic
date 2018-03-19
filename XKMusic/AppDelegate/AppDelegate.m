@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "XKRootViewController.h"
+#import "XKLoginModel.h"
 
 @interface AppDelegate ()
 
@@ -22,6 +23,11 @@
     self.window.rootViewController = [[XKRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
+//    [[XKLoginModel signalForLoginWithPhone:@"手机号码" password:@"密码"] subscribeNext:^(XKLoginModel *x) {
+//        if (x.code == 200) {
+//            [QMUITips showInfo:@"登录成功"];
+//        }
+//    }];
     return YES;
 }
 

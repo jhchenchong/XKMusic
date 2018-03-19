@@ -85,6 +85,8 @@
 		B7D906DD205903A800BAF211 /* XKNewsongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906DC205903A800BAF211 /* XKNewsongCell.m */; };
 		B7D906E02059067500BAF211 /* XKNewsongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906DF2059067500BAF211 /* XKNewsongModel.m */; };
 		B7D906E4205906F800BAF211 /* XKNewsongApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906E3205906F800BAF211 /* XKNewsongApi.m */; };
+		B7DC9975205F4529002DB5C5 /* XKLoginApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9974205F4529002DB5C5 /* XKLoginApi.m */; };
+		B7DC9979205F4748002DB5C5 /* XKLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9978205F4748002DB5C5 /* XKLoginModel.m */; };
 		B7FF369A204CD6DD005CD83E /* XKRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF3699204CD6DD005CD83E /* XKRootViewController.m */; };
 		B7FF36B7204CD9BC005CD83E /* XKComponentController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AC204CD9BC005CD83E /* XKComponentController.m */; };
 		B7FF36B8204CD9BC005CD83E /* XKCollectionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AE204CD9BC005CD83E /* XKCollectionComponent.m */; };
@@ -262,6 +264,10 @@
 		B7D906DF2059067500BAF211 /* XKNewsongModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKNewsongModel.m; sourceTree = "<group>"; };
 		B7D906E2205906F800BAF211 /* XKNewsongApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKNewsongApi.h; sourceTree = "<group>"; };
 		B7D906E3205906F800BAF211 /* XKNewsongApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKNewsongApi.m; sourceTree = "<group>"; };
+		B7DC9973205F4529002DB5C5 /* XKLoginApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKLoginApi.h; sourceTree = "<group>"; };
+		B7DC9974205F4529002DB5C5 /* XKLoginApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKLoginApi.m; sourceTree = "<group>"; };
+		B7DC9977205F4748002DB5C5 /* XKLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKLoginModel.h; sourceTree = "<group>"; };
+		B7DC9978205F4748002DB5C5 /* XKLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKLoginModel.m; sourceTree = "<group>"; };
 		B7FF3698204CD6DD005CD83E /* XKRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKRootViewController.h; sourceTree = "<group>"; };
 		B7FF3699204CD6DD005CD83E /* XKRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKRootViewController.m; sourceTree = "<group>"; };
 		B7FF36A9204CD9BC005CD83E /* XKComponentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKComponentTableView.h; sourceTree = "<group>"; };
@@ -568,6 +574,7 @@
 		B7768A86204AA05F006E8304 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B7DC9971205F44EA002DB5C5 /* Login */,
 				B7964F3320561AE400EFACE4 /* Video */,
 				B7FF36C3204CDDE4005CD83E /* DiscoverMusic */,
 				B7FF36C2204CDDE1005CD83E /* MyMusic */,
@@ -829,6 +836,33 @@
 				B7D906E3205906F800BAF211 /* XKNewsongApi.m */,
 			);
 			path = Newsong;
+			sourceTree = "<group>";
+		};
+		B7DC9971205F44EA002DB5C5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B7DC9972205F44FC002DB5C5 /* Networks */,
+				B7DC9976205F472A002DB5C5 /* Models */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B7DC9972205F44FC002DB5C5 /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				B7DC9973205F4529002DB5C5 /* XKLoginApi.h */,
+				B7DC9974205F4529002DB5C5 /* XKLoginApi.m */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
+		B7DC9976205F472A002DB5C5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B7DC9977205F4748002DB5C5 /* XKLoginModel.h */,
+				B7DC9978205F4748002DB5C5 /* XKLoginModel.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B7FF3697204CD6A5005CD83E /* RootViewController */ = {
@@ -1185,6 +1219,7 @@
 			files = (
 				B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */,
 				B7B888F6204CC3CF00A7A231 /* XKCustomHeaderFooterView.m in Sources */,
+				B7DC9975205F4529002DB5C5 /* XKLoginApi.m in Sources */,
 				B7B88901204CC4B400A7A231 /* QMUIAlertController+XK.m in Sources */,
 				B74DC8BA20522A9B0092025A /* LKImageMemoryImageLoader.m in Sources */,
 				B74DC8AB20522A9B0092025A /* LKImageConfiguration.m in Sources */,
@@ -1244,6 +1279,7 @@
 				B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */,
 				B7FF36B8204CD9BC005CD83E /* XKCollectionComponent.m in Sources */,
 				B74DC8B920522A9B0092025A /* LKImagePhotoKitLoader.m in Sources */,
+				B7DC9979205F4748002DB5C5 /* XKLoginModel.m in Sources */,
 				B74DC8AC20522A9B0092025A /* LKImageView.m in Sources */,
 				B74DC8AF20522A9B0092025A /* LKImageRequest.m in Sources */,
 				B7A8CF4C204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m in Sources */,
