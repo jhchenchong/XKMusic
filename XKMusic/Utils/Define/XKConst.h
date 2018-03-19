@@ -11,6 +11,12 @@
 
 #pragma mark -- 通知
 
+typedef NS_ENUM(NSUInteger, XKPlayerPlayStyle) {
+    XKPlayerPlayStyleLoop,        // 循环播放
+    XKPlayerPlayStyleSingleCycle, // 单曲循环
+    XKPlayerPlayStyleRandom       // 随机播放
+};
+
 static NSString  *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";
 
 #endif

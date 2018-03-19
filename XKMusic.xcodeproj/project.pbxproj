@@ -47,6 +47,7 @@
 		B74DC8C120522DD60092025A /* XKColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B74DC8C020522DD60092025A /* XKColorHelper.m */; };
 		B74DC8C420526B250092025A /* XKCustomSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B74DC8C320526B250092025A /* XKCustomSearchBar.m */; };
 		B74DC8C720528EFF0092025A /* XKCustomHotSearchTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B74DC8C620528EFF0092025A /* XKCustomHotSearchTagsView.m */; };
+		B7606AEC205FC14A00DC2575 /* XKPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7606AEB205FC14A00DC2575 /* XKPlayerController.m */; };
 		B7768A71204A9400006E8304 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7768A70204A9400006E8304 /* AppDelegate.m */; };
 		B7768A79204A9400006E8304 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7768A78204A9400006E8304 /* Assets.xcassets */; };
 		B7768A7F204A9400006E8304 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7768A7E204A9400006E8304 /* main.m */; };
@@ -192,6 +193,8 @@
 		B74DC8C320526B250092025A /* XKCustomSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKCustomSearchBar.m; sourceTree = "<group>"; };
 		B74DC8C520528EFF0092025A /* XKCustomHotSearchTagsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKCustomHotSearchTagsView.h; sourceTree = "<group>"; };
 		B74DC8C620528EFF0092025A /* XKCustomHotSearchTagsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKCustomHotSearchTagsView.m; sourceTree = "<group>"; };
+		B7606AEA205FC14A00DC2575 /* XKPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPlayerController.h; sourceTree = "<group>"; };
+		B7606AEB205FC14A00DC2575 /* XKPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKPlayerController.m; sourceTree = "<group>"; };
 		B7768A6C204A9400006E8304 /* XKMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XKMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7768A6F204A9400006E8304 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B7768A70204A9400006E8304 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -540,6 +543,39 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		B7606AE6205FC08E00DC2575 /* PlayMusic */ = {
+			isa = PBXGroup;
+			children = (
+				B7606AE9205FC0C500DC2575 /* Models */,
+				B7606AE8205FC0C200DC2575 /* Views */,
+				B7606AE7205FC0BE00DC2575 /* Controllers */,
+			);
+			path = PlayMusic;
+			sourceTree = "<group>";
+		};
+		B7606AE7205FC0BE00DC2575 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B7606AEA205FC14A00DC2575 /* XKPlayerController.h */,
+				B7606AEB205FC14A00DC2575 /* XKPlayerController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B7606AE8205FC0C200DC2575 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B7606AE9205FC0C500DC2575 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B7768A63204A9400006E8304 = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +624,7 @@
 		B7768A86204AA05F006E8304 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B7606AE6205FC08E00DC2575 /* PlayMusic */,
 				B7DC9971205F44EA002DB5C5 /* Login */,
 				B7964F3320561AE400EFACE4 /* Video */,
 				B7FF36C3204CDDE4005CD83E /* DiscoverMusic */,
@@ -1301,6 +1338,7 @@
 				B74D2B2D204D238900AD1C01 /* WMMenuItem.m in Sources */,
 				B74DC8B720522A9B0092025A /* LKImageSpritesToMutipleImagesProcessor.m in Sources */,
 				B74DC8A820522A9B0092025A /* LKImageLogManager.m in Sources */,
+				B7606AEC205FC14A00DC2575 /* XKPlayerController.m in Sources */,
 				B74DC8B320522A9B0092025A /* LKImageSmartCache.m in Sources */,
 				B74DC8A520522A9B0092025A /* LKImageManager.m in Sources */,
 				B7FF36BB204CD9BC005CD83E /* XKHeaderComponent.m in Sources */,
