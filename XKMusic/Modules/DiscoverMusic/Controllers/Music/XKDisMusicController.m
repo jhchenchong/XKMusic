@@ -14,6 +14,9 @@
 #import "XKNewsongComponent.h"
 #import "XKDJProgramComponent.h"
 #import "XKAdjustSectionsController.h"
+#import "XKDailyRecommendController.h"
+#import "XKSongListController.h"
+#import "XKLeaderboardController.h"
 
 @interface XKDisMusicController ()<XKActionHeaderComponentDelegate, SDCycleScrollViewDelegate>
 
@@ -56,17 +59,25 @@
 - (void)configTableView {
     self.headerView = [[XKDisMusicHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
     self.headerView.cycleScrollView.delegate = self;
+    XKWEAK
     [[self.headerView.fmButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [QMUITips showInfo:@"私人FM"];
     }];
     [[self.headerView.recommendButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [QMUITips showInfo:@"每日推荐"];
+        XKSTRONG
+        XKDailyRecommendController *dailyRecommendController = [[XKDailyRecommendController alloc] init];
+        [self.navigationController pushViewController:dailyRecommendController animated:YES];
     }];
     [[self.headerView.songListButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [QMUITips showInfo:@"歌单"];
+        XKSTRONG
+        XKSongListController *songListController = [[XKSongListController alloc] init];
+        [self.navigationController pushViewController:songListController animated:YES];
     }];
     [[self.headerView.leaderboardsButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [QMUITips showInfo:@"排行榜"];
+        XKSTRONG
+        XKLeaderboardController *leaderboardController = [[XKLeaderboardController alloc] init];
+        [self.navigationController pushViewController:leaderboardController animated:YES];
+        
     }];
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
