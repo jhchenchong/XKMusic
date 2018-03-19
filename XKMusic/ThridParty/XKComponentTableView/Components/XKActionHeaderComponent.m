@@ -72,10 +72,4 @@
     }
 }
 
-- (void)handleTapHeader {
-    if ([self.delegate respondsToSelector:@selector(tableComponentDidTapHeaderView:)]) {
-        [self.delegate tableComponentDidTapHeaderView:self];
-    }
-}
-
 @end

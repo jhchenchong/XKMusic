@@ -104,10 +104,6 @@
     self.components = mutabArray.copy;
 }
 
-- (void)tableComponentDidTapHeaderView:(id<XKTableComponent>)component {
-    
-}
-
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     [QMUITips showInfo:[NSString stringWithFormat:@"点击了第%ld张轮播图", (long)index + 1]];
 }

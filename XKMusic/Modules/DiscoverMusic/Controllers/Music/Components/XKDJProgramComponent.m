@@ -80,4 +80,8 @@
     }];
 }
 
+- (void)handleTapHeader {
+    
+}
+
 @end

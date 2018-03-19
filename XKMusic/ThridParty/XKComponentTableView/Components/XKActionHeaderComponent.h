@@ -13,7 +13,6 @@
 @optional
 
 - (void)tableComponent:(id<XKTableComponent>)component didTapActionButton:(UIButton *)actionButton;
-- (void)tableComponentDidTapHeaderView:(id<XKTableComponent>)component;
 
 @end
 
