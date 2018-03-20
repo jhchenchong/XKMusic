@@ -78,6 +78,7 @@
 		B7B888F8204CC3CF00A7A231 /* XKCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888F1204CC3CF00A7A231 /* XKCustomCollectionViewCell.m */; };
 		B7B88900204CC4B400A7A231 /* QMUIAlertAction+XK.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888FC204CC4B400A7A231 /* QMUIAlertAction+XK.m */; };
 		B7B88901204CC4B400A7A231 /* QMUIAlertController+XK.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888FE204CC4B400A7A231 /* QMUIAlertController+XK.m */; };
+		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
 		B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */; };
 		B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D02058F5C600BAF211 /* XKPrivatecontentModel.m */; };
 		B7D906D42058F6F000BAF211 /* XKDisPrivatecontentComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D32058F6F000BAF211 /* XKDisPrivatecontentComponent.m */; };
@@ -255,6 +256,8 @@
 		B7B888FC204CC4B400A7A231 /* QMUIAlertAction+XK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMUIAlertAction+XK.m"; sourceTree = "<group>"; };
 		B7B888FE204CC4B400A7A231 /* QMUIAlertController+XK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMUIAlertController+XK.m"; sourceTree = "<group>"; };
 		B7B888FF204CC4B400A7A231 /* QMUIAlertController+XK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QMUIAlertController+XK.h"; sourceTree = "<group>"; };
+		B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegateHelper.h; sourceTree = "<group>"; };
+		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
 		B7D906CC2058F53B00BAF211 /* XKPrivatecontentApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentApi.h; sourceTree = "<group>"; };
 		B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKPrivatecontentApi.m; sourceTree = "<group>"; };
 		B7D906CF2058F5C600BAF211 /* XKPrivatecontentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentModel.h; sourceTree = "<group>"; };
@@ -539,6 +542,8 @@
 			children = (
 				B74DC8BF20522DD60092025A /* XKColorHelper.h */,
 				B74DC8C020522DD60092025A /* XKColorHelper.m */,
+				B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */,
+				B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1319,6 +1324,7 @@
 				B7964F4E2056529D00EFACE4 /* YTKChainRequest+AnimatingAccessory.m in Sources */,
 				B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */,
 				B7DC9985205F5CB7002DB5C5 /* XKLeaderboardController.m in Sources */,
+				B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */,
 				B7B155F2205A4F980053918B /* XKDJProgramComponent.m in Sources */,
 				B7B888F5204CC3CF00A7A231 /* XKCellHeaderFooterDataAdapter.m in Sources */,
 				B74DC8A620522A9B0092025A /* LKImageCacheManager.m in Sources */,

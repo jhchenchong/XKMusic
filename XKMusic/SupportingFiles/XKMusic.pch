@@ -31,5 +31,7 @@
 #import "YTKChainRequest+AnimatingAccessory.h"
 #import "NSString+Count.h"
 #import "AppDelegate+AnimationButton.h"
+#import "XKAppDelegateHelper.h"
+#import "XKPlayerController.h"
 
 #endif

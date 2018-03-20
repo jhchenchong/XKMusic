@@ -22,6 +22,8 @@
 
 #define keyWindow [UIApplication sharedApplication].keyWindow
 
+#define XKPlayerVC [XKPlayerController sharedInstance]
+
 #define KAUTOSCALE(num) ((SCREEN_WIDTH/375)*num)
 
 #endif

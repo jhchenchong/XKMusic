@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, XKPlayerPlayStyle) {
     XKPlayerPlayStyleRandom       // 随机播放
 };
 
-static NSString  *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";
+static NSString *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";
+static NSString *const kColumnOrder = @"ColumnOrder";
 
 #endif

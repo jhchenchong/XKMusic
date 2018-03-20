@@ -25,7 +25,7 @@
 
 - (void)initDataSource {
     self.dataSource = @[].mutableCopy;
-    NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"ColumnOrder"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"ColumnOrder"] : @[@"0", @"1", @"2", @"3"];
+    NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"ColumnOrder"] ? [[NSUserDefaults standardUserDefaults] objectForKey:kColumnOrder] : @[@"0", @"1", @"2", @"3"];
     for (NSString *string in array) {
         [self.dataSource addObject:[self.dict valueForKey:string]];
     }
@@ -44,6 +44,7 @@
     [super setNavigationItemsIsInEditMode:isInEditMode animated:animated];
     self.titleView.title = @"调整栏目顺序";
     [self configRightButtonItem];
+    [XKAppDelegateHelper hideAnimationButton];
 }
 
 - (void)configRightButtonItem {
@@ -114,7 +115,7 @@
             }
         }];
     }
-    [[NSUserDefaults standardUserDefaults] setObject:mutableArray forKey:@"ColumnOrder"];
+    [[NSUserDefaults standardUserDefaults] setObject:mutableArray forKey:kColumnOrder];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -134,7 +135,7 @@
         [[linkButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             XKSTRONG
             self.dataSource = @[@"推荐歌单", @"独家放送", @"最新音乐", @"主播电台"].mutableCopy;
-            [[NSUserDefaults standardUserDefaults] setObject:@[@"0", @"1", @"2", @"3"] forKey:@"ColumnOrder"];
+            [[NSUserDefaults standardUserDefaults] setObject:@[@"0", @"1", @"2", @"3"] forKey:kColumnOrder];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self.tableView reloadData];
         }];

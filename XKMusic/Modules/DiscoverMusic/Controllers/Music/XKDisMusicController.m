@@ -37,6 +37,11 @@
 
 @implementation XKDisMusicController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [XKAppDelegateHelper showAnimationButton];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self requestBanner];
@@ -97,7 +102,7 @@
 
 - (void)updateSections {
     NSMutableArray *mutabArray = @[].mutableCopy;
-    NSArray *array =  [[NSUserDefaults standardUserDefaults] objectForKey:@"ColumnOrder"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"ColumnOrder"] : @[@"0", @"1", @"2", @"3"];
+    NSArray *array =  [[NSUserDefaults standardUserDefaults] objectForKey:kColumnOrder] ? [[NSUserDefaults standardUserDefaults] objectForKey:kColumnOrder] : @[@"0", @"1", @"2", @"3"];
     for (NSString *section in array) {
         [mutabArray addObject:self.componentDict[section]];
     }

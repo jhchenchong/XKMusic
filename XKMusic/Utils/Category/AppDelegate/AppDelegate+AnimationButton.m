@@ -33,12 +33,8 @@ static char *AnimationButtonKey = "AnimationButtonKey";
         make.right.equalTo(self.window).offset(-4);
         make.width.height.mas_equalTo(44);
     }];
-    XKWEAK
     [[self.animationButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        NSLog(@"进入播放音乐控制器");
-        XKSTRONG
-        self.animationButton.selected = !self.animationButton.selected;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAnimationButtnStateChanged object:nil];
+        [[XKAppDelegateHelper visibleViewController].navigationController pushViewController:XKPlayerVC animated:YES];
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kAnimationButtnStateChanged object:nil] subscribeNext:^(NSNotification * _Nullable x) {
@@ -54,7 +50,7 @@ static char *AnimationButtonKey = "AnimationButtonKey";
                 [images addObject:UIImageMake(imageName)];
             }
             
-            self.animationButton.imageView.animationImages   = images;
+            self.animationButton.imageView.animationImages = images;
             self.animationButton.imageView.animationDuration = 0.75;
             [self.animationButton.imageView startAnimating];
             
