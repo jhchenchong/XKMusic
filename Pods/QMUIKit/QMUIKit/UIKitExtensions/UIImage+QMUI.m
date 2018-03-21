@@ -598,7 +598,7 @@ CGSizeFlatSpecificScale(CGSize size, float scale) {
     CGFloat lineWidth = 0;
     switch (shape) {
         case QMUIImageShapeNavBack:
-            lineWidth = 2.0f;
+            lineWidth = 1.0f;
             break;
         case QMUIImageShapeDisclosureIndicator:
             lineWidth = 1.5f;
