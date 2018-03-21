@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32C13B7C8BE687BF2A76269C /* libPods-XKMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */; };
 		B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */; };
+		B73700A12061F67500BC844C /* XKMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A02061F67500BC844C /* XKMusicPlayer.m */; };
 		B74D111E205521930013D321 /* XKSearchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D111D205521930013D321 /* XKSearchHeaderView.m */; };
 		B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1E204D238900AD1C01 /* WMPageController.m */; };
 		B74D2B2C204D238900AD1C01 /* UIViewController+WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1F204D238900AD1C01 /* UIViewController+WMPageController.m */; };
@@ -112,6 +113,8 @@
 		2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XKMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B737009B2061F22500BC844C /* NSString+LabelWidthAndHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+LabelWidthAndHeight.h"; sourceTree = "<group>"; };
 		B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+LabelWidthAndHeight.m"; sourceTree = "<group>"; };
+		B737009F2061F67500BC844C /* XKMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKMusicPlayer.h; sourceTree = "<group>"; };
+		B73700A02061F67500BC844C /* XKMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKMusicPlayer.m; sourceTree = "<group>"; };
 		B74D111C205521930013D321 /* XKSearchHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSearchHeaderView.h; sourceTree = "<group>"; };
 		B74D111D205521930013D321 /* XKSearchHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSearchHeaderView.m; sourceTree = "<group>"; };
 		B74D2B1C204D17D300AD1C01 /* XKToolsMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKToolsMacro.h; sourceTree = "<group>"; };
@@ -336,6 +339,15 @@
 				13EA4298FABCC20B1147EEBA /* Pods-XKMusic.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B737009E2061F66800BC844C /* XKMusicPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				B737009F2061F67500BC844C /* XKMusicPlayer.h */,
+				B73700A02061F67500BC844C /* XKMusicPlayer.m */,
+			);
+			path = XKMusicPlayer;
 			sourceTree = "<group>";
 		};
 		B74D2B1B204D17AF00AD1C01 /* Define */ = {
@@ -621,6 +633,7 @@
 		B7768A85204AA05F006E8304 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B737009E2061F66800BC844C /* XKMusicPlayer */,
 				B7964F42205651B400EFACE4 /* Accessory */,
 				B74DC8BE20522DA70092025A /* Helper */,
 				B74D2B1B204D17AF00AD1C01 /* Define */,
@@ -1345,6 +1358,7 @@
 				B7DC998C205FA655002DB5C5 /* AppDelegate+AnimationButton.m in Sources */,
 				B74D111E205521930013D321 /* XKSearchHeaderView.m in Sources */,
 				B7768A7F204A9400006E8304 /* main.m in Sources */,
+				B73700A12061F67500BC844C /* XKMusicPlayer.m in Sources */,
 				B7D906DA2059032100BAF211 /* XKNewsongComponent.m in Sources */,
 				B74D2B2D204D238900AD1C01 /* WMMenuItem.m in Sources */,
 				B74DC8B720522A9B0092025A /* LKImageSpritesToMutipleImagesProcessor.m in Sources */,
