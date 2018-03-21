@@ -59,10 +59,12 @@
 - (void)initSubviews {
     [super initSubviews];
     [self configTableView];
+    [self configTipLabel];
 }
 
 - (void)configTableView {
     self.headerView = [[XKDisMusicHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
+    self.headerView.backgroundColor = UIColorWhite;
     self.headerView.cycleScrollView.delegate = self;
     XKWEAK
     [[self.headerView.fmButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
@@ -86,7 +88,7 @@
     }];
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    self.tableView.backgroundColor = UIColorWhite;
+    self.tableView.backgroundColor = UIColorClear;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.tableFootView;
     self.disMusicSongListRecommendedComponent = [XKDisMusicSongListRecommendedComponent componentWithTableView:self.tableView delegate:self];
@@ -98,6 +100,40 @@
     [self.disPrivatecontentComponent reloadDataWithTableView:self.tableView inSection:[self.components indexOfObject:self.disPrivatecontentComponent]];
     [self.newsongComponent reloadDataWithTableView:self.tableView inSection:[self.components indexOfObject:self.newsongComponent]];
     [self.DJProgramComponent reloadDataWithTableView:self.tableView inSection:[self.components indexOfObject:self.DJProgramComponent]];
+}
+
+- (void)configTipLabel {
+    UIView *tipView = [[UIView alloc] init];
+    
+    QMUIButton *button = [[QMUIButton alloc] init];
+    [button setBackgroundImage:UIImageMake(@"cm2_discover_icn_start_bg") forState:UIControlStateNormal];
+    [button setImage:UIImageMake(@"cm2_discover_icn_start") forState:UIControlStateNormal];
+    [tipView addSubview:button];
+    
+    QMUILabel *label = [[QMUILabel alloc] init];
+    label.text = @"首页内容根据您的口味生成";
+    label.textColor = UIColorGray;
+    label.font = UIFontMake(12);
+    [tipView addSubview:label];
+    
+    [self.view insertSubview:tipView atIndex:0];
+    
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(tipView.mas_centerY);
+        make.left.mas_equalTo(0);
+        make.width.height.mas_equalTo(25);
+    }];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(button.mas_centerY);
+        make.left.mas_equalTo(button.mas_right).offset(10);
+    }];
+    
+    [tipView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(55);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.height.mas_equalTo(36);
+        make.width.mas_equalTo(35 + [label.text widthWithStringFont:UIFontMake(12)]);
+    }];
 }
 
 - (void)updateSections {

@@ -27,6 +27,7 @@
 
 - (__kindof UIView *)headerForTableView:(UITableView *)tableView {
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:self.headerIdentifier];
+    header.contentView.backgroundColor = UIColorWhite;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapHeader)];
     [header addGestureRecognizer:tap];
     self.label.text = self.title;

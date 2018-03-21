@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32C13B7C8BE687BF2A76269C /* libPods-XKMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */; };
+		B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */; };
 		B74D111E205521930013D321 /* XKSearchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D111D205521930013D321 /* XKSearchHeaderView.m */; };
 		B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1E204D238900AD1C01 /* WMPageController.m */; };
 		B74D2B2C204D238900AD1C01 /* UIViewController+WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1F204D238900AD1C01 /* UIViewController+WMPageController.m */; };
@@ -109,6 +110,8 @@
 /* Begin PBXFileReference section */
 		13EA4298FABCC20B1147EEBA /* Pods-XKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-XKMusic/Pods-XKMusic.release.xcconfig"; sourceTree = "<group>"; };
 		2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XKMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B737009B2061F22500BC844C /* NSString+LabelWidthAndHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+LabelWidthAndHeight.h"; sourceTree = "<group>"; };
+		B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+LabelWidthAndHeight.m"; sourceTree = "<group>"; };
 		B74D111C205521930013D321 /* XKSearchHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSearchHeaderView.h; sourceTree = "<group>"; };
 		B74D111D205521930013D321 /* XKSearchHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSearchHeaderView.m; sourceTree = "<group>"; };
 		B74D2B1C204D17D300AD1C01 /* XKToolsMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKToolsMacro.h; sourceTree = "<group>"; };
@@ -788,6 +791,8 @@
 			children = (
 				B7964F5C2056850500EFACE4 /* NSString+Count.h */,
 				B7964F5D2056850500EFACE4 /* NSString+Count.m */,
+				B737009B2061F22500BC844C /* NSString+LabelWidthAndHeight.h */,
+				B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */,
 			);
 			path = NSString;
 			sourceTree = "<group>";
@@ -1359,6 +1364,7 @@
 				B74DC8C420526B250092025A /* XKCustomSearchBar.m in Sources */,
 				B7FF36BF204CDCF5005CD83E /* QMUITabBarViewController+XKCategory.m in Sources */,
 				B74DC8B820522A9B0092025A /* LKImageSystemDecoder.m in Sources */,
+				B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */,
 				B74D2B2F204D238900AD1C01 /* WMMenuView.m in Sources */,
 				B7FF36D8204CE21C005CD83E /* XKFriendsController.m in Sources */,
 				B74DC8B520522A9B0092025A /* LKImagePredrawProcessor.m in Sources */,

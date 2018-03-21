@@ -33,5 +33,6 @@
 #import "AppDelegate+AnimationButton.h"
 #import "XKAppDelegateHelper.h"
 #import "XKPlayerController.h"
+#import "NSString+LabelWidthAndHeight.h"
 
 #endif
