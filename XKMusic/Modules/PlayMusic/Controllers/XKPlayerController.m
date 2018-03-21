@@ -23,6 +23,11 @@
     return playerVC;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [XKAppDelegateHelper hideAnimationButton];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
