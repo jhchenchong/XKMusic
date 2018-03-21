@@ -35,5 +35,7 @@
 #import "XKPlayerController.h"
 #import "NSString+LabelWidthAndHeight.h"
 #import "XKSliderView.h"
+#import "XKRandomHelper.h"
+#import <Shimmer/FBShimmeringView.h>
 
 #endif

@@ -9,50 +9,50 @@
 #import "XKNewsongModel.h"
 #import "XKNewsongApi.h"
 
-@implementation Artist
-
-@end
-
-@implementation Privilege
-
-@end
-
-@implementation Music
-
-@end
-
-@implementation Album
-
-+ (nullable NSDictionary<NSString *, id> *)modelContainerPropertyGenericClass {
-    return @{@"artist" : Artist.class,
-             @"artists" : Artist.class
-             };
-}
-
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{@"identifier" : @"id"};
-}
-
-@end
-
-@implementation Song
-
-+ (nullable NSDictionary<NSString *, id> *)modelContainerPropertyGenericClass {
-    return @{@"privilege" : Privilege.class,
-             @"hMusic" : Music.class,
-             @"mMusic" : Music.class,
-             @"lMusic" : Music.class,
-             @"bMusic" : Music.class,
-             @"album" : Album.class,
-             @"artists" : Artist.class
-             };
-}
-
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{@"identifier" : @"id"};
-}
-
-@end
+//@implementation Artist
+//
+//@end
+//
+//@implementation Privilege
+//
+//@end
+//
+//@implementation Music
+//
+//@end
+//
+//@implementation Album
+//
+//+ (nullable NSDictionary<NSString *, id> *)modelContainerPropertyGenericClass {
+//    return @{@"artist" : Artist.class,
+//             @"artists" : Artist.class
+//             };
+//}
+//
+//+ (NSDictionary *)modelCustomPropertyMapper {
+//    return @{@"identifier" : @"id"};
+//}
+//
+//@end
+//
+//@implementation Song
+//
+//+ (nullable NSDictionary<NSString *, id> *)modelContainerPropertyGenericClass {
+//    return @{@"privilege" : Privilege.class,
+//             @"hMusic" : Music.class,
+//             @"mMusic" : Music.class,
+//             @"lMusic" : Music.class,
+//             @"bMusic" : Music.class,
+//             @"album" : Album.class,
+//             @"artists" : Artist.class
+//             };
+//}
+//
+//+ (NSDictionary *)modelCustomPropertyMapper {
+//    return @{@"identifier" : @"id"};
+//}
+//
+//@end
 
 @implementation XKNewsongModel
 

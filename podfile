@@ -9,4 +9,5 @@ pod 'MJRefresh'
 pod 'KTVHTTPCache'
 pod 'QMUIKit'
 pod 'YTKNetwork'
+pod 'Shimmer'
 end
