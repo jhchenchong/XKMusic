@@ -10,6 +10,7 @@
 		32C13B7C8BE687BF2A76269C /* libPods-XKMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */; };
 		B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */; };
 		B73700A12061F67500BC844C /* XKMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A02061F67500BC844C /* XKMusicPlayer.m */; };
+		B73700A5206229B000BC844C /* XKSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A4206229B000BC844C /* XKSliderView.m */; };
 		B74D111E205521930013D321 /* XKSearchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D111D205521930013D321 /* XKSearchHeaderView.m */; };
 		B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1E204D238900AD1C01 /* WMPageController.m */; };
 		B74D2B2C204D238900AD1C01 /* UIViewController+WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74D2B1F204D238900AD1C01 /* UIViewController+WMPageController.m */; };
@@ -115,6 +116,8 @@
 		B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+LabelWidthAndHeight.m"; sourceTree = "<group>"; };
 		B737009F2061F67500BC844C /* XKMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKMusicPlayer.h; sourceTree = "<group>"; };
 		B73700A02061F67500BC844C /* XKMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKMusicPlayer.m; sourceTree = "<group>"; };
+		B73700A3206229B000BC844C /* XKSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSliderView.h; sourceTree = "<group>"; };
+		B73700A4206229B000BC844C /* XKSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSliderView.m; sourceTree = "<group>"; };
 		B74D111C205521930013D321 /* XKSearchHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSearchHeaderView.h; sourceTree = "<group>"; };
 		B74D111D205521930013D321 /* XKSearchHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSearchHeaderView.m; sourceTree = "<group>"; };
 		B74D2B1C204D17D300AD1C01 /* XKToolsMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKToolsMacro.h; sourceTree = "<group>"; };
@@ -348,6 +351,15 @@
 				B73700A02061F67500BC844C /* XKMusicPlayer.m */,
 			);
 			path = XKMusicPlayer;
+			sourceTree = "<group>";
+		};
+		B73700A22062298600BC844C /* XKSliderView */ = {
+			isa = PBXGroup;
+			children = (
+				B73700A3206229B000BC844C /* XKSliderView.h */,
+				B73700A4206229B000BC844C /* XKSliderView.m */,
+			);
+			path = XKSliderView;
 			sourceTree = "<group>";
 		};
 		B74D2B1B204D17AF00AD1C01 /* Define */ = {
@@ -585,6 +597,7 @@
 		B7606AE8205FC0C200DC2575 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B73700A22062298600BC844C /* XKSliderView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1406,6 +1419,7 @@
 				B74DC8AF20522A9B0092025A /* LKImageRequest.m in Sources */,
 				B7A8CF4C204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m in Sources */,
 				B7D906D72058F96000BAF211 /* XKPrivatecontentCell.m in Sources */,
+				B73700A5206229B000BC844C /* XKSliderView.m in Sources */,
 				B74DC8BB20522A9B0092025A /* LKImageNetworkFileLoader.m in Sources */,
 				B74DC8BD20522A9B0092025A /* LKImageLocalFileLoader.m in Sources */,
 				B7B155F8205A66C80053918B /* XKAdjustSectionsController.m in Sources */,
