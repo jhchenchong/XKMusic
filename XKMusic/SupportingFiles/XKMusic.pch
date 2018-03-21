@@ -34,5 +34,6 @@
 #import "XKAppDelegateHelper.h"
 #import "XKPlayerController.h"
 #import "NSString+LabelWidthAndHeight.h"
+#import "XKSliderView.h"
 
 #endif
