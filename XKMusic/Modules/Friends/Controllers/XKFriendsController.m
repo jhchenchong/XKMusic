@@ -14,6 +14,23 @@
 
 @implementation XKFriendsController
 
+- (BOOL)shouldCustomNavigationBarTransitionWhenPushDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomNavigationBarTransitionWhenPopDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomizeNavigationBarTransitionIfHideable {
+    return YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [XKAppDelegateHelper showAnimationButton];
+}
+
 - (void)setNavigationItemsIsInEditMode:(BOOL)isInEditMode animated:(BOOL)animated {
     [super setNavigationItemsIsInEditMode:isInEditMode animated:animated];
     self.navigationItem.titleView = self.menuView;

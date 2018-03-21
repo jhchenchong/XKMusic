@@ -38,6 +38,7 @@
     
     /// 发现音乐
     XKDiscoverController *discoverController = [[XKDiscoverController alloc] init];
+    discoverController.hidesBottomBarWhenPushed = NO;
     discoverController.automaticallyCalculatesItemWidths = YES;
     discoverController.titleSizeSelected = 15;;
     discoverController.titleSizeNormal = 15;
@@ -48,6 +49,7 @@
     
     /// 视频
     XKVideoController *videoController = [[XKVideoController alloc] init];
+    videoController.hidesBottomBarWhenPushed = NO;
     videoController.automaticallyCalculatesItemWidths = YES;
     videoController.titleSizeSelected = 15;
     videoController.itemsMargins = @[@15,@30,@30,@30,@30,@30,@30,@15];
@@ -58,10 +60,13 @@
     [self addChildViewController:videoController title:@"视频" image:@"cm4_btm_icn_video" selectedImage:@"cm4_btm_icn_video_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
     
     /// 我的音乐
-    [self addChildViewController:[[XKMyMusicController alloc] init] title:@"我的" image:@"cm2_btm_icn_music" selectedImage:@"cm2_btm_icn_music_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
+    XKMyMusicController *myMusicController = [[XKMyMusicController alloc] init];
+    myMusicController.hidesBottomBarWhenPushed = NO;
+    [self addChildViewController:myMusicController title:@"我的" image:@"cm2_btm_icn_music" selectedImage:@"cm2_btm_icn_music_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
     
     /// 朋友
     XKFriendsController *friendsController = [[XKFriendsController alloc] init];
+    friendsController.hidesBottomBarWhenPushed = NO;
     friendsController.menuViewStyle = WMMenuViewStyleSegmented;
     friendsController.showOnNavigationBar = YES;
     friendsController.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
@@ -73,7 +78,9 @@
     [self addChildViewController:friendsController title:@"朋友" image:@"cm2_btm_icn_friend" selectedImage:@"cm2_btm_icn_friend_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
     
     /// 账号
-    [self addChildViewController:[[XKAccountController alloc] init] title:@"账号" image:@"cm2_btm_icn_account" selectedImage:@"cm2_btm_icn_account_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
+    XKAccountController *accountController = [[XKAccountController alloc] init];
+    accountController.hidesBottomBarWhenPushed = NO;
+    [self addChildViewController:accountController title:@"账号" image:@"cm2_btm_icn_account" selectedImage:@"cm2_btm_icn_account_prs" imageInsets:UIEdgeInsetsZero titlePosition:titlePosition navControllerClass:NSClassFromString(@"QMUINavigationController")];
 }
 
 @end

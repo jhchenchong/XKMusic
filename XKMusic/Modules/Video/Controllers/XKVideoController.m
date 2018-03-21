@@ -16,6 +16,23 @@
 
 @implementation XKVideoController
 
+- (BOOL)shouldCustomNavigationBarTransitionWhenPushDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomNavigationBarTransitionWhenPopDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomizeNavigationBarTransitionIfHideable {
+    return YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [XKAppDelegateHelper showAnimationButton];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

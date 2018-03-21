@@ -62,6 +62,7 @@
     self.searchBar.text = nil;
     [self.searchBar setIconAlign:XKCustomSearchBarIconAlignCenter];
     [self.searchBar resignFirstResponder];
+    [XKAppDelegateHelper showAnimationButton];
 }
 
 - (void)handleLeftBarButtonItemEvent {
@@ -119,6 +120,7 @@
         [self.navigationItem setLeftBarButtonItem:nil animated:YES];
         [self.navigationItem setRightBarButtonItem:[QMUINavigationButton barButtonItemWithType:QMUINavigationButtonTypeNormal title:@"取消" position:QMUINavigationButtonPositionRight target:self action:@selector(handleCancel)] animated:YES];
         self.searchBar.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+        [XKAppDelegateHelper hideAnimationButton];
     }
 }
 
