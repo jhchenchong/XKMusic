@@ -9,11 +9,13 @@
 #import "XKDailyRecommendController.h"
 #import "XKDailyRecommendModel.h"
 #import "XKDailyRecommendCell.h"
+#import "XKDailyRecommendHeaderView.h"
 
 @interface XKDailyRecommendController ()
 
 @property (nonatomic, copy) NSArray<XKCellDataAdapter *> *adapters;
 @property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) NSMutableSet<NSNumber *> *selectedItemIndexes;
 
 @end
 
@@ -32,6 +34,7 @@
 - (void)initTableView {
     [super initTableView];
     [XKDailyRecommendCell registerToTableView:self.tableView];
+    [XKDailyRecommendHeaderView registerToTableView:self.tableView];
     self.tableView.tableHeaderView = self.headerView;
 }
 
@@ -49,11 +52,72 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return (XKDailyRecommendCell *)[tableView dequeueReusableCellAndLoadDataWithAdapter:self.adapters[indexPath.row] indexPath:indexPath];
+    XKDailyRecommendCell *cell = (XKDailyRecommendCell *)[tableView dequeueReusableCellAndLoadDataWithAdapter:self.adapters[indexPath.row] indexPath:indexPath];
+    if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
+        cell.selected = YES;
+    } else {
+        cell.selected = NO;
+    }
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return self.adapters[indexPath.row].cellHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"XKDailyRecommendHeaderView"];
+    [headerView setHeaderFooterViewBackgroundColor:UIColorWhite];
+    XKWEAK
+    headerView.playAllBlock = ^{
+        NSLog(@"播放全部");
+    };
+    headerView.SelectedBlock = ^(BOOL isClick) {
+        XKSTRONG
+        if (isClick) {
+            NSArray<NSIndexPath *> *indexPaths = [self.tableView indexPathsForRowsInRect:CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.contentSize.height)];
+            [self.selectedItemIndexes addObjectsFromArray:[[indexPaths.rac_sequence.signal map:^id _Nullable(NSIndexPath * _Nullable value) {
+                return @(value.row);
+            }] toArray]];
+        } else {
+            [self.selectedItemIndexes removeAllObjects];
+        }
+        [self.tableView reloadData];
+    };
+    headerView.MultipleButtonBlock = ^(BOOL isClick) {
+        XKSTRONG
+        self.tableView.editing = isClick;
+        if (isClick == NO) {
+            [self.selectedItemIndexes removeAllObjects];
+        }
+    };
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing == YES) {
+        return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+    } else {
+        return UITableViewCellEditingStyleDelete;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView headerViewForSection:indexPath.section];
+    if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
+        [self.selectedItemIndexes removeObject:@(indexPath.row)];
+         headerView.isSelected = NO;
+    } else {
+        [self.selectedItemIndexes addObject:@(indexPath.row)];
+        if (self.selectedItemIndexes.count == [self.tableView indexPathsForRowsInRect:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.contentSize.height)].count) {
+            headerView.isSelected = YES;
+        }
+    }
+    [self.tableView reloadData];
 }
 
 - (UIView *)headerView {
@@ -69,7 +133,9 @@
         [_headerView addSubview:calendarImageView];
         
         QMUILabel *label = [[QMUILabel alloc] init];
-        label.text = @"21";
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"dd";
+        label.text = [dateFormatter stringFromDate:[NSDate date]];
         label.textColor = UIColorWhite;
         label.font = UIFontBoldMake(40);
         [label sizeToFit];
@@ -109,6 +175,13 @@
         
     }
     return _headerView;
+}
+
+- (NSMutableSet<NSNumber *> *)selectedItemIndexes {
+    if (!_selectedItemIndexes) {
+        _selectedItemIndexes = [[NSMutableSet alloc] init];
+    }
+    return _selectedItemIndexes;
 }
 
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32C13B7C8BE687BF2A76269C /* libPods-XKMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */; };
+		B70BAA7820633EF100E0ED66 /* XKDailyRecommendHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */; };
 		B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */; };
 		B7232E0F2062891800DA1D41 /* XKDailyRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */; };
 		B7232E1220629C0900DA1D41 /* XKRandomHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E1120629C0900DA1D41 /* XKRandomHelper.m */; };
@@ -125,6 +126,8 @@
 /* Begin PBXFileReference section */
 		13EA4298FABCC20B1147EEBA /* Pods-XKMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XKMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-XKMusic/Pods-XKMusic.release.xcconfig"; sourceTree = "<group>"; };
 		2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XKMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B70BAA7620633EF100E0ED66 /* XKDailyRecommendHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendHeaderView.h; sourceTree = "<group>"; };
+		B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDailyRecommendHeaderView.m; sourceTree = "<group>"; };
 		B7232E0A2062864500DA1D41 /* XKDailyRecommendApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendApi.h; sourceTree = "<group>"; };
 		B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDailyRecommendApi.m; sourceTree = "<group>"; };
 		B7232E0D2062891800DA1D41 /* XKDailyRecommendCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendCell.h; sourceTree = "<group>"; };
@@ -1220,6 +1223,8 @@
 				B7B155F4205A5F080053918B /* XKDJProgramCell.m */,
 				B7232E0D2062891800DA1D41 /* XKDailyRecommendCell.h */,
 				B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */,
+				B70BAA7620633EF100E0ED66 /* XKDailyRecommendHeaderView.h */,
+				B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1546,6 +1551,7 @@
 				B7768A90204AA291006E8304 /* QMUIConfigurationTemplate.m in Sources */,
 				B7964F5E2056850500EFACE4 /* NSString+Count.m in Sources */,
 				B7FF36DB204CE272005CD83E /* XKAccountController.m in Sources */,
+				B70BAA7820633EF100E0ED66 /* XKDailyRecommendHeaderView.m in Sources */,
 				B7964F55205665A100EFACE4 /* XKPersonalizedApi.m in Sources */,
 				B7964F512056657100EFACE4 /* XKPersonalizedModel.m in Sources */,
 				B7964F3E2056496200EFACE4 /* XKBannerApi.m in Sources */,

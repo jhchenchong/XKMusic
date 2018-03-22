@@ -21,8 +21,44 @@
 
 @implementation XKDailyRecommendCell
 
+- (void)layoutSubviews {
+    for (UIControl *control in self.subviews){
+        if ([control isMemberOfClass:NSClassFromString(@"UITableViewCellEditControl")]){
+            for (UIView *v in control.subviews) {
+                if ([v isKindOfClass: [UIImageView class]]) {
+                    UIImageView *img=(UIImageView *)v;
+                    if (self.selected) {
+                        img.image=[UIImage imageNamed:@"cm4_list_checkbox_ok"];
+                    } else {
+                        img.image=[UIImage imageNamed:@"cm4_list_checkbox"];
+                    }
+                }
+            }
+        }
+    }
+    [super layoutSubviews];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    for (UIControl *control in self.subviews){
+        if ([control isMemberOfClass:NSClassFromString(@"UITableViewCellEditControl")]){
+            for (UIView *v in control.subviews) {
+                if ([v isKindOfClass: [UIImageView class]]) {
+                    UIImageView *img = (UIImageView *)v;
+                    if (!self.selected) {
+                        img.image = [UIImage imageNamed:@"cm4_list_checkbox"];
+                    }
+                }
+            }
+        }
+    }
+}
+
 - (void)setupCell {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.multipleSelectionBackgroundView = [[UIView alloc] init];
+    self.tintColor = [XKColorHelper appMainColor];
 }
 
 - (void)buildSubview {
