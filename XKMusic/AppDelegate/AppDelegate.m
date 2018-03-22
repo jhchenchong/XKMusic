@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "XKRootViewController.h"
 #import "XKLoginModel.h"
+#import <IPTool/IPToolManager.h>
 
 @interface AppDelegate ()
 
@@ -23,8 +24,7 @@
     self.window.rootViewController = [[XKRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
-//    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
-    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.10.219:3000";
+    [YTKNetworkConfig sharedConfig].baseUrl = [NSString stringWithFormat:@"http://%@:3000", [[IPToolManager sharedManager] getIPAddresses][@"en0/ipv4"]];
 //    [[XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"] subscribeNext:^(XKLoginModel *x) {
 //        if (x.code == 200) {
 //            [QMUITips showInfo:@"登录成功"];

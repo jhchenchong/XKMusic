@@ -24,6 +24,7 @@ PODS:
   - CocoaLumberjack/Default (3.4.1)
   - CocoaLumberjack/Extensions (3.4.1):
     - CocoaLumberjack/Default
+  - IPTool (1.0.0)
   - KTVHTTPCache (1.0.2):
     - CocoaHTTPServer (~> 2.3)
   - Masonry (1.1.0)
@@ -246,6 +247,7 @@ PODS:
   - YYModel (1.0.4)
 
 DEPENDENCIES:
+  - IPTool
   - KTVHTTPCache
   - Masonry
   - MJRefresh
@@ -261,6 +263,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 3541e024f48c54b251638ef72d51dd42808de932
   CocoaHTTPServer: 5624681fc3473d43b18202f635f9b3abb013b530
   CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
+  IPTool: 86cd2140b3c539b9c647342987a7b59256d86a80
   KTVHTTPCache: 5b46cde001869e199fcd079014173083fbf0328c
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
@@ -272,6 +275,6 @@ SPEC CHECKSUMS:
   YTKNetwork: df8a7a5597bda1664a4efaa7ef871a818a887fe0
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 2e5c7e0af035cb6ec18007b5f949d572ec178aff
+PODFILE CHECKSUM: 995cb6c0a1bbf92469ed71610d3a9f8e72f06473
 
 COCOAPODS: 1.3.1
