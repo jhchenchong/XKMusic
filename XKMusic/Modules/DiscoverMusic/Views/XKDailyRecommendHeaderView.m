@@ -56,6 +56,13 @@
     self.selectedAllButton.selected = isSelected;
 }
 
+- (void)resetHeaderView {
+    self.multipleButton.selected = NO;
+    self.playAllButton.hidden = NO;
+    self.selectedAllButton.selected = NO;
+    self.selectedAllButton.hidden = YES;
+}
+
 - (QMUIButton *)multipleButton {
     if (!_multipleButton) {
         _multipleButton = [[QMUIButton alloc] init];

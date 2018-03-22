@@ -10,4 +10,6 @@
 
 @interface XKDailyRecommendCell : XKCustomCell
 
+@property (nonatomic, copy) void(^ClickMoreButtonBlock)(XKDailyRecommendCell *dailyRecommendCell);
+
 @end

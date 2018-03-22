@@ -15,4 +15,6 @@
 @property (nonatomic, copy) dispatch_block_t playAllBlock;
 @property (nonatomic, assign) BOOL isSelected;
 
+- (void)resetHeaderView;
+
 @end

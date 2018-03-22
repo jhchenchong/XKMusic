@@ -73,6 +73,7 @@
     [[self.headerView.recommendButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         XKSTRONG
         XKDailyRecommendController *dailyRecommendController = [[XKDailyRecommendController alloc] init];
+        dailyRecommendController.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:dailyRecommendController animated:YES];
     }];
     [[self.headerView.songListButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {

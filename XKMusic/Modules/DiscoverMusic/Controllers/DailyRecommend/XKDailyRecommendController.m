@@ -10,6 +10,7 @@
 #import "XKDailyRecommendModel.h"
 #import "XKDailyRecommendCell.h"
 #import "XKDailyRecommendHeaderView.h"
+#import "XKToolbar.h"
 
 @interface XKDailyRecommendController ()
 
@@ -17,9 +18,40 @@
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *selectedItemIndexes;
 
+@property (nonatomic, strong) XKToolbar *toolbar;
+
+
 @end
 
 @implementation XKDailyRecommendController
+
+- (BOOL)shouldCustomNavigationBarTransitionWhenPushDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomNavigationBarTransitionWhenPopDisappearing {
+    return YES;
+}
+
+- (BOOL)shouldCustomizeNavigationBarTransitionIfHideable {
+    return YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self resetHeaderView];
+    self.tableView.editing = NO;
+    self.tabBarController.tabBar.hidden = NO;
+    [self.selectedItemIndexes removeAllObjects];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49);
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [XKAppDelegateHelper showAnimationButton];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +61,11 @@
 - (void)setNavigationItemsIsInEditMode:(BOOL)isInEditMode animated:(BOOL)animated {
     [super setNavigationItemsIsInEditMode:isInEditMode animated:animated];
     self.titleView.title = @"每日推荐";
+}
+
+- (void)initSubviews {
+    [super initSubviews];
+    [self.view addSubview:self.toolbar];
 }
 
 - (void)initTableView {
@@ -47,12 +84,30 @@
     }];
 }
 
+- (void)resetHeaderView {
+    XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[self.tableView headerViewForSection:0];
+    [headerView resetHeaderView];
+}
+
+- (void)handleToolbarButtonEnble {
+    if (self.tableView.editing == YES) {
+        if (self.selectedItemIndexes.count == 0) {
+            [self.toolbar toolbarButtonEnabled:NO];
+        } else {
+            [self.toolbar toolbarButtonEnabled:YES];
+        }
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.adapters.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XKDailyRecommendCell *cell = (XKDailyRecommendCell *)[tableView dequeueReusableCellAndLoadDataWithAdapter:self.adapters[indexPath.row] indexPath:indexPath];
+    cell.ClickMoreButtonBlock = ^(XKDailyRecommendCell *dailyRecommendCell) {
+        [QMUITips showInfo:[NSString stringWithFormat:@"%ld", dailyRecommendCell.indexPath.row]];
+    };
     if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
         cell.selected = YES;
     } else {
@@ -70,7 +125,7 @@
     [headerView setHeaderFooterViewBackgroundColor:UIColorWhite];
     XKWEAK
     headerView.playAllBlock = ^{
-        NSLog(@"播放全部");
+        [QMUITips showInfo:@"播放全部"];
     };
     headerView.SelectedBlock = ^(BOOL isClick) {
         XKSTRONG
@@ -82,13 +137,26 @@
         } else {
             [self.selectedItemIndexes removeAllObjects];
         }
+        [self handleToolbarButtonEnble];
         [self.tableView reloadData];
     };
     headerView.MultipleButtonBlock = ^(BOOL isClick) {
         XKSTRONG
+        /// 左滑删除的同事点击了多选按钮 先将tableView的编辑状态设为NO，再继续下面的逻辑
+        self.tableView.editing = NO;
         self.tableView.editing = isClick;
+        [self.selectedItemIndexes removeAllObjects];
         if (isClick == NO) {
-            [self.selectedItemIndexes removeAllObjects];
+            [UIView animateWithDuration:0.25 animations:^{
+                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49);
+            } completion:^(BOOL finished) {
+                self.tabBarController.tabBar.hidden = isClick;
+            }];
+        } else {
+            self.tabBarController.tabBar.hidden = isClick;
+            [UIView animateWithDuration:0.25 animations:^{
+                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT - 49, SCREEN_WIDTH, 49);
+            }];
         }
     };
     return headerView;
@@ -110,14 +178,27 @@
     XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView headerViewForSection:indexPath.section];
     if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
         [self.selectedItemIndexes removeObject:@(indexPath.row)];
-         headerView.isSelected = NO;
+        headerView.isSelected = NO;
     } else {
         [self.selectedItemIndexes addObject:@(indexPath.row)];
         if (self.selectedItemIndexes.count == [self.tableView indexPathsForRowsInRect:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.contentSize.height)].count) {
             headerView.isSelected = YES;
         }
     }
+    [self handleToolbarButtonEnble];
     [self.tableView reloadData];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"不感兴趣";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 - (UIView *)headerView {
@@ -182,6 +263,29 @@
         _selectedItemIndexes = [[NSMutableSet alloc] init];
     }
     return _selectedItemIndexes;
+}
+
+- (XKToolbar *)toolbar {
+    if (!_toolbar) {
+        _toolbar = [[XKToolbar alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49)];
+        _toolbar.ClickButtonBlock = ^(XKToolbarButtonType type) {
+            switch (type) {
+                case XKToolbarButtonTypeNext:
+                    [QMUITips showInfo:@"下一首播放"];
+                    break;
+                case XKToolbarButtonTypeAdd:
+                    [QMUITips showInfo:@"收藏到歌单"];
+                    break;
+                case XKToolbarButtonTypeDownload:
+                    [QMUITips showInfo:@"下载"];
+                    break;
+                case XKToolbarButtonTypeDelete:
+                    [QMUITips showInfo:@"删除下载"];
+                    break;
+            }
+        };
+    }
+    return _toolbar;
 }
 
 @end

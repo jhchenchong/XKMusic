@@ -17,7 +17,7 @@
 #define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
 #define kNavBarHeight 44.0
 
-#define kTabBarHeight kAppDelegate.mainTabBar.tabBar.frame.size.height
+#define iPhoneX_BOTTOM_HEIGHT  ([UIScreen mainScreen].bounds.size.height==812?34:0)
 #define kTopHeight (kStatusBarHeight + kNavBarHeight)
 
 #define keyWindow [UIApplication sharedApplication].keyWindow

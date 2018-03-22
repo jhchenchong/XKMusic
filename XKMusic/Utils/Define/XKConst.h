@@ -17,6 +17,13 @@ typedef NS_ENUM(NSUInteger, XKPlayerPlayStyle) {
     XKPlayerPlayStyleRandom       // 随机播放
 };
 
+typedef NS_ENUM(NSUInteger, XKToolbarButtonType) {
+    XKToolbarButtonTypeNext,      // 下一首播放
+    XKToolbarButtonTypeAdd,       // 收藏到歌单
+    XKToolbarButtonTypeDownload,  // 下载
+    XKToolbarButtonTypeDelete     // 删除
+};
+
 static NSString *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";
 static NSString *const kColumnOrder = @"ColumnOrder";
 

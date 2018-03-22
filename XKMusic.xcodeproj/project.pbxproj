@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32C13B7C8BE687BF2A76269C /* libPods-XKMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */; };
 		B70BAA7820633EF100E0ED66 /* XKDailyRecommendHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */; };
+		B70BAA822063B6C200E0ED66 /* XKToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B70BAA812063B6C200E0ED66 /* XKToolbar.m */; };
 		B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */; };
 		B7232E0F2062891800DA1D41 /* XKDailyRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */; };
 		B7232E1220629C0900DA1D41 /* XKRandomHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E1120629C0900DA1D41 /* XKRandomHelper.m */; };
@@ -128,6 +129,8 @@
 		2C9D3F5C1ACBC65E8232BF33 /* libPods-XKMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XKMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70BAA7620633EF100E0ED66 /* XKDailyRecommendHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendHeaderView.h; sourceTree = "<group>"; };
 		B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDailyRecommendHeaderView.m; sourceTree = "<group>"; };
+		B70BAA802063B6C200E0ED66 /* XKToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKToolbar.h; sourceTree = "<group>"; };
+		B70BAA812063B6C200E0ED66 /* XKToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKToolbar.m; sourceTree = "<group>"; };
 		B7232E0A2062864500DA1D41 /* XKDailyRecommendApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendApi.h; sourceTree = "<group>"; };
 		B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDailyRecommendApi.m; sourceTree = "<group>"; };
 		B7232E0D2062891800DA1D41 /* XKDailyRecommendCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDailyRecommendCell.h; sourceTree = "<group>"; };
@@ -1225,6 +1228,8 @@
 				B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */,
 				B70BAA7620633EF100E0ED66 /* XKDailyRecommendHeaderView.h */,
 				B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */,
+				B70BAA802063B6C200E0ED66 /* XKToolbar.h */,
+				B70BAA812063B6C200E0ED66 /* XKToolbar.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1562,6 +1567,7 @@
 				B74D2B2C204D238900AD1C01 /* UIViewController+WMPageController.m in Sources */,
 				B7FF36D5204CE1DB005CD83E /* XKMyMusicController.m in Sources */,
 				B7D906D42058F6F000BAF211 /* XKDisPrivatecontentComponent.m in Sources */,
+				B70BAA822063B6C200E0ED66 /* XKToolbar.m in Sources */,
 				B74D2B3F204D367200AD1C01 /* XKDisMusicHeaderView.m in Sources */,
 				B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */,
 				B7964F482056525F00EFACE4 /* YTKBaseRequest+AnimatingAccessory.m in Sources */,

@@ -126,6 +126,11 @@
         _moreButton = [[QMUIButton alloc] init];
         [_moreButton setImage:UIImageMake(@"cm4_act_icn_more") forState:UIControlStateNormal];
         [_moreButton setImage:UIImageMake(@"cm4_act_icn_more_prs") forState:UIControlStateHighlighted];
+        XKWEAK
+        [[_moreButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            XKSTRONG
+            XKBLOCK_EXEC(self.ClickMoreButtonBlock, self)
+        }];
     }
     return _moreButton;
 }
