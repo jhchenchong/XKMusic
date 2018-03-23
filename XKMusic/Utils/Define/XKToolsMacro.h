@@ -26,4 +26,6 @@
 
 #define KAUTOSCALE(num) ((SCREEN_WIDTH/375)*num)
 
+#define MUSICURL(musicID) [NSString stringWithFormat:@"http://music.163.com/song/media/outer/url?id=%@.mp3", musicID]
+
 #endif

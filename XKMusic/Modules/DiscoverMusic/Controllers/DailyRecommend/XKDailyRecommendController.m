@@ -11,6 +11,7 @@
 #import "XKDailyRecommendCell.h"
 #import "XKDailyRecommendHeaderView.h"
 #import "XKToolbar.h"
+#import "XKMusicModel.h"
 
 @interface XKDailyRecommendController ()
 
@@ -99,6 +100,19 @@
     }
 }
 
+- (NSArray <XKMusicModel *> *)fetchMusicModels {
+    NSArray <XKMusicModel *> *musicModels = [[self.adapters.rac_sequence.signal map:^id _Nullable(XKCellDataAdapter * _Nullable value) {
+        XKDailyRecommendModel *model = value.data;
+        XKMusicModel *musicModel = [[XKMusicModel alloc] init];
+        musicModel.music_id = [NSString stringWithFormat:@"%ld", (long)model.ID];
+        musicModel.music_name = model.name;
+        musicModel.music_artist = model.artists.firstObject.name;
+        musicModel.music_cover = model.album.blurPicUrl;
+        return musicModel;
+    }] toArray];
+    return musicModels;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.adapters.count;
 }
@@ -125,7 +139,13 @@
     [headerView setHeaderFooterViewBackgroundColor:UIColorWhite];
     XKWEAK
     headerView.playAllBlock = ^{
-        [QMUITips showInfo:@"播放全部"];
+        XKSTRONG
+        NSArray <XKMusicModel *> *musicModels = [self fetchMusicModels];
+        [[XKPlayerController sharedInstance] playMusicWithIndex:0 musicModels:musicModels];
+        /// 稍微延迟一下再去执行push动画 第一次进入的动画效果看起来要流畅不少
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
+        });
     };
     headerView.SelectedBlock = ^(BOOL isClick) {
         XKSTRONG
@@ -175,18 +195,26 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView headerViewForSection:indexPath.section];
-    if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
-        [self.selectedItemIndexes removeObject:@(indexPath.row)];
-        headerView.isSelected = NO;
-    } else {
-        [self.selectedItemIndexes addObject:@(indexPath.row)];
-        if (self.selectedItemIndexes.count == [self.tableView indexPathsForRowsInRect:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.contentSize.height)].count) {
-            headerView.isSelected = YES;
+    if (self.tableView.editing == YES) {
+        XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView headerViewForSection:indexPath.section];
+        if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
+            [self.selectedItemIndexes removeObject:@(indexPath.row)];
+            headerView.isSelected = NO;
+        } else {
+            [self.selectedItemIndexes addObject:@(indexPath.row)];
+            if (self.selectedItemIndexes.count == [self.tableView indexPathsForRowsInRect:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.contentSize.height)].count) {
+                headerView.isSelected = YES;
+            }
         }
+        [self handleToolbarButtonEnble];
+        [self.tableView reloadData];
+    } else {
+        NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
+        [[XKPlayerController sharedInstance] playMusicWithIndex:indexPath.row musicModels:musicModels];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
+        });
     }
-    [self handleToolbarButtonEnble];
-    [self.tableView reloadData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

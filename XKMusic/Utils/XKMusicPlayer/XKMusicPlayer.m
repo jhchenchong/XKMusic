@@ -41,8 +41,11 @@
     [self configPlayer];
 }
 
-- (void)setProgress:(CGFloat)progress {
+- (void)setProgress:(NSInteger)progress {
     _progress = progress;
+    CMTime dragedCMTime = CMTimeMake(progress, 1);
+    [self.player seekToTime:dragedCMTime];
+    
 }
 
 - (void)setPlayerItem:(AVPlayerItem *)playerItem {

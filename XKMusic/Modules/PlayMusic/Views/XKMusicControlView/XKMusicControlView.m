@@ -171,6 +171,11 @@
     self.totalLabel.text = totalTime;
 }
 
+- (void)setBufferValue:(float)bufferValue {
+    _bufferValue = bufferValue;
+    self.slider.bufferValue = bufferValue;
+}
+
 - (void)setValue:(float)value {
     _value = value;
     self.slider.value = value;
@@ -189,6 +194,7 @@
     self.value = 0;
     self.currentTime = @"00:00";
     self.totalTime = @"00:00";
+    self.bufferValue = 0;
 }
 
 - (void)showLoadingAnim {
@@ -200,13 +206,13 @@
 }
 
 - (void)setupPlayBtn {
-    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause"] forState:UIControlStateNormal];
-    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause_prs"] forState:UIControlStateHighlighted];
+    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play"] forState:UIControlStateNormal];
+    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play_prs"] forState:UIControlStateHighlighted];
 }
 
 - (void)setupPauseBtn {
-    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play"] forState:UIControlStateNormal];
-    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play_prs"] forState:UIControlStateHighlighted];
+    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause"] forState:UIControlStateNormal];
+    [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause_prs"] forState:UIControlStateHighlighted];
 }
 
 - (void)setupLoveBtn {
@@ -358,8 +364,8 @@
 - (QMUIButton *)playBtn {
     if (!_playBtn) {
         _playBtn = [[QMUIButton alloc] init];
-        [_playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play"] forState:UIControlStateNormal];
-        [_playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play_prs"] forState:UIControlStateHighlighted];
+        [_playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause"] forState:UIControlStateNormal];
+        [_playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause_prs"] forState:UIControlStateHighlighted];
         [_playBtn addTarget:self action:@selector(playBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _playBtn;
@@ -417,7 +423,7 @@
     if (!_currentLabel) {
         _currentLabel = [[QMUILabel alloc] init];
         _currentLabel.textColor = [UIColor whiteColor];
-        _currentLabel.font = [UIFont systemFontOfSize:16.0];
+        _currentLabel.font = [UIFont systemFontOfSize:14.0];
         _currentLabel.text = @"00:00";
     }
     return _currentLabel;
@@ -427,7 +433,7 @@
     if (!_totalLabel) {
         _totalLabel = [[QMUILabel alloc] init];
         _totalLabel.textColor = [UIColor whiteColor];
-        _totalLabel.font = [UIFont systemFontOfSize:16.0];
+        _totalLabel.font = [UIFont systemFontOfSize:14.0];
         _totalLabel.text = @"00:00";
     }
     return _totalLabel;

@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, XKMusicPlayerStatus) {
 /// 播放状态
 @property (nonatomic, assign, readonly) XKMusicPlayerStatus status;
 /// 播放进度
-@property (nonatomic, assign) CGFloat progress;
+@property (nonatomic, assign) NSInteger progress;
 
 
 + (instancetype)sharedInstance;

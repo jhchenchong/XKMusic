@@ -263,21 +263,25 @@
 - (void)scrollViewDidEnd:(UIScrollView *)scrollView {
     CGFloat scrollW = CGRectGetWidth(scrollView.frame);
     CGFloat offsetX = scrollView.contentOffset.x;
-    
     if (offsetX == 2 * scrollW) {
         NSInteger currentIndex = (self.currentIndex + 1) % self.musics.count;
         [self setCurrentIndex:currentIndex needChange:YES];
+        XKMusicModel *model = self.musics[self.currentIndex];
+        if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
+            [self.delegate scrollDidChangeModel:model];
+        }
     } else if (offsetX == 0) {
         NSInteger currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
         [self setCurrentIndex:currentIndex needChange:YES];
+        XKMusicModel *model = self.musics[self.currentIndex];
+        if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
+            [self.delegate scrollDidChangeModel:model];
+        }
     } else {
         [self setScrollViewContentOffsetCenter];
     }
-    
-    XKMusicModel *model = self.musics[self.currentIndex];
-    
-    if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
-        [self.delegate scrollDidChangeModel:model];
+    if ([self.delegate respondsToSelector:@selector(scrollDidEnd:)]) {
+        [self.delegate scrollDidEnd:scrollView];
     }
 }
 

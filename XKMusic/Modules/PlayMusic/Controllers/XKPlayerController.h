@@ -7,6 +7,7 @@
 //
 
 #import <QMUIKit/QMUIKit.h>
+#import "XKMusicModel.h"
 
 @interface XKPlayerController : QMUICommonViewController
 
@@ -15,5 +16,8 @@
 @property (nonatomic, assign) BOOL isPlaying;
 
 + (instancetype)sharedInstance;
+
+- (void)setupMusicModels:(NSArray<XKMusicModel *> *)models;
+- (void)playMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models;
 
 @end

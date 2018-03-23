@@ -16,6 +16,7 @@
 - (void)scrollDidScroll;
 - (void)scrollWillChangeModel:(XKMusicModel *)model;
 - (void)scrollDidChangeModel:(XKMusicModel *)model;
+- (void)scrollDidEnd:(UIScrollView *)scrollView;
 
 @end
 

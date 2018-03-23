@@ -39,6 +39,7 @@
 
 @property (nonatomic, copy) NSString *currentTime;
 @property (nonatomic, copy) NSString *totalTime;
+@property (nonatomic, assign) float bufferValue;
 @property (nonatomic, assign) float value;
 @property (nonatomic, assign) BOOL is_love;
 
