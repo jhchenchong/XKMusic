@@ -45,7 +45,6 @@
     _progress = progress;
     CMTime dragedCMTime = CMTimeMake(progress, 1);
     [self.player seekToTime:dragedCMTime];
-    
 }
 
 - (void)setPlayerItem:(AVPlayerItem *)playerItem {

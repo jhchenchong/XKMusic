@@ -33,6 +33,8 @@
 @property (nonatomic, assign) BOOL isDraging;
 /// 是否在快进快退
 @property (nonatomic, assign) BOOL isSeeking;
+/// 是否更新音乐控制视图
+@property (nonatomic, assign) BOOL isUpdatingControlView;
 /// 总时间
 @property (nonatomic, assign) NSTimeInterval duration;
 /// 当前时间
@@ -141,11 +143,15 @@
 - (void)xkMusicPlayer:(XKMusicPlayer *)player totalTime:(CGFloat)totalTime currentTime:(NSInteger)currentTime progress:(CGFloat)progress {
     if (self.isDraging) return;
     if (self.isSeeking) return;
-    self.duration = totalTime;
-    self.currentTime = currentTime;
-    self.controlView.totalTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:totalTime];
-    self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:currentTime];
-    self.controlView.value = progress;
+    /// 拖动进度条改变播放进度时 会出现滑块闪动的情况 最开始怀疑是滑块的在滑动的时候同时响应了滑动和点击事件 最后发现 在改变进度之后 progress第一次回来的值是滑动之前的 不知道是什么原因造成的 这里先用这个属性保护一下
+    if (self.isUpdatingControlView == YES) {
+        self.controlView.value = progress;
+        self.duration = totalTime;
+        self.currentTime = currentTime;
+        self.controlView.totalTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:totalTime];
+        self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:currentTime];
+    }
+    self.isUpdatingControlView = YES;
 }
 - (void)xkMusicPlayer:(XKMusicPlayer *)player cacheProgress:(CGFloat)cacheProgress {
     self.controlView.bufferValue = cacheProgress;
@@ -185,6 +191,7 @@
 
 - (void)controlView:(XKMusicControlView *)controlView didSliderTouchBegan:(float)value {
     self.isDraging = YES;
+    self.isUpdatingControlView = NO;
 }
 - (void)controlView:(XKMusicControlView *)controlView didSliderTouchEnded:(float)value {
     self.isDraging = NO;
@@ -193,10 +200,13 @@
 }
 - (void)controlView:(XKMusicControlView *)controlView didSliderValueChange:(float)value {
     self.isDraging = YES;
+    self.isUpdatingControlView = NO;
     self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:self.duration * value];
 }
 - (void)controlView:(XKMusicControlView *)controlView didSliderTapped:(float)value {
-    
+    self.isDraging = NO;
+    NSInteger time = floorf(self.duration * value);
+    [XKMusicPlayer sharedInstance].progress = time;
 }
 
 #pragma mark -- XKMusicCoverViewDelegate
