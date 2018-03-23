@@ -81,7 +81,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.needleView.xk_centerX = SCREEN_WIDTH * 0.5 + 25;
+    self.needleView.xk_centerX = SCREEN_WIDTH * 0.5;
     self.needleView.mj_y = -25;
     [self pausedWithAnimated:NO];
     
