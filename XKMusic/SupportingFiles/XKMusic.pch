@@ -19,6 +19,7 @@
 #import <YTKNetwork/YTKNetwork.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import <YYModel/YYModel.h>
+#import <KTVHTTPCache/KTVHTTPCache.h>
 
 #import "XKToolsMacro.h"
 #import "XKConst.h"

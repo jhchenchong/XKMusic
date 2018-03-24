@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, XKMusicPlayerStatus) {
     XKMusicPlayerStatusPlaying,     // 播放中
     XKMusicPlayerStatusPaused,      // 暂停
     XKMusicPlayerStatusEnded,       // 播放结束
-    XKMusicPlayerStatusError        // 播放出错
+    XKMusicPlayerStatusError       // 播放出错
 };
 
 @class XKMusicPlayer;

@@ -24,11 +24,6 @@
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
     [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.10.219:3000";
-//    [[XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"] subscribeNext:^(XKLoginModel *x) {
-//        if (x.code == 200) {
-//            [QMUITips showInfo:@"登录成功"];
-//        }
-//    }];
     return YES;
 }
 

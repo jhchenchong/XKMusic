@@ -13,6 +13,7 @@
 		B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */; };
 		B7232E0F2062891800DA1D41 /* XKDailyRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */; };
 		B7232E1220629C0900DA1D41 /* XKRandomHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7232E1120629C0900DA1D41 /* XKRandomHelper.m */; };
+		B724AF47206636B700D79368 /* XKPlayerController+KTVHTTPCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B724AF46206636B700D79368 /* XKPlayerController+KTVHTTPCache.m */; };
 		B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */; };
 		B73700A12061F67500BC844C /* XKMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A02061F67500BC844C /* XKMusicPlayer.m */; };
 		B73700A5206229B000BC844C /* XKSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A4206229B000BC844C /* XKSliderView.m */; };
@@ -137,6 +138,8 @@
 		B7232E0E2062891800DA1D41 /* XKDailyRecommendCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDailyRecommendCell.m; sourceTree = "<group>"; };
 		B7232E1020629C0900DA1D41 /* XKRandomHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKRandomHelper.h; sourceTree = "<group>"; };
 		B7232E1120629C0900DA1D41 /* XKRandomHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKRandomHelper.m; sourceTree = "<group>"; };
+		B724AF45206636B700D79368 /* XKPlayerController+KTVHTTPCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XKPlayerController+KTVHTTPCache.h"; sourceTree = "<group>"; };
+		B724AF46206636B700D79368 /* XKPlayerController+KTVHTTPCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XKPlayerController+KTVHTTPCache.m"; sourceTree = "<group>"; };
 		B737009B2061F22500BC844C /* NSString+LabelWidthAndHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+LabelWidthAndHeight.h"; sourceTree = "<group>"; };
 		B737009C2061F22500BC844C /* NSString+LabelWidthAndHeight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+LabelWidthAndHeight.m"; sourceTree = "<group>"; };
 		B737009F2061F67500BC844C /* XKMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKMusicPlayer.h; sourceTree = "<group>"; };
@@ -396,6 +399,15 @@
 				B7232E0B2062864500DA1D41 /* XKDailyRecommendApi.m */,
 			);
 			path = DailyRecommend;
+			sourceTree = "<group>";
+		};
+		B724AF442066368200D79368 /* XKPlayerController */ = {
+			isa = PBXGroup;
+			children = (
+				B724AF45206636B700D79368 /* XKPlayerController+KTVHTTPCache.h */,
+				B724AF46206636B700D79368 /* XKPlayerController+KTVHTTPCache.m */,
+			);
+			path = XKPlayerController;
 			sourceTree = "<group>";
 		};
 		B737009E2061F66800BC844C /* XKMusicPlayer */ = {
@@ -987,6 +999,7 @@
 		B7B888F9204CC4B400A7A231 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				B724AF442066368200D79368 /* XKPlayerController */,
 				B7DC9986205FA624002DB5C5 /* AppDelegate */,
 				B7964F5B205684E000EFACE4 /* NSString */,
 				B7FF36BC204CDCF5005CD83E /* QMUITabBarViewController */,
@@ -1461,6 +1474,7 @@
 			files = (
 				B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */,
 				B7B888F6204CC3CF00A7A231 /* XKCustomHeaderFooterView.m in Sources */,
+				B724AF47206636B700D79368 /* XKPlayerController+KTVHTTPCache.m in Sources */,
 				B73700CA2062657B00BC844C /* Album.m in Sources */,
 				B7DC9975205F4529002DB5C5 /* XKLoginApi.m in Sources */,
 				B73700C42062655500BC844C /* Privilege.m in Sources */,

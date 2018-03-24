@@ -138,8 +138,8 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self setScrollViewContentOffsetCenter];
                 
-                self.leftDiskView.imgurl   = leftM.music_cover;
-                self.rightDiskView.imgurl  = rightM.music_cover;
+                self.leftDiskView.imgurl = leftM.music_cover;
+                self.rightDiskView.imgurl = rightM.music_cover;
                 
                 if (self.isChanged) {
                     !self.finished ? : self.finished();

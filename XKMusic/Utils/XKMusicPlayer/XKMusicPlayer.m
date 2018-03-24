@@ -88,7 +88,7 @@
     // 这里每次都去创建新的播放器对象 replaceCurrentItemWithPlayerItem: 这个方法会阻塞线程
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     [self createTimer];
-    // 如果musicUrlString是以file开头 说明这是一个本地的文件 本地文件没有缓冲状态
+    // 如果musicUrlString是以localhost开头 说明这是一个已经缓存了的文件
     if ([self.musicUrlString hasPrefix:@"file"]) {
         self.status = XKMusicPlayerStatusPlaying;
         self.isLocalMusic = YES;
@@ -170,7 +170,11 @@
         CGFloat totalDuration = CMTimeGetSeconds(duration);
         // 这里将缓存的进度传出去
         if (self.delegate && [self.delegate respondsToSelector:@selector(xkMusicPlayer:cacheProgress:)]) {
-            [self.delegate xkMusicPlayer:self cacheProgress:timeInterval / totalDuration];
+            if (self.isLocalMusic) {
+                [self.delegate xkMusicPlayer:self cacheProgress:1];
+            } else {
+                [self.delegate xkMusicPlayer:self cacheProgress:timeInterval / totalDuration];
+            }
         }
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
         if (self.playerItem.playbackBufferEmpty) {

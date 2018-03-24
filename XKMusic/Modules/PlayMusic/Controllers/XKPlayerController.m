@@ -10,6 +10,7 @@
 #import "XKMusicControlView.h"
 #import "XKMusicCoverView.h"
 #import "XKMusicPlayer.h"
+#import "XKPlayerController+KTVHTTPCache.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -64,6 +65,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupHTTPCache];
     [XKMusicPlayer sharedInstance].delegate = self;
 }
 
@@ -118,7 +120,8 @@
     self.titleView.subtitle = self.model.music_artist;
     self.bgImageView.URL = self.model.music_cover;
     self.currentMusicID = self.model.music_id;
-    [XKMusicPlayer sharedInstance].musicUrlString = MUSICURL(self.model.music_id);
+    NSString *musicUrlString = [KTVHTTPCache proxyURLStringWithOriginalURLString:MUSICURL(self.model.music_id)];
+    [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
 }
 
 #pragma mark -- XKMusicPlayerDelegate
@@ -369,7 +372,7 @@
         currentIndex = self.musicModels.count - 1;
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.coverView scrollChangeIsNext:YES finished:^{
+        [self.coverView scrollChangeIsNext:NO finished:^{
             [self playMusicWithIndex:currentIndex musicModels:musicModels];
         }];
     });
