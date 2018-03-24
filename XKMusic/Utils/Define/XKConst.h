@@ -17,6 +17,11 @@ typedef NS_ENUM(NSUInteger, XKPlayerPlayStyle) {
     XKPlayerPlayStyleRandom       // 随机播放
 };
 
+typedef NS_ENUM(NSUInteger, XKPlayerChangeStyle) {
+    XKPlayerChangeStyleNext,      // 下一曲
+    XKPlayerChangeStylePrev       // 上一曲
+};
+
 typedef NS_ENUM(NSUInteger, XKToolbarButtonType) {
     XKToolbarButtonTypeNext,      // 下一首播放
     XKToolbarButtonTypeAdd,       // 收藏到歌单

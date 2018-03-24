@@ -20,4 +20,9 @@
 - (void)setupMusicModels:(NSArray<XKMusicModel *> *)models;
 - (void)playMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models;
 
+- (void)playMusic;
+- (void)pauseMusic;
+- (void)playNextMusic;
+- (void)playPrevMusic;
+
 @end

@@ -142,6 +142,7 @@
         XKSTRONG
         NSArray <XKMusicModel *> *musicModels = [self fetchMusicModels];
         [[XKPlayerController sharedInstance] playMusicWithIndex:0 musicModels:musicModels];
+        [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
         /// 稍微延迟一下再去执行push动画 第一次进入的动画效果看起来要流畅不少
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
@@ -211,6 +212,7 @@
     } else {
         NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
         [[XKPlayerController sharedInstance] playMusicWithIndex:indexPath.row musicModels:musicModels];
+        [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
         });

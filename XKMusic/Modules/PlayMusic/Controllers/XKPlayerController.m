@@ -29,10 +29,14 @@
 @property (nonatomic, strong) XKMusicModel *model;
 /// 播放类型
 @property (nonatomic, assign) XKPlayerPlayStyle playStyle;
+/// 是否自动播放
+@property (nonatomic, assign) BOOL isAutoPlay;
 /// 是否正在拖拽
 @property (nonatomic, assign) BOOL isDraging;
 /// 是否在快进快退
 @property (nonatomic, assign) BOOL isSeeking;
+/// 是否转盘在滑动
+@property (nonatomic, assign) BOOL isCoverScroll;
 /// 是否更新音乐控制视图
 @property (nonatomic, assign) BOOL isUpdatingControlView;
 /// 总时间
@@ -109,9 +113,11 @@
 #pragma mark -- Section
 - (void)fetchMusicInfo {
     [self.controlView setupInitialData];
+    [self.coverView resetCover];
     self.titleView.title = self.model.music_name;
     self.titleView.subtitle = self.model.music_artist;
     self.bgImageView.URL = self.model.music_cover;
+    self.currentMusicID = self.model.music_id;
     [XKMusicPlayer sharedInstance].musicUrlString = MUSICURL(self.model.music_id);
 }
 
@@ -119,8 +125,13 @@
 - (void)xkMusicPlayer:(XKMusicPlayer *)player statusChanged:(XKMusicPlayerStatus)status {
     switch (status) {
         case XKMusicPlayerStatusBuffering:
+            self.isPlaying = NO;
+            [self.controlView showLoadingAnim];
+            [self.coverView playedWithAnimated:YES];
+            break;
         case XKMusicPlayerStatusPlaying:
             self.isPlaying = YES;
+            [self.controlView hideLoadingAnim];
             [self.coverView playedWithAnimated:YES];
             break;
             
@@ -157,7 +168,8 @@
     self.controlView.bufferValue = cacheProgress;
 }
 - (void)xkMusicPlayerDidEndPlay:(XKMusicPlayer *)player {
-    NSLog(@"播放结束");
+    self.isAutoPlay = YES;
+    [self playNextMusic];
 }
 
 #pragma mark -- XKMusicControlViewDelegate
@@ -174,16 +186,37 @@
     
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickLoop:(UIButton *)loopBtn {
-    
+    NSString *tip = nil;
+    if (self.playStyle == XKPlayerPlayStyleLoop) {
+        self.playStyle = XKPlayerPlayStyleSingleCycle;
+        self.outOrderMusicModels = nil;
+        [self setCoverModels:self.musicModels];
+        tip = @"单曲循环";
+    } else if (self.playStyle == XKPlayerPlayStyleSingleCycle) {
+        self.playStyle = XKPlayerPlayStyleRandom;
+        self.outOrderMusicModels = [self randomArray:self.musicModels];
+        [self setCoverModels:self.outOrderMusicModels];
+        tip = @"随机播放";
+    } else {
+        self.playStyle = XKPlayerPlayStyleLoop;
+        self.outOrderMusicModels = nil;
+        [self setCoverModels:self.musicModels];
+        tip = @"列表循环";
+    }
+    self.controlView.style = self.playStyle;
+    [QMUITips showWithText:tip];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickPrev:(UIButton *)prevBtn {
-    
+    if (self.isCoverScroll) return;
+    [self playPrevMusic];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickPlay:(UIButton *)playBtn {
     self.isPlaying ? [[XKMusicPlayer sharedInstance] pause] : [[XKMusicPlayer sharedInstance] play];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {
-    
+    if (self.isCoverScroll) return;
+    self.isAutoPlay = NO;
+    [self playNextMusic];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickList:(UIButton *)listBtn {
     
@@ -212,10 +245,11 @@
 #pragma mark -- XKMusicCoverViewDelegate
 
 - (void)scrollDidScroll {
-    
+    self.isCoverScroll = YES;
 }
 
 - (void)scrollDidChangeModel:(XKMusicModel *)model {
+    self.isCoverScroll = NO;
     self.model = model;
     [self fetchMusicInfo];
 }
@@ -241,17 +275,57 @@
 - (void)playMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models {
     self.playMusicModels = models;
     XKMusicModel *model = models[index];
-    if ([model.music_id isEqualToString:self.currentMusicID]) {
-        NSLog(@"歌曲就是当前正在播放的 先不要管");
-    } else {
+    if (![model.music_id isEqualToString:self.currentMusicID]) {
         [self.coverView pausedWithAnimated:YES];
         self.model = model;
-        self.currentMusicID = model.music_id;
         [self.coverView setupMusicList:models index:index];
         [self fetchMusicInfo];
     }
 }
 
+- (void)playMusic {
+    [[XKMusicPlayer sharedInstance] play];
+}
+
+- (void)pauseMusic {
+    [[XKMusicPlayer sharedInstance] pause];
+}
+
+- (void)playNextMusic {
+    switch (self.playStyle) {
+            
+        case XKPlayerPlayStyleLoop:
+            [self loopPlayWithChangeStyle:XKPlayerChangeStyleNext];
+            break;
+            
+        case XKPlayerPlayStyleSingleCycle:
+            [self singleCyclePlayWithChangeStyle:XKPlayerChangeStyleNext];
+            break;
+            
+        case XKPlayerPlayStyleRandom:
+            [self randomPlayWithChangeStyle:XKPlayerChangeStyleNext];
+            break;
+    }
+}
+
+- (void)playPrevMusic {
+    switch (self.playStyle) {
+            
+        case XKPlayerPlayStyleLoop:
+            [self loopPlayWithChangeStyle:XKPlayerChangeStylePrev];
+            break;
+            
+        case XKPlayerPlayStyleSingleCycle:
+            [self singleCyclePlayWithChangeStyle:XKPlayerChangeStylePrev];
+            break;
+            
+        case XKPlayerPlayStyleRandom:
+            [self randomPlayWithChangeStyle:XKPlayerChangeStylePrev];
+            break;
+    }
+}
+
+#pragma mark -- 私有方法
 - (void)setCoverModels:(NSArray *)models {
     __block NSUInteger currentIndex = 0;
     [models enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -273,6 +347,98 @@
         }
     }];
     return randomArr;
+}
+
+- (void)playNextMusicWithMusicModels:(NSArray<XKMusicModel *> *)musicModels index:(NSInteger)currentIndex {
+    if (currentIndex < musicModels.count - 1) {
+        currentIndex ++;
+    } else {
+        currentIndex = 0;
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.coverView scrollChangeIsNext:YES finished:^{
+            [self playMusicWithIndex:currentIndex musicModels:musicModels];
+        }];
+    });
+}
+
+- (void)playPrevMusicWithMusicModels:(NSArray<XKMusicModel *> *)musicModels index:(NSInteger)currentIndex {
+    if (currentIndex > 0) {
+        currentIndex --;
+    } else if (currentIndex == 0) {
+        currentIndex = self.musicModels.count - 1;
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.coverView scrollChangeIsNext:YES finished:^{
+            [self playMusicWithIndex:currentIndex musicModels:musicModels];
+        }];
+    });
+}
+
+- (void)loopPlayWithChangeStyle:(XKPlayerChangeStyle)style {
+    NSArray <XKMusicModel *> *musicModels = self.musicModels;
+    __block NSUInteger currentIndex = 0;
+    [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.music_id isEqualToString:self.model.music_id]) {
+            currentIndex = idx;
+            *stop = YES;
+        }
+    }];
+    style == XKPlayerChangeStyleNext ? [self playNextMusicWithMusicModels:musicModels index:currentIndex] : [self playPrevMusicWithMusicModels:musicModels index:currentIndex];
+}
+
+- (void)singleCyclePlayWithChangeStyle:(XKPlayerChangeStyle)style {
+    if (style == XKPlayerChangeStyleNext) {
+        if (self.isAutoPlay) {
+            NSArray <XKMusicModel *> *musicModels = self.musicModels;
+            __block NSUInteger currentIndex = 0;
+            [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.music_id isEqualToString:self.model.music_id]) {
+                    currentIndex = idx;
+                    *stop = YES;
+                }
+            }];
+            [self.coverView resetMusicList:musicModels index:currentIndex];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self fetchMusicInfo];
+            });
+        } else {
+            NSArray <XKMusicModel *> *musicModels = self.musicModels;
+            __block NSUInteger currentIndex = 0;
+            [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.music_id isEqualToString:self.model.music_id]) {
+                    currentIndex = idx;
+                    *stop = YES;
+                }
+            }];
+            [self playNextMusicWithMusicModels:musicModels index:currentIndex];
+        }
+    } else {
+        NSArray *musicModels = self.musicModels;
+        __block NSUInteger currentIndex = 0;
+        [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.music_id isEqualToString:self.model.music_id]) {
+                currentIndex = idx;
+                *stop = YES;
+            }
+        }];
+        [self playPrevMusicWithMusicModels:musicModels index:currentIndex];
+    }
+}
+
+- (void)randomPlayWithChangeStyle:(XKPlayerChangeStyle)style {
+    if (!self.outOrderMusicModels) {
+        self.outOrderMusicModels = [self randomArray:self.musicModels];
+    }
+    NSArray *outOrderMusicModels = self.outOrderMusicModels;
+    __block NSInteger currentIndex = 0;
+    [outOrderMusicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.music_id isEqualToString:self.model.music_id]) {
+            currentIndex = idx;
+            *stop = YES;
+        }
+    }];
+    style == XKPlayerChangeStyleNext ? [self playNextMusicWithMusicModels:outOrderMusicModels index:currentIndex] : [self playPrevMusicWithMusicModels:outOrderMusicModels index:currentIndex];
 }
 
 #pragma mark -- 懒加载
