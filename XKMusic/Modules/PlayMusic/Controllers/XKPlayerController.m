@@ -11,6 +11,7 @@
 #import "XKMusicCoverView.h"
 #import "XKMusicPlayer.h"
 #import "XKPlayerController+KTVHTTPCache.h"
+#import "XKLyricModel.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -122,6 +123,13 @@
     self.currentMusicID = self.model.music_id;
     NSString *musicUrlString = [KTVHTTPCache proxyURLStringWithOriginalURLString:MUSICURL(self.model.music_id)];
     [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
+    [self fetchLyricInfo];
+}
+
+- (void)fetchLyricInfo {
+    [[XKLyricModel signalForLyricModelsWithMusicID:self.currentMusicID] subscribeNext:^(NSArray<XKLyricModel *> *x) {
+        
+    }];
 }
 
 #pragma mark -- XKMusicPlayerDelegate
