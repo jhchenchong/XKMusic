@@ -12,6 +12,7 @@
 #import "XKMusicPlayer.h"
 #import "XKPlayerController+KTVHTTPCache.h"
 #import "XKLyricModel.h"
+#import "XKMusicLyricView.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) XKMusicCoverView *coverView;
 /// 音乐控制视图
 @property (nonatomic, strong) XKMusicControlView *controlView;
+/// 歌词视图
+@property (nonatomic, strong) XKMusicLyricView *lyricView;
 /// 音乐模型数组
 @property (nonatomic, copy) NSArray<XKMusicModel *> *musicModels;
 /// 当前播放的音乐模型数组
@@ -97,6 +100,7 @@
     [self.view addSubview:self.bgImageView];
     [self.view addSubview:self.coverView];
     [self.view addSubview:self.controlView];
+    [self.view addSubview:self.lyricView];
     
     /// 布局
     [self.bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -110,6 +114,11 @@
     [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.mas_equalTo(0);
         make.height.mas_equalTo(170);
+    }];
+    [self.lyricView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.mas_equalTo(kTopHeight);
+        make.bottom.equalTo(self.controlView.mas_top).offset(20);
     }];
 }
 
@@ -128,7 +137,7 @@
 
 - (void)fetchLyricInfo {
     [[XKLyricModel signalForLyricModelsWithMusicID:self.currentMusicID] subscribeNext:^(NSArray<XKLyricModel *> *x) {
-        
+        self.lyricView.lyricModels = x;
     }];
 }
 
@@ -452,6 +461,33 @@
     style == XKPlayerChangeStyleNext ? [self playNextMusicWithMusicModels:outOrderMusicModels index:currentIndex] : [self playPrevMusicWithMusicModels:outOrderMusicModels index:currentIndex];
 }
 
+- (void)showCoverView {
+    self.coverView.hidden = NO;
+    self.controlView.topView.hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.lyricView.alpha = 0.0;
+        self.coverView.alpha = 1.0;
+        self.controlView.topView.alpha  = 1.0;
+    }completion:^(BOOL finished) {
+        self.lyricView.hidden = YES;
+        self.coverView.hidden = NO;
+        self.controlView.topView.hidden = NO;
+    }];
+}
+
+- (void)showLyricView {
+    self.lyricView.hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.lyricView.alpha = 1.0;
+        self.coverView.alpha = 0.0;
+        self.controlView.topView.alpha  = 0.0;
+    }completion:^(BOOL finished) {
+        self.lyricView.hidden = NO;
+        self.coverView.hidden = YES;
+        self.controlView.topView.hidden = YES;
+    }];
+}
+
 #pragma mark -- 懒加载
 
 - (LKImageView *)bgImageView {
@@ -472,6 +508,13 @@
     if (!_coverView) {
         _coverView = [[XKMusicCoverView alloc] init];;
         _coverView.delegate = self;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+        XKWEAK
+        [tap.rac_gestureSignal subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
+            XKSTRONG
+            [self showLyricView];
+        }];
+        [_coverView addGestureRecognizer:tap];
     }
     return _coverView;
 }
@@ -482,6 +525,22 @@
         _controlView.delegate = self;
     }
     return _controlView;
+}
+
+- (XKMusicLyricView *)lyricView {
+    if (!_lyricView) {
+        _lyricView = [[XKMusicLyricView alloc] init];
+        _lyricView.backgroundColor = [UIColor clearColor];
+        _lyricView.hidden = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+        XKWEAK
+        [tap.rac_gestureSignal subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
+            XKSTRONG
+            [self showCoverView];
+        }];
+        [_lyricView addGestureRecognizer:tap];
+    }
+    return _lyricView;
 }
 
 @end

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XKLyricModel.h"
 
 @interface XKMusicLyricView : UIView
+
+@property (nonatomic, copy) NSArray<XKLyricModel *> *lyricModels;
+@property (nonatomic, assign) NSInteger lyricIndex;
 
 @end

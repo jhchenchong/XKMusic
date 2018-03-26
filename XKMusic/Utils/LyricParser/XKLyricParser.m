@@ -34,6 +34,11 @@
             [modelArray addObject:lyricModel];
         }
     }
+    [modelArray enumerateObjectsUsingBlock:^(XKLyricModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!obj.content || [obj.content isEqualToString:@""]) {
+            [modelArray removeObject:obj];
+        }
+    }];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"msTime" ascending:YES];
     return [modelArray sortedArrayUsingDescriptors:@[descriptor]];
 }
