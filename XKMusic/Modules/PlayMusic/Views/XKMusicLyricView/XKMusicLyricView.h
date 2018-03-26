@@ -13,5 +13,9 @@
 
 @property (nonatomic, copy) NSArray<XKLyricModel *> *lyricModels;
 @property (nonatomic, assign) NSInteger lyricIndex;
+@property (nonatomic, assign) BOOL isWillDraging;
+@property (nonatomic, assign) BOOL isScrolling;
+
+- (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime;
 
 @end

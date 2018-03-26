@@ -183,6 +183,8 @@
         self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:currentTime];
     }
     self.isUpdatingControlView = YES;
+    if (!self.isPlaying) return;
+    [self.lyricView scrollLyricWithCurrentTime:currentTime totalTime:totalTime];
 }
 - (void)xkMusicPlayer:(XKMusicPlayer *)player cacheProgress:(CGFloat)cacheProgress {
     self.controlView.bufferValue = cacheProgress;

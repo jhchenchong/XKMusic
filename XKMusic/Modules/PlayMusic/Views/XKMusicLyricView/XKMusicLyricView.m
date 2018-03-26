@@ -37,7 +37,7 @@
     if (lyricModels) {
         if (lyricModels.count == 0) {
             self.tipLabel.hidden = NO;
-            self.tipLabel.text   = @"纯音乐，无歌词";
+            self.tipLabel.text = @"纯音乐，无歌词";
             [self.tableView reloadData];
         } else {
             self.tipLabel.hidden = YES;
@@ -73,6 +73,78 @@
         }
     }
     return cell;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    self.isWillDraging = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    self.isScrolling = YES;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        self.isWillDraging = NO;
+        [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
+    }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    self.isScrolling = YES;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.isWillDraging = NO;
+    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (!self.isScrolling) return;
+    CGFloat offsetY  = scrollView.contentOffset.y;
+    NSInteger index = (offsetY + self.tableView.frame.size.height * 0.5) / 44 - 5 + 1;
+    XKLyricModel *model = nil;
+    if (index < 0) {
+        model = self.lyricModels.firstObject;
+    } else if (index > self.lyricModels.count - 1) {
+        model = nil;
+    } else {
+        model = self.lyricModels[index];
+    }
+    
+    if(model){
+        
+    } else {
+
+    }
+}
+
+- (void)endedScroll {
+    if (self.isWillDraging) return;
+    [self performSelector:@selector(endScrolling) withObject:nil afterDelay:4.0];
+}
+
+- (void)endScrolling {
+    if (self.isWillDraging) return;
+    self.isScrolling = NO;
+}
+
+- (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime {
+    if (self.lyricModels.count == 0) self.lyricIndex = 0;
+    for (NSInteger i = 0; i < self.lyricModels.count; i++) {
+        XKLyricModel *currentLyric = self.lyricModels[i];
+        XKLyricModel *nextLyric = nil;
+        if (i < self.lyricModels.count - 1) {
+            nextLyric = self.lyricModels[i + 1];
+        }
+        if ((self.lyricIndex != i && currentTime * 1000 > currentLyric.msTime) && (!nextLyric || currentTime * 1000 < nextLyric.msTime)) {
+            self.lyricIndex = i;
+            [self.tableView reloadData];
+            if (!self.isScrolling) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.lyricIndex + 5) inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+            }
+        }
+    }
 }
 
 - (QMUITableView *)tableView {
