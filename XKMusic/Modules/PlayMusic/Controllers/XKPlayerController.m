@@ -117,7 +117,7 @@
     }];
     [self.lyricView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.mas_equalTo(kTopHeight);
+        make.top.mas_equalTo(kTopHeight + 10);
         make.bottom.equalTo(self.controlView.mas_top).offset(20);
     }];
 }
@@ -132,6 +132,7 @@
     self.currentMusicID = self.model.music_id;
     NSString *musicUrlString = [KTVHTTPCache proxyURLStringWithOriginalURLString:MUSICURL(self.model.music_id)];
     [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
+    self.lyricView.lyricModels = nil;
     [self fetchLyricInfo];
 }
 
@@ -534,6 +535,9 @@
         _lyricView = [[XKMusicLyricView alloc] init];
         _lyricView.backgroundColor = [UIColor clearColor];
         _lyricView.hidden = YES;
+        _lyricView.PlaySelectedLineBlock = ^(NSTimeInterval time) {
+            [XKMusicPlayer sharedInstance].progress = time;
+        };
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
         XKWEAK
         [tap.rac_gestureSignal subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {

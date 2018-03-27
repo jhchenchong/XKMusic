@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSInteger lyricIndex;
 @property (nonatomic, assign) BOOL isWillDraging;
 @property (nonatomic, assign) BOOL isScrolling;
+@property (nonatomic, copy) void(^PlaySelectedLineBlock)(NSTimeInterval time);
 
 - (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime;
 

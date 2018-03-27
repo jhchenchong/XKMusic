@@ -12,6 +12,11 @@
 
 @property (nonatomic, strong) QMUITableView *tableView;
 @property (nonatomic, strong) QMUILabel *tipLabel;
+@property (nonatomic, strong) UIView *timeLineView;
+@property (nonatomic, strong) QMUILabel *timeLabel;
+@property (nonatomic, strong) QMUIButton *timeLineButton;
+
+@property (nonatomic, assign) NSTimeInterval time;
 
 @end
 
@@ -22,11 +27,29 @@
     if (self) {
         [self addSubview:self.tableView];
         [self addSubview:self.tipLabel];
+        [self addSubview:self.timeLineView];
+        [self addSubview:self.timeLabel];
+        [self addSubview:self.timeLineButton];
+        
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.bottom.mas_equalTo(0);
         }];
         [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.tableView);
+        }];
+        [self.timeLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).offset(50);
+            make.right.equalTo(self).offset(-50);
+            make.center.equalTo(self.tableView);
+            make.height.mas_equalTo(0.5);
+        }];
+        [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.timeLineView.mas_right).offset(25);
+            make.centerY.equalTo(self.timeLineView.mas_centerY);
+        }];
+        [self.timeLineButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(15);
+            make.centerY.equalTo(self.timeLineView.mas_centerY);
         }];
     }
     return self;
@@ -38,18 +61,19 @@
         if (lyricModels.count == 0) {
             self.tipLabel.hidden = NO;
             self.tipLabel.text = @"纯音乐，无歌词";
-            [self.tableView reloadData];
         } else {
             self.tipLabel.hidden = YES;
+            self.lyricIndex = 0;
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-            [self.tableView reloadData];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         }
     } else {
         self.tipLabel.hidden = NO;
         self.tipLabel.text = @"歌词加载中...";
-        [self.tableView reloadData];
     }
+    [UIView performWithoutAnimation:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -61,6 +85,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.textLabel.font = UIFontMake(16);
     if (indexPath.row < 5 || indexPath.row > self.lyricModels.count + 4) {
         cell.textLabel.textColor = [UIColor clearColor];
         cell.textLabel.text = @"";
@@ -80,12 +105,15 @@
     self.isWillDraging = YES;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     self.isScrolling = YES;
+    self.timeLineView.hidden = NO;
+    self.timeLabel.hidden = NO;
+    self.timeLineButton.hidden = NO;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         self.isWillDraging = NO;
-        [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
+        [self performSelector:@selector(endedScroll) withObject:nil afterDelay:2.0];
     }
 }
 
@@ -95,13 +123,13 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.isWillDraging = NO;
-    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:2.0];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (!self.isScrolling) return;
     CGFloat offsetY  = scrollView.contentOffset.y;
-    NSInteger index = (offsetY + self.tableView.frame.size.height * 0.5) / 44 - 5 + 1;
+    NSInteger index = (offsetY + self.tableView.frame.size.height * 0.5) / 44 - 5;
     XKLyricModel *model = nil;
     if (index < 0) {
         model = self.lyricModels.firstObject;
@@ -110,16 +138,21 @@
     } else {
         model = self.lyricModels[index];
     }
-    
     if(model){
-        
+        self.timeLabel.text = [NSString qmui_timeStringWithMinsAndSecsFromSecs:model.secTime];
+        self.time = model.secTime;
+        self.timeLabel.hidden = NO;
     } else {
-
+        self.timeLabel.text = @"";
+        self.timeLabel.hidden = YES;
     }
 }
 
 - (void)endedScroll {
     if (self.isWillDraging) return;
+    self.timeLineView.hidden = YES;
+    self.timeLabel.hidden = YES;
+    self.timeLineButton.hidden = YES;
     [self performSelector:@selector(endScrolling) withObject:nil afterDelay:4.0];
 }
 
@@ -138,10 +171,12 @@
         }
         if ((self.lyricIndex != i && currentTime * 1000 > currentLyric.msTime) && (!nextLyric || currentTime * 1000 < nextLyric.msTime)) {
             self.lyricIndex = i;
-            [self.tableView reloadData];
+            [UIView performWithoutAnimation:^{
+                [self.tableView reloadData];
+            }];
             if (!self.isScrolling) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.lyricIndex + 5) inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
             }
         }
     }
@@ -154,7 +189,6 @@
         _tableView.delegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = 30;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
         [XKCustomCell registerToTableView:_tableView];
@@ -169,6 +203,40 @@
         _tipLabel.hidden = YES;
     }
     return _tipLabel;
+}
+
+- (UIView *)timeLineView {
+    if (!_timeLineView) {
+        _timeLineView = [[UIView alloc] init];
+        _timeLineView.backgroundColor = [UIColor darkGrayColor];
+        _timeLineView.hidden = YES;
+    }
+    return _timeLineView;
+}
+
+- (QMUILabel *)timeLabel {
+    if (!_timeLabel) {
+        _timeLabel = [[QMUILabel alloc] init];
+        _timeLabel.textColor = [UIColor whiteColor];
+        _timeLabel.font = [UIFont systemFontOfSize:13.0];
+        _timeLabel.hidden = YES;
+    }
+    return _timeLabel;
+}
+
+- (QMUIButton *)timeLineButton {
+    if (!_timeLineButton) {
+        _timeLineButton = [[QMUIButton alloc] init];
+        [_timeLineButton setImage:UIImageMake(@"cm2_lrc_time_btn_play") forState:UIControlStateNormal];
+        [_timeLineButton setImage:UIImageMake(@"cm2_lrc_time_btn_play_prs") forState:UIControlStateHighlighted];
+        XKWEAK
+        [[_timeLineButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            XKSTRONG
+            XKBLOCK_EXEC(self.PlaySelectedLineBlock, self.time)
+        }];
+        _timeLineButton.hidden = YES;
+    }
+    return _timeLineButton;
 }
 
 @end
