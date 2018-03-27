@@ -138,7 +138,9 @@
 
 - (void)fetchLyricInfo {
     [[XKLyricModel signalForLyricModelsWithMusicID:self.currentMusicID] subscribeNext:^(NSArray<XKLyricModel *> *x) {
-        self.lyricView.lyricModels = x;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.lyricView.lyricModels = x;
+        });
     }];
 }
 
@@ -536,7 +538,7 @@
         _lyricView.backgroundColor = [UIColor clearColor];
         _lyricView.hidden = YES;
         _lyricView.PlaySelectedLineBlock = ^(NSTimeInterval time) {
-            [XKMusicPlayer sharedInstance].progress = time;
+            [XKMusicPlayer sharedInstance].progress = time + 1;
         };
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
         XKWEAK
