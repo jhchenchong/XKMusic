@@ -38,7 +38,7 @@
             make.center.equalTo(self.tableView);
         }];
         [self.timeLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(50);
+            make.left.equalTo(self).offset(30);
             make.right.equalTo(self).offset(-50);
             make.center.equalTo(self.tableView);
             make.height.mas_equalTo(0.5);
@@ -48,7 +48,7 @@
             make.centerY.equalTo(self.timeLineView.mas_centerY);
         }];
         [self.timeLineButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(15);
+            make.right.equalTo(self.timeLineView.mas_left);
             make.centerY.equalTo(self.timeLineView.mas_centerY);
         }];
     }
@@ -113,7 +113,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         self.isWillDraging = NO;
-        [self performSelector:@selector(endedScroll) withObject:nil afterDelay:2.0];
+        [self adjustTheCellPosition];
     }
 }
 
@@ -123,7 +123,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.isWillDraging = NO;
-    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:2.0];
+    [self adjustTheCellPosition];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -146,6 +146,14 @@
         self.timeLabel.text = @"";
         self.timeLabel.hidden = YES;
     }
+}
+
+- (void)adjustTheCellPosition {
+    CGFloat offsetY  = self.tableView.contentOffset.y;
+    NSInteger index = (offsetY + self.tableView.frame.size.height * 0.5) / 44 - 5;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(index + 5) inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:2.0];
 }
 
 - (void)endedScroll {
@@ -208,7 +216,7 @@
 - (UIView *)timeLineView {
     if (!_timeLineView) {
         _timeLineView = [[UIView alloc] init];
-        _timeLineView.backgroundColor = [UIColor darkGrayColor];
+        _timeLineView.backgroundColor = [UIColor grayColor];
         _timeLineView.hidden = YES;
     }
     return _timeLineView;
@@ -232,6 +240,9 @@
         XKWEAK
         [[_timeLineButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             XKSTRONG
+            self.timeLineView.hidden = YES;
+            self.timeLabel.hidden = YES;
+            self.timeLineButton.hidden = YES;
             XKBLOCK_EXEC(self.PlaySelectedLineBlock, self.time)
         }];
         _timeLineButton.hidden = YES;

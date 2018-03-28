@@ -133,6 +133,7 @@
     NSString *musicUrlString = [KTVHTTPCache proxyURLStringWithOriginalURLString:MUSICURL(self.model.music_id)];
     [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
     self.lyricView.lyricModels = nil;
+    [self.controlView setupPlayBtn];
     [self fetchLyricInfo];
 }
 
@@ -186,7 +187,6 @@
         self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:currentTime];
     }
     self.isUpdatingControlView = YES;
-    if (!self.isPlaying) return;
     [self.lyricView scrollLyricWithCurrentTime:currentTime totalTime:totalTime];
 }
 - (void)xkMusicPlayer:(XKMusicPlayer *)player cacheProgress:(CGFloat)cacheProgress {
@@ -494,7 +494,6 @@
 }
 
 #pragma mark -- 懒加载
-
 - (LKImageView *)bgImageView {
     if (!_bgImageView) {
         _bgImageView = [[LKImageView alloc] init];

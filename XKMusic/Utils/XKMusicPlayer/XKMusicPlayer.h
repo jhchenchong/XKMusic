@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, XKMusicPlayerStatus) {
     XKMusicPlayerStatusPlaying,     // 播放中
     XKMusicPlayerStatusPaused,      // 暂停
     XKMusicPlayerStatusEnded,       // 播放结束
-    XKMusicPlayerStatusError       // 播放出错
+    XKMusicPlayerStatusError        // 播放出错
 };
 
 @class XKMusicPlayer;
@@ -42,19 +42,9 @@ typedef NS_ENUM(NSUInteger, XKMusicPlayerStatus) {
 /// 播放进度
 @property (nonatomic, assign) NSInteger progress;
 
-
 + (instancetype)sharedInstance;
 
-
-/**
- 播放音乐
- */
 - (void)play;
-
-
-/**
- 暂停播放
- */
 - (void)pause;
 
 @end

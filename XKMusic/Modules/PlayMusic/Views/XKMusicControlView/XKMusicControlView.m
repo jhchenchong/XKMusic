@@ -208,11 +208,13 @@
 - (void)setupPlayBtn {
     [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play"] forState:UIControlStateNormal];
     [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play_prs"] forState:UIControlStateHighlighted];
+    self.playBtn.selected = YES;
 }
 
 - (void)setupPauseBtn {
     [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause"] forState:UIControlStateNormal];
     [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_pause_prs"] forState:UIControlStateHighlighted];
+    self.playBtn.selected = NO;
 }
 
 - (void)setupLoveBtn {
@@ -257,7 +259,6 @@
     } else {
         [self setupPauseBtn];
     }
-    
     if ([self.delegate respondsToSelector:@selector(controlView:didClickPlay:)]) {
         [self.delegate controlView:self didClickPlay:sender];
     }
