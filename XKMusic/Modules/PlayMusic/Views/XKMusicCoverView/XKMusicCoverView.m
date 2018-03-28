@@ -84,6 +84,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+
     
     CGFloat diskW = CGRectGetWidth(self.diskScrollView.frame);
     CGFloat diskH = CGRectGetHeight(self.diskScrollView.frame);
@@ -171,7 +172,7 @@
         self.needleView.transform = CGAffineTransformIdentity;
     }
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animation)];
-    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 }
 
 - (void)pausedWithAnimated:(BOOL)animated {

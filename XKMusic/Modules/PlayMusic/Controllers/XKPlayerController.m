@@ -14,6 +14,7 @@
 #import "XKLyricModel.h"
 #import "XKMusicLyricView.h"
 #import "XKLikeMusicApi.h"
+#import "XKMusicListView.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -25,6 +26,8 @@
 @property (nonatomic, strong) XKMusicControlView *controlView;
 /// 歌词视图
 @property (nonatomic, strong) XKMusicLyricView *lyricView;
+/// 音乐列表视图
+@property (nonatomic, strong) XKMusicListView *musicListView;
 /// 音乐模型数组
 @property (nonatomic, copy) NSArray<XKMusicModel *> *musicModels;
 /// 当前播放的音乐模型数组
@@ -267,7 +270,14 @@
     [self playNextMusic];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickList:(UIButton *)listBtn {
-    
+    QMUIModalPresentationViewController *modalPresentationViewController = [[QMUIModalPresentationViewController alloc] init];
+    modalPresentationViewController.contentView = self.musicListView;
+    self.musicListView.musicModels = self.musicModels;
+    modalPresentationViewController.animationStyle = QMUIModalPresentationAnimationStyleSlide;
+    modalPresentationViewController.layoutBlock = ^(CGRect containerBounds, CGFloat keyboardHeight, CGRect contentViewDefaultFrame) {
+        self.musicListView.frame = CGRectMake(0, SCREEN_HEIGHT - 440, SCREEN_WIDTH, 440);
+    };
+    [modalPresentationViewController showWithAnimated:YES completion:NULL];
 }
 
 - (void)controlView:(XKMusicControlView *)controlView didSliderTouchBegan:(float)value {
@@ -593,6 +603,14 @@
         [_lyricView addGestureRecognizer:tap];
     }
     return _lyricView;
+}
+
+- (XKMusicListView *)musicListView {
+    if (!_musicListView) {
+        _musicListView = [[XKMusicListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 440)];
+        _musicListView.backgroundColor = [UIColor whiteColor];
+    }
+    return _musicListView;
 }
 
 @end
