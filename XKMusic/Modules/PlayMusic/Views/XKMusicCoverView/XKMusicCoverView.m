@@ -55,6 +55,11 @@
             make.top.equalTo(self).offset(66 - 2.5);
             make.width.height.mas_equalTo(SCREEN_WIDTH - 75);
         }];
+        [self.needleView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.mas_centerX);
+            make.top.mas_equalTo(-78);
+        }];
+        
         
         self.diskBgView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
         self.diskBgView.layer.borderWidth = 10;
@@ -73,17 +78,12 @@
         self.diskScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, 0);
         
         [self setScrollViewContentOffsetCenter];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStateChanged:) name:@"NetworkStateChangedNotification" object:nil];
     }
-    return self;
-}
+    return self;}
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.needleView.xk_centerX = SCREEN_WIDTH * 0.5;
-    self.needleView.mj_y = -25;
-    [self pausedWithAnimated:NO];
     
     CGFloat diskW = CGRectGetWidth(self.diskScrollView.frame);
     CGFloat diskH = CGRectGetHeight(self.diskScrollView.frame);
@@ -336,7 +336,7 @@
 
 - (UIImageView *)needleView {
     if (!_needleView) {
-        _needleView = [UIImageView new];
+        _needleView = [[UIImageView alloc] init];
         _needleView.image = [UIImage imageNamed:@"cm2_play_needle_play"];
         [_needleView sizeToFit];
     }

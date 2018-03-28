@@ -38,5 +38,6 @@
 #import "XKSliderView.h"
 #import "XKRandomHelper.h"
 #import <Shimmer/FBShimmeringView.h>
+#import "XKMusicHelper.h"
 
 #endif

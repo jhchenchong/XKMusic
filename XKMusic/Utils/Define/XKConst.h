@@ -32,4 +32,8 @@ typedef NS_ENUM(NSUInteger, XKToolbarButtonType) {
 static NSString *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";
 static NSString *const kColumnOrder = @"ColumnOrder";
 
+static NSString *const kLikeMusicIDKey = @"kLikeMusicIDKey";
+static NSString *const kCurrentMusicID = @"kCurrentMusicID";
+static NSString *const kXKPlayStyle = @"kXKPlayStyleKey";
+
 #endif

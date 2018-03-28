@@ -10,4 +10,12 @@
 
 @implementation XKMusicModel
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    return [self yy_modelInitWithCoder:aDecoder];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [self yy_modelEncodeWithCoder:aCoder];
+}
+
 @end

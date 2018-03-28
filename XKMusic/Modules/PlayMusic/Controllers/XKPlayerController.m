@@ -13,6 +13,7 @@
 #import "XKPlayerController+KTVHTTPCache.h"
 #import "XKLyricModel.h"
 #import "XKMusicLyricView.h"
+#import "XKLikeMusicApi.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -71,6 +72,9 @@
     [super viewDidLoad];
     [self setupHTTPCache];
     [XKMusicPlayer sharedInstance].delegate = self;
+    /// 获取播放模式
+    self.playStyle = [[NSUserDefaults standardUserDefaults] integerForKey:kXKPlayStyle];
+    self.controlView.style = self.playStyle;
 }
 
 #pragma mark -- 配置导航栏
@@ -124,16 +128,20 @@
 
 #pragma mark -- Section
 - (void)fetchMusicInfo {
+    NSArray *likeMusicIDs = (NSArray *)([[NSUserDefaults standardUserDefaults] objectForKey:kLikeMusicIDKey]);
+    self.model.isLike = [likeMusicIDs containsObject:self.model.music_id];
     [self.controlView setupInitialData];
     [self.coverView resetCover];
     self.titleView.title = self.model.music_name;
     self.titleView.subtitle = self.model.music_artist;
     self.bgImageView.URL = self.model.music_cover;
     self.currentMusicID = self.model.music_id;
+    self.controlView.is_love = self.model.isLike;
     NSString *musicUrlString = [KTVHTTPCache proxyURLStringWithOriginalURLString:MUSICURL(self.model.music_id)];
     [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
     self.lyricView.lyricModels = nil;
     [self.controlView setupPlayBtn];
+    [[NSUserDefaults standardUserDefaults] setValue:self.model.music_id forKey:kCurrentMusicID];
     [self fetchLyricInfo];
 }
 
@@ -199,7 +207,21 @@
 
 #pragma mark -- XKMusicControlViewDelegate
 - (void)controlView:(XKMusicControlView *)controlView didClickLove:(UIButton *)loveBtn {
-    
+    self.model.isLike = !self.model.isLike;
+    self.controlView.is_love = self.model.isLike;
+    [[[XKLikeMusicApi alloc] initWithMusicID:self.model.music_id isLike:self.model.isLike] startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request) {
+        if ([request.responseObject[@"code"] integerValue] == 200) {
+            if (self.model.isLike) {
+                [QMUITips showWithText:@"已添加到我喜欢的音乐"];
+                [XKMusicHelper saveLikeMusicID:self.model.music_id];
+            } else {
+                [QMUITips showWithText:@"已取消喜欢"];
+                [XKMusicHelper removeLikeMusicID:self.model.music_id];
+            }
+        }
+    } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
+        
+    }];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickDownload:(UIButton *)downloadBtn {
     
@@ -230,13 +252,14 @@
     }
     self.controlView.style = self.playStyle;
     [QMUITips showWithText:tip];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.playStyle forKey:kXKPlayStyle];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickPrev:(UIButton *)prevBtn {
     if (self.isCoverScroll) return;
     [self playPrevMusic];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickPlay:(UIButton *)playBtn {
-    self.isPlaying ? [[XKMusicPlayer sharedInstance] pause] : [[XKMusicPlayer sharedInstance] play];
+    self.isPlaying ? [self pauseMusic] : [self playMusic];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {
     if (self.isCoverScroll) return;
@@ -295,6 +318,7 @@
         self.outOrderMusicModels = nil;
         [self setCoverModels:models];
     }
+    [XKMusicHelper saveCurrentMusicModels:models];
 }
 
 - (void)playMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models {
@@ -308,8 +332,29 @@
     }
 }
 
+- (void)loadMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models {
+    self.playMusicModels = models;
+    XKMusicModel *model = models[index];
+    if (![model.music_id isEqualToString:self.currentMusicID]) {
+        self.model = model;
+        NSArray *likeMusicIDs = (NSArray *)([[NSUserDefaults standardUserDefaults] objectForKey:kLikeMusicIDKey]);
+        self.model.isLike = [likeMusicIDs containsObject:self.model.music_id];
+        [self.coverView setupMusicList:models index:index];
+        self.titleView.title = self.model.music_name;
+        self.titleView.subtitle = self.model.music_artist;
+        self.bgImageView.URL = self.model.music_cover;
+        self.controlView.is_love = self.model.isLike;
+        /// 这行代码千万不要动！！！
+        [self.coverView pausedWithAnimated:NO];
+    }
+}
+
 - (void)playMusic {
-    [[XKMusicPlayer sharedInstance] play];
+    if ([XKMusicPlayer sharedInstance].musicUrlString) {
+        [[XKMusicPlayer sharedInstance] play];
+    } else {
+        [self fetchMusicInfo];
+    }
 }
 
 - (void)pauseMusic {

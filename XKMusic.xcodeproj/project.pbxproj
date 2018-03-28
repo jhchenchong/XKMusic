@@ -101,6 +101,8 @@
 		B7B888F8204CC3CF00A7A231 /* XKCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888F1204CC3CF00A7A231 /* XKCustomCollectionViewCell.m */; };
 		B7B88900204CC4B400A7A231 /* QMUIAlertAction+XK.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888FC204CC4B400A7A231 /* QMUIAlertAction+XK.m */; };
 		B7B88901204CC4B400A7A231 /* QMUIAlertController+XK.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B888FE204CC4B400A7A231 /* QMUIAlertController+XK.m */; };
+		B7C00107206B2FD4009D92B6 /* XKLikeMusicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C00106206B2FD4009D92B6 /* XKLikeMusicApi.m */; };
+		B7C0010A206B3711009D92B6 /* XKMusicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C00109206B3711009D92B6 /* XKMusicHelper.m */; };
 		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
 		B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */; };
 		B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D02058F5C600BAF211 /* XKPrivatecontentModel.m */; };
@@ -325,6 +327,10 @@
 		B7B888FC204CC4B400A7A231 /* QMUIAlertAction+XK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMUIAlertAction+XK.m"; sourceTree = "<group>"; };
 		B7B888FE204CC4B400A7A231 /* QMUIAlertController+XK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMUIAlertController+XK.m"; sourceTree = "<group>"; };
 		B7B888FF204CC4B400A7A231 /* QMUIAlertController+XK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QMUIAlertController+XK.h"; sourceTree = "<group>"; };
+		B7C00105206B2FD4009D92B6 /* XKLikeMusicApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKLikeMusicApi.h; sourceTree = "<group>"; };
+		B7C00106206B2FD4009D92B6 /* XKLikeMusicApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKLikeMusicApi.m; sourceTree = "<group>"; };
+		B7C00108206B3711009D92B6 /* XKMusicHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKMusicHelper.h; sourceTree = "<group>"; };
+		B7C00109206B3711009D92B6 /* XKMusicHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicHelper.m; sourceTree = "<group>"; };
 		B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegateHelper.h; sourceTree = "<group>"; };
 		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
 		B7D906CC2058F53B00BAF211 /* XKPrivatecontentApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentApi.h; sourceTree = "<group>"; };
@@ -443,6 +449,7 @@
 		B724AF5320668FCB00D79368 /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				B7C00104206B2FAC009D92B6 /* LikeMusic */,
 				B724AF542066915800D79368 /* Lyric */,
 			);
 			path = Networks;
@@ -730,6 +737,8 @@
 				B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */,
 				B7232E1020629C0900DA1D41 /* XKRandomHelper.h */,
 				B7232E1120629C0900DA1D41 /* XKRandomHelper.m */,
+				B7C00108206B3711009D92B6 /* XKMusicHelper.h */,
+				B7C00109206B3711009D92B6 /* XKMusicHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1077,6 +1086,15 @@
 				B7B888FE204CC4B400A7A231 /* QMUIAlertController+XK.m */,
 			);
 			path = QMUIAlertController;
+			sourceTree = "<group>";
+		};
+		B7C00104206B2FAC009D92B6 /* LikeMusic */ = {
+			isa = PBXGroup;
+			children = (
+				B7C00105206B2FD4009D92B6 /* XKLikeMusicApi.h */,
+				B7C00106206B2FD4009D92B6 /* XKLikeMusicApi.m */,
+			);
+			path = LikeMusic;
 			sourceTree = "<group>";
 		};
 		B7D906CB2058F50600BAF211 /* Privatecontent */ = {
@@ -1582,6 +1600,7 @@
 				B74DC8C420526B250092025A /* XKCustomSearchBar.m in Sources */,
 				B7FF36BF204CDCF5005CD83E /* QMUITabBarViewController+XKCategory.m in Sources */,
 				B74DC8B820522A9B0092025A /* LKImageSystemDecoder.m in Sources */,
+				B7C00107206B2FD4009D92B6 /* XKLikeMusicApi.m in Sources */,
 				B737009D2061F22500BC844C /* NSString+LabelWidthAndHeight.m in Sources */,
 				B74D2B2F204D238900AD1C01 /* WMMenuView.m in Sources */,
 				B7FF36D8204CE21C005CD83E /* XKFriendsController.m in Sources */,
@@ -1622,6 +1641,7 @@
 				B74DC8A920522A9B0092025A /* LKImageLoaderManager.m in Sources */,
 				B7768A71204A9400006E8304 /* AppDelegate.m in Sources */,
 				B7232E1220629C0900DA1D41 /* XKRandomHelper.m in Sources */,
+				B7C0010A206B3711009D92B6 /* XKMusicHelper.m in Sources */,
 				B7768A90204AA291006E8304 /* QMUIConfigurationTemplate.m in Sources */,
 				B7964F5E2056850500EFACE4 /* NSString+Count.m in Sources */,
 				B7FF36DB204CE272005CD83E /* XKAccountController.m in Sources */,

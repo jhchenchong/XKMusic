@@ -18,8 +18,8 @@
     return YTKRequestMethodGET;
 }
 
-- (NSInteger)cacheTimeInSeconds {
-    return 3600;
-}
+//- (NSInteger)cacheTimeInSeconds {
+//    return 3600;
+//}
 
 @end

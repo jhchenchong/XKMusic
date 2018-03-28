@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XKMusicModel : NSObject
+@interface XKMusicModel : NSObject<NSCoding>
 
 @property (nonatomic, copy) NSString *music_id;
 @property (nonatomic, copy) NSString *music_name;
