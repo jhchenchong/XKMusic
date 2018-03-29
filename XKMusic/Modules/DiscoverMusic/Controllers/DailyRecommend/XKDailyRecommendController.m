@@ -141,6 +141,10 @@
     headerView.playAllBlock = ^{
         XKSTRONG
         NSArray <XKMusicModel *> *musicModels = [self fetchMusicModels];
+        if (musicModels.count == 0) {
+            [QMUITips showError:@"没有数据别乱点哦🙂🙂🙂" inView:self.view.window hideAfterDelay:1];
+            return;
+        }
         [[XKPlayerController sharedInstance] playMusicWithIndex:0 musicModels:musicModels];
         [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
         /// 稍微延迟一下再去执行push动画 第一次进入的动画效果看起来要流畅不少

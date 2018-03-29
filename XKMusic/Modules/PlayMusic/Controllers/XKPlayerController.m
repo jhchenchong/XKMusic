@@ -337,6 +337,7 @@
 
 - (void)loadMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models {
     self.playMusicModels = models;
+    self.musicModels = models;
     XKMusicModel *model = models[index];
     if (![model.music_id isEqualToString:self.currentMusicID]) {
         self.model = model;
