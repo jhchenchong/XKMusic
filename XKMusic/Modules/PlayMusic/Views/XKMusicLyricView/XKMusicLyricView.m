@@ -40,7 +40,7 @@
         [self.timeLineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(30);
             make.right.equalTo(self).offset(-50);
-            make.center.equalTo(self.tableView);
+            make.centerY.equalTo(self.tableView);
             make.height.mas_equalTo(0.5);
         }];
         [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

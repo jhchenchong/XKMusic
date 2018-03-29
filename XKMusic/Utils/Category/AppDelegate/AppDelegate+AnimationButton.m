@@ -38,7 +38,7 @@ static char *AnimationButtonKey = "AnimationButtonKey";
     }];
     
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:kAnimationButtnStateChanged object:nil] subscribeNext:^(NSNotification * _Nullable x) {
-        if (self.animationButton.selected) {
+        if (XKPlayerVC.isPlaying) {
             NSMutableArray *images = @[].mutableCopy;
             
             for (NSInteger i = 0; i < 6; i++) {

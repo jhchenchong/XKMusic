@@ -10,6 +10,10 @@
 
 @implementation XKMusicModel
 
+- (BOOL)isPlaying {
+    return [self.music_id isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kCurrentMusicID]];
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     return [self yy_modelInitWithCoder:aDecoder];
 }
