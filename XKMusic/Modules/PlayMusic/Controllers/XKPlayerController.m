@@ -102,6 +102,54 @@
 - (void)setNavigationItemsIsInEditMode:(BOOL)isInEditMode animated:(BOOL)animated {
     [super setNavigationItemsIsInEditMode:isInEditMode animated:animated];
     self.titleView.style = QMUINavigationTitleViewStyleSubTitleVertical;
+    [self configRightBarButtonItem];
+}
+
+- (void)configRightBarButtonItem {
+    self.navigationItem.rightBarButtonItem = [QMUINavigationButton barButtonItemWithImage:UIImageMake(@"cm2_topbar_icn_share") tintColor:UIColorWhite position:QMUINavigationButtonPositionRight target:self action:@selector(handleRightButtonEvent)];
+}
+
+- (void)handleRightButtonEvent {
+    QMUIMoreOperationController *moreOperationController = [[QMUIMoreOperationController alloc] init];
+    moreOperationController.contentBackgroundColor = moreOperationController.cancelButtonBackgroundColor = UIColorGray;
+    moreOperationController.itemTitleColor = moreOperationController.cancelButtonTitleColor = [XKColorHelper textMainColor];
+    moreOperationController.items = @[
+                                      @[
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_share") title:@"云音乐动态" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_mail") title:@"私信" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }]
+                                          ],
+                                      @[
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_pyq") title:@"微信朋友圈" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_weixin") title:@"微信好友" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_qzone") title:@"QQ空间" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_qq") title:@"QQ好友" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_sina") title:@"微博" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_yxq") title:@"易信朋友圈" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_yixin") title:@"易信好友" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }],
+                                          [QMUIMoreOperationItemView itemViewWithImage:UIImageMake(@"cm2_blogo_copylink") title:@"复制链接" handler:^(QMUIMoreOperationController *moreOperationController, QMUIMoreOperationItemView *itemView) {
+                                              [moreOperationController hideToBottom];
+                                          }]
+                                          ],
+                                      ];
+    [moreOperationController showFromBottom];
 }
 
 - (void)initSubviews {
