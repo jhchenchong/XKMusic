@@ -26,6 +26,18 @@
 + (NSArray<XKMusicModel *> *)musicModels;
 
 /**
+ 根据音乐ID移除音乐模型
+
+ @param musicID 音乐ID
+ */
++ (void)removeMusicModelWithMusicID:(NSString *)musicID;
+
+/**
+ 移除当前所有的音乐模型
+ */
++ (void)removeAllMusicModel;
+
+/**
  返回指定id的音乐在当前列表中的索引
 
  @param musicID 音乐ID

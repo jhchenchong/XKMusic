@@ -155,6 +155,9 @@
 }
 
 - (void)setMusicModels:(NSArray<XKMusicModel *> *)musicModels {
+    if (musicModels.count == 0) {
+        return;
+    }
     _musicModels = musicModels;
     [self.tableView reloadData];
     if (self.shouldScroll) {

@@ -16,6 +16,7 @@
 @property (nonatomic, assign) BOOL isPlaying;
 
 + (instancetype)sharedInstance;
++ (void)destroyInstance;
 
 - (void)setupMusicModels:(NSArray<XKMusicModel *> *)models;
 - (void)playMusicWithIndex:(NSInteger)index musicModels:(NSArray<XKMusicModel *> *)models;

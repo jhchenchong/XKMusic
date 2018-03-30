@@ -21,6 +21,21 @@
     return musicModel;
 }
 
++ (void)removeMusicModelWithMusicID:(NSString *)musicID {
+    NSMutableArray<XKMusicModel *> *musicModels = [self musicModels].mutableCopy;
+    [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.music_id isEqualToString:musicID]) {
+            [musicModels removeObject:obj];
+            *stop = YES;
+        }
+    }];
+    [self saveCurrentMusicModels:musicModels.copy];
+}
+
++ (void)removeAllMusicModel {
+    [NSKeyedArchiver archiveRootObject:@[] toFile:kDataPath];
+}
+
 + (NSInteger)indexFromMusicID:(NSString *)musicID {
     __block NSInteger index = 0;
     [[self musicModels] enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {

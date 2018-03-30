@@ -34,7 +34,7 @@ static char *AnimationButtonKey = "AnimationButtonKey";
         make.width.height.mas_equalTo(44);
     }];
     [[self.animationButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if (![XKMusicHelper musicModels]) {
+        if (![XKMusicHelper musicModels] || [XKMusicHelper musicModels].count == 0) {
             [QMUITips showError:@"播放列表是空的🙂🙂🙂" inView:self.window hideAfterDelay:1];
             return;
         }

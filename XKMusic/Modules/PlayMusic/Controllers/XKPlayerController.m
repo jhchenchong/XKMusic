@@ -50,6 +50,8 @@
 @property (nonatomic, assign) BOOL isUpdatingControlView;
 /// 列表视图是否现在显示
 @property (nonatomic, assign) BOOL isExist;
+/// 是否正在执行删除操作
+@property (nonatomic, assign) BOOL isDelete;
 /// 总时间
 @property (nonatomic, assign) NSTimeInterval duration;
 /// 当前时间
@@ -57,15 +59,25 @@
 
 @end
 
+static XKPlayerController *_playerVC = nil;
+static dispatch_once_t onceToken;
+
 @implementation XKPlayerController
 
 + (instancetype)sharedInstance {
-    static XKPlayerController *playerVC = nil;
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        playerVC = [[XKPlayerController alloc] init];
+        _playerVC = [[XKPlayerController alloc] init];
     });
-    return playerVC;
+    return _playerVC;
+}
+
++ (void)destroyInstance {
+    _playerVC = nil;
+    onceToken = 0l;
+}
+
+- (void)dealloc {
+    NSLog(@"单例销毁了。。。。");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -219,6 +231,9 @@
             self.isPlaying = YES;
             [self.controlView hideLoadingAnim];
             [self.coverView playedWithAnimated:YES];
+            if (self.isExist == YES) {
+                self.musicListView.musicModels = self.musicModels;
+            }
             break;
             
         case XKMusicPlayerStatusPaused:
@@ -235,9 +250,6 @@
             self.isPlaying = NO;
             [self.coverView pausedWithAnimated:YES];
             break;
-    }
-    if (self.isExist == YES) {
-        self.musicListView.musicModels = self.musicModels;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kAnimationButtnStateChanged object:nil];
 }
@@ -317,12 +329,50 @@
         self.isExist = NO;
         [modalPresentationViewController hideWithAnimated:YES completion:NULL];
     };
+    _musicListView.deleteButtonBlock = ^{
+        XKSTRONG
+        [XKMusicHelper removeAllMusicModel];
+        [[XKMusicPlayer sharedInstance] pause];
+        [modalPresentationViewController hideWithAnimated:YES completion:^(BOOL finished) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [XKPlayerController destroyInstance];
+        }];
+    };
+    _musicListView.listDeleteButtonBlock = ^(XKMusicModel *model) {
+        XKSTRONG
+        self.isDelete = YES;
+        if ([model.music_id isEqualToString:self.currentMusicID]) {
+            if (self.musicModels.count > 1) {
+                [self playNextMusic];
+            } else {
+                [[XKMusicPlayer sharedInstance] pause];
+                [modalPresentationViewController hideWithAnimated:YES completion:^(BOOL finished) {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    [XKPlayerController destroyInstance];
+                }];
+            }
+            /// 这里要注意 删除的时候 要先做切音乐的操作 然后再刷数据源 如果先更了数据源 执行下一曲操作的时候 索引跟之前的对不上 会出现音乐乱切的问题
+            [XKMusicHelper removeMusicModelWithMusicID:model.music_id];
+            self.musicModels = [XKMusicHelper musicModels];
+        } else {
+            [XKMusicHelper removeMusicModelWithMusicID:model.music_id];
+            self.musicModels = [XKMusicHelper musicModels];
+            self.musicListView.musicModels = self.musicModels;
+        }
+        /// 如果随机模式 这里先用musicModels生成随机的音乐模型数组
+        if (self.playStyle == XKPlayerPlayStyleRandom) {
+            self.outOrderMusicModels = [self randomArray:self.musicModels];
+        }
+        self.musicListView.playStyle = self.playStyle;
+        self.isDelete = NO;
+    };
     modalPresentationViewController.animationStyle = QMUIModalPresentationAnimationStyleSlide;
     modalPresentationViewController.layoutBlock = ^(CGRect containerBounds, CGFloat keyboardHeight, CGRect contentViewDefaultFrame) {
         XKSTRONG
         self.musicListView.frame = CGRectMake(0, SCREEN_HEIGHT - 440, SCREEN_WIDTH, 440);
     };
     modalPresentationViewController.didHideByDimmingViewTappedBlock = ^{
+        XKSTRONG
         self.isExist = NO;
     };
     [modalPresentationViewController showWithAnimated:YES completion:NULL];
@@ -437,7 +487,11 @@
             break;
     }
     if (self.isExist == YES) {
-        self.musicListView.shouldScroll = YES;
+        if (self.playStyle == XKPlayerPlayStyleRandom) {
+            self.musicListView.shouldScroll = YES;
+        } else {
+           self.musicListView.shouldScroll = !self.isDelete;
+        }
     }
 }
 
@@ -694,14 +748,6 @@
         _musicListView.allButtonBlock = ^{
             XKSTRONG
             [QMUITips showWithText:@"收藏全部" inView:self.musicListView hideAfterDelay:1];
-        };
-        _musicListView.deleteButtonBlock = ^{
-            XKSTRONG
-            [QMUITips showWithText:@"删除全部" inView:self.musicListView hideAfterDelay:1];
-        };
-        _musicListView.listDeleteButtonBlock = ^(XKMusicModel *model) {
-            XKSTRONG
-            [QMUITips showWithText:@"删除单条" inView:self.musicListView hideAfterDelay:1];
         };
         _musicListView.linkButtonBlock = ^{
             XKSTRONG

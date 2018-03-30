@@ -24,9 +24,10 @@
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
     [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
-    if ([XKMusicHelper musicModels]) {
+    if ([XKMusicHelper musicModels] && [XKMusicHelper musicModels].count != 0) {
         [XKPlayerVC loadMusicWithIndex:0 musicModels:[XKMusicHelper musicModels]];
     }
+    [XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"];
     return YES;
 }
 
