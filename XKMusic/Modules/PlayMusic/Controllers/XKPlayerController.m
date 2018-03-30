@@ -131,7 +131,6 @@
 
 #pragma mark -- Section
 - (void)fetchMusicInfo {
-    /// 先将当前播放的ID存入本地
     [[NSUserDefaults standardUserDefaults] setValue:self.model.music_id forKey:kCurrentMusicID];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSArray *likeMusicIDs = (NSArray *)([[NSUserDefaults standardUserDefaults] objectForKey:kLikeMusicIDKey]);
@@ -148,10 +147,6 @@
     self.lyricView.lyricModels = nil;
     [self.controlView setupPlayBtn];
     [self fetchLyricInfo];
-    /// 很奇怪 在同步数据的时候  明明已经调用了 synchronize 了  但是  如果立即去拿数据的话  还是之前的 这里先延迟一下在赋值
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.musicListView.musicModels = self.musicModels;
-    });
 }
 
 - (void)fetchLyricInfo {
@@ -191,6 +186,7 @@
             [self.coverView pausedWithAnimated:YES];
             break;
     }
+    self.musicListView.musicModels = self.musicModels;
     [[NSNotificationCenter defaultCenter] postNotificationName:kAnimationButtnStateChanged object:nil];
 }
 - (void)xkMusicPlayer:(XKMusicPlayer *)player totalTime:(CGFloat)totalTime currentTime:(NSInteger)currentTime progress:(CGFloat)progress {
