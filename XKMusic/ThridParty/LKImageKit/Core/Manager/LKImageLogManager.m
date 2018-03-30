@@ -54,7 +54,7 @@
     {
         if (level >= LKImageLogLevelDebug)
         {
-            NSLog(@"%@:%@", [LKImageLogManager logLevelStr:level], str);
+//            NSLog(@"%@:%@", [LKImageLogManager logLevelStr:level], str);
         }
         return;
     }

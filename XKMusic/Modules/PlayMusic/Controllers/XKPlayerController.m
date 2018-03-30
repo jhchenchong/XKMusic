@@ -48,6 +48,8 @@
 @property (nonatomic, assign) BOOL isCoverScroll;
 /// 是否更新音乐控制视图
 @property (nonatomic, assign) BOOL isUpdatingControlView;
+/// 列表视图是否现在显示
+@property (nonatomic, assign) BOOL isExist;
 /// 总时间
 @property (nonatomic, assign) NSTimeInterval duration;
 /// 当前时间
@@ -186,7 +188,9 @@
             [self.coverView pausedWithAnimated:YES];
             break;
     }
-    self.musicListView.musicModels = self.musicModels;
+    if (self.isExist == YES) {
+        self.musicListView.musicModels = self.musicModels;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:kAnimationButtnStateChanged object:nil];
 }
 - (void)xkMusicPlayer:(XKMusicPlayer *)player totalTime:(CGFloat)totalTime currentTime:(NSInteger)currentTime progress:(CGFloat)progress {
@@ -230,13 +234,13 @@
     }];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickDownload:(UIButton *)downloadBtn {
-    
+    [QMUITips showWithText:@"下载"];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickComment:(UIButton *)commentBtn {
-    
+    [QMUITips showWithText:@"评论"];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickMore:(UIButton *)moreBtn {
-    
+    [QMUITips showWithText:@"更多"];
 }
 - (void)controlView:(XKMusicControlView *)controlView didClickLoop:(UIButton *)loopBtn {
     [self handleLoopButtonEvent];
@@ -259,14 +263,22 @@
     self.musicListView.musicModels = self.musicModels;
     self.musicListView.playStyle = self.playStyle;
     self.musicListView.shouldScroll = YES;
+    XKWEAK
     self.musicListView.closeButtonBlock = ^{
+        XKSTRONG
+        self.isExist = NO;
         [modalPresentationViewController hideWithAnimated:YES completion:NULL];
     };
     modalPresentationViewController.animationStyle = QMUIModalPresentationAnimationStyleSlide;
     modalPresentationViewController.layoutBlock = ^(CGRect containerBounds, CGFloat keyboardHeight, CGRect contentViewDefaultFrame) {
+        XKSTRONG
         self.musicListView.frame = CGRectMake(0, SCREEN_HEIGHT - 440, SCREEN_WIDTH, 440);
     };
+    modalPresentationViewController.didHideByDimmingViewTappedBlock = ^{
+        self.isExist = NO;
+    };
     [modalPresentationViewController showWithAnimated:YES completion:NULL];
+    self.isExist = YES;
 }
 
 - (void)controlView:(XKMusicControlView *)controlView didSliderTouchBegan:(float)value {
@@ -376,7 +388,9 @@
             [self randomPlayWithChangeStyle:XKPlayerChangeStyleNext];
             break;
     }
-    self.musicListView.shouldScroll = YES;
+    if (self.isExist == YES) {
+        self.musicListView.shouldScroll = YES;
+    }
 }
 
 - (void)playPrevMusic {
