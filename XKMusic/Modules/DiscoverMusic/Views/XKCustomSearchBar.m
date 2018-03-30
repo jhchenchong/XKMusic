@@ -273,8 +273,8 @@
     }
     if (!_isHiddenCancelButton) {
         [UIView animateWithDuration:0.25 animations:^{
-            _cancelButton.hidden = NO;
-            _textField.frame = CGRectMake(7, 7, _cancelButton.frame.origin.x - 7, 30);
+            self.cancelButton.hidden = NO;
+            self.textField.frame = CGRectMake(7, 7, self.cancelButton.frame.origin.x - 7, 30);
         }];
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(searchBarTextDidBeginEditing:)]) {
@@ -295,8 +295,8 @@
     }
     if (!_isHiddenCancelButton) {
         [UIView animateWithDuration:0.25 animations:^{
-            _cancelButton.hidden = YES;
-            _textField.frame = CGRectMake(7, 7, self.frame.size.width - 7*2, 30);
+            self.cancelButton.hidden = YES;
+            self.textField.frame = CGRectMake(7, 7, self.frame.size.width - 7*2, 30);
         }];
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(searchBarTextDidEndEditing:)]) {

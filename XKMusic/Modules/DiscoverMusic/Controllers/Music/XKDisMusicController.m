@@ -166,8 +166,8 @@
         button.titleLabel.font = UIFontMake(12);
         [_tableFootView addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(_tableFootView.mas_centerX);
-            make.centerY.mas_equalTo(_tableFootView.mas_centerY);
+            make.centerX.mas_equalTo(self.tableFootView.mas_centerX);
+            make.centerY.mas_equalTo(self.tableFootView.mas_centerY);
             make.height.mas_equalTo(30);
             make.width.mas_equalTo(110);
         }];

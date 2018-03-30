@@ -274,7 +274,7 @@
         shimmmeringView.shimmering = YES;
         
         [calendarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(_headerView.mas_centerY);
+            make.centerY.mas_equalTo(self.headerView.mas_centerY);
             make.left.mas_equalTo(15);
         }];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {

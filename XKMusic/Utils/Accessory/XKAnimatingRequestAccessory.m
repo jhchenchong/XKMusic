@@ -38,7 +38,7 @@
 - (void)requestWillStart:(id)request {
     if (_animatingView) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [QMUITips showLoading:_animatingText inView:_animatingView];
+            [QMUITips showLoading:self.animatingText inView:self.animatingView];
         });
     }
 }
@@ -46,7 +46,7 @@
 - (void)requestWillStop:(id)request {
     if (_animatingView) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [QMUITips hideAllToastInView:_animatingView animated:YES];
+            [QMUITips hideAllToastInView:self.animatingView animated:YES];
         });
     }
 }

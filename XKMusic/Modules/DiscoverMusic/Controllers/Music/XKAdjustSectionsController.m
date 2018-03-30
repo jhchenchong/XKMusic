@@ -128,8 +128,8 @@
         linkButton.titleLabel.font = UIFontMake(12);
         [_footView addSubview:linkButton];
         [linkButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(_footView.mas_centerX);
-            make.bottom.mas_equalTo(_footView.mas_bottom);
+            make.centerX.mas_equalTo(self.footView.mas_centerX);
+            make.bottom.mas_equalTo(self.footView.mas_bottom);
         }];
         XKWEAK
         [[linkButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
