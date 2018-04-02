@@ -11,6 +11,7 @@
 @interface XKToolbar : UIView
 
 @property (nonatomic, copy) void(^ClickButtonBlock)(XKToolbarButtonType type);
+
 - (void)toolbarButtonEnabled:(BOOL)enabled;
 
 @end

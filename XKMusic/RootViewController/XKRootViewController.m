@@ -28,7 +28,7 @@
 
 - (void)configTabBar {
     UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-    visualEfView.frame = CGRectMake(0, -1, CGRectGetWidth(self.tabBar.frame), CGRectGetHeight(self.tabBar.frame)+1);
+    visualEfView.frame = CGRectMake(0, -1, CGRectGetWidth(self.tabBar.frame), TabBarHeight+1);
     visualEfView.alpha = 1;
     [self.tabBar insertSubview:visualEfView atIndex:0];
 }

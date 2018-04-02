@@ -42,10 +42,9 @@
     [super viewWillDisappear:animated];
     [self resetHeaderView];
     self.tableView.editing = NO;
-    self.tabBarController.tabBar.hidden = NO;
     [self.selectedItemIndexes removeAllObjects];
-    [UIView animateWithDuration:0.25 animations:^{
-        self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight);
     }];
 }
 
@@ -172,15 +171,16 @@
         self.tableView.editing = isClick;
         [self.selectedItemIndexes removeAllObjects];
         if (isClick == NO) {
-            [UIView animateWithDuration:0.25 animations:^{
-                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49);
+            [UIView animateWithDuration:0.3 animations:^{
+                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight);
             } completion:^(BOOL finished) {
-                self.tabBarController.tabBar.hidden = isClick;
+                [self.tabBarController hideTabBar:NO animated:YES];
             }];
         } else {
-            self.tabBarController.tabBar.hidden = isClick;
-            [UIView animateWithDuration:0.25 animations:^{
-                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT - 49, SCREEN_WIDTH, 49);
+            [self handleToolbarButtonEnble];
+            [self.tabBarController hideTabBar:YES animated:YES];
+            [UIView animateWithDuration:0.3 animations:^{
+                self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - TabBarHeight, SCREEN_WIDTH, TabBarHeight);
             }];
         }
     };
@@ -301,7 +301,7 @@
 
 - (XKToolbar *)toolbar {
     if (!_toolbar) {
-        _toolbar = [[XKToolbar alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - iPhoneX_BOTTOM_HEIGHT, SCREEN_WIDTH, 49)];
+        _toolbar = [[XKToolbar alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight)];
         _toolbar.ClickButtonBlock = ^(XKToolbarButtonType type) {
             switch (type) {
                 case XKToolbarButtonTypeNext:

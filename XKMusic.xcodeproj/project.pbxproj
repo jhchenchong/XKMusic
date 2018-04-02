@@ -105,6 +105,7 @@
 		B7C0010A206B3711009D92B6 /* XKMusicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C00109206B3711009D92B6 /* XKMusicHelper.m */; };
 		B7C0010E206B875F009D92B6 /* XKMusicListView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C0010D206B875F009D92B6 /* XKMusicListView.m */; };
 		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
+		B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */; };
 		B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */; };
 		B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D02058F5C600BAF211 /* XKPrivatecontentModel.m */; };
 		B7D906D42058F6F000BAF211 /* XKDisPrivatecontentComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D32058F6F000BAF211 /* XKDisPrivatecontentComponent.m */; };
@@ -336,6 +337,8 @@
 		B7C0010D206B875F009D92B6 /* XKMusicListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicListView.m; sourceTree = "<group>"; };
 		B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegateHelper.h; sourceTree = "<group>"; };
 		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
+		B7D285B22071EEDF00488510 /* UITabBarController+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+Animation.h"; sourceTree = "<group>"; };
+		B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+Animation.m"; sourceTree = "<group>"; };
 		B7D906CC2058F53B00BAF211 /* XKPrivatecontentApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentApi.h; sourceTree = "<group>"; };
 		B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKPrivatecontentApi.m; sourceTree = "<group>"; };
 		B7D906CF2058F5C600BAF211 /* XKPrivatecontentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentModel.h; sourceTree = "<group>"; };
@@ -1240,6 +1243,8 @@
 			children = (
 				B7FF36BD204CDCF5005CD83E /* QMUITabBarViewController+XKCategory.h */,
 				B7FF36BE204CDCF5005CD83E /* QMUITabBarViewController+XKCategory.m */,
+				B7D285B22071EEDF00488510 /* UITabBarController+Animation.h */,
+				B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */,
 			);
 			path = QMUITabBarViewController;
 			sourceTree = "<group>";
@@ -1636,6 +1641,7 @@
 				B7964F4120564DD100EFACE4 /* XKBannerModel.m in Sources */,
 				B74DC8C720528EFF0092025A /* XKCustomHotSearchTagsView.m in Sources */,
 				B74DC8B020522A9B0092025A /* LKImageMonitor.m in Sources */,
+				B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */,
 				B73700AF206248A500BC844C /* XKMusicCoverView.m in Sources */,
 				B7DC997D205F5B08002DB5C5 /* XKDailyRecommendController.m in Sources */,
 				B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */,

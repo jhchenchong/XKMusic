@@ -45,7 +45,7 @@
         [@[self.nextButton, self.addButton, self.downloadButton, self.deleteButton] mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:65 leadSpacing:30 tailSpacing:30];
         [@[self.nextButton, self.addButton, self.downloadButton, self.deleteButton] mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(40);
-            make.centerY.mas_equalTo(self.mas_centerY);
+            make.centerY.mas_equalTo(self.mas_centerY).offset(-iPhoneX_BOTTOM_HEIGHT / 2);
         }];
         [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.mas_equalTo(0);
