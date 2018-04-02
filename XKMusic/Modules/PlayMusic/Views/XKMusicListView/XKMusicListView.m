@@ -126,12 +126,13 @@
 }
 
 - (void)setPlayStyle:(XKPlayerPlayStyle)playStyle {
+    NSInteger count = self.musicModels.count;
     switch (playStyle) {
         case XKPlayerPlayStyleLoop:
         {
             [self.styleButton setImage:[UIImage imageNamed:@"cm2_playlist_icn_loop"] forState:UIControlStateNormal];
             [self.styleButton setImage:[UIImage imageNamed:@"cm2_playlist_icn_loop_prs"] forState:UIControlStateHighlighted];
-            [self.styleButton setTitle:[NSString stringWithFormat:@"列表循环(%ld)",self.musicModels.count] forState:UIControlStateNormal];
+            [self.styleButton setTitle:[NSString stringWithFormat:@"列表循环(%ld)",count] forState:UIControlStateNormal];
         }
             break;
         case XKPlayerPlayStyleSingleCycle:
@@ -145,7 +146,7 @@
         {
             [self.styleButton setImage:[UIImage imageNamed:@"cm2_playlist_icn_shuffle"] forState:UIControlStateNormal];
             [self.styleButton setImage:[UIImage imageNamed:@"cm2_playlist_icn_shuffle_prs"] forState:UIControlStateHighlighted];
-            [self.styleButton setTitle:[NSString stringWithFormat:@"随机播放(%ld)",self.musicModels.count] forState:UIControlStateNormal];
+            [self.styleButton setTitle:[NSString stringWithFormat:@"随机播放(%ld)",count] forState:UIControlStateNormal];
         }
             break;
             
@@ -158,9 +159,10 @@
     if (musicModels.count == 0) {
         return;
     }
+    NSLog(@"刷新了。。。");
     _musicModels = musicModels;
     [self.tableView reloadData];
-    if (self.shouldScroll) {
+    if (self.shouldScroll == YES) {
         __block NSInteger playIndex = 0;
         [musicModels enumerateObjectsUsingBlock:^(XKMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (obj.isPlaying) {
@@ -168,10 +170,8 @@
                 *stop = YES;
             }
         }];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:playIndex inSection:0];
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        });
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:playIndex inSection:0];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     }
 }
 
@@ -309,10 +309,12 @@
     [self.deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
         make.centerY.mas_equalTo(self.contentView);
+        make.width.height.mas_equalTo(28);
     }];
     [self.linkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.deleteButton.mas_left).offset(-20);
         make.centerY.mas_equalTo(self.contentView);
+        make.width.height.mas_equalTo(28);
     }];
 }
 

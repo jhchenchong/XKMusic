@@ -21,6 +21,7 @@
 #import <YYModel/YYModel.h>
 #import <KTVHTTPCache/KTVHTTPCache.h>
 #import "UITabBarController+Animation.h"
+#import "MessageThrottle.h"
 
 #import "XKToolsMacro.h"
 #import "XKConst.h"

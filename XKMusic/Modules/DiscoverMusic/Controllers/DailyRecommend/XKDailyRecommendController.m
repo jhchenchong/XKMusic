@@ -166,7 +166,7 @@
     };
     headerView.MultipleButtonBlock = ^(BOOL isClick) {
         XKSTRONG
-        /// 左滑删除的同事点击了多选按钮 先将tableView的编辑状态设为NO，再继续下面的逻辑
+        /// 左滑删除的同时点击了多选按钮 先将tableView的编辑状态设为NO，再继续下面的逻辑
         self.tableView.editing = NO;
         self.tableView.editing = isClick;
         [self.selectedItemIndexes removeAllObjects];

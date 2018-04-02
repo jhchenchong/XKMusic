@@ -92,6 +92,14 @@ static dispatch_once_t onceToken;
     /// 获取播放模式
     self.playStyle = [[NSUserDefaults standardUserDefaults] integerForKey:kXKPlayStyle];
     self.controlView.style = self.playStyle;
+    
+    /// 配置消息节流 快速点击 上一曲 下一曲的时候
+    MTRule *rule = [[MTRule alloc] initWithTarget:self selector:@selector(playNextMusic) durationThreshold:1];
+    rule.mode = MTPerformModeFirstly;
+    MTRule *rule1 = [[MTRule alloc] initWithTarget:self selector:@selector(playPrevMusic) durationThreshold:1];
+    rule1.mode = MTPerformModeFirstly;
+    [MTEngine.defaultEngine applyRule:rule];
+    [MTEngine.defaultEngine applyRule:rule1];
 }
 
 #pragma mark -- 配置导航栏
@@ -233,6 +241,7 @@ static dispatch_once_t onceToken;
             [self.coverView playedWithAnimated:YES];
             if (self.isExist == YES) {
                 self.musicListView.musicModels = self.musicModels;
+                self.musicListView.playStyle = self.playStyle;
             }
             break;
             
@@ -320,9 +329,9 @@ static dispatch_once_t onceToken;
 - (void)controlView:(XKMusicControlView *)controlView didClickList:(UIButton *)listBtn {
     QMUIModalPresentationViewController *modalPresentationViewController = [[QMUIModalPresentationViewController alloc] init];
     modalPresentationViewController.contentView = self.musicListView;
+    self.musicListView.shouldScroll = YES;
     self.musicListView.musicModels = self.musicModels;
     self.musicListView.playStyle = self.playStyle;
-    self.musicListView.shouldScroll = YES;
     XKWEAK
     self.musicListView.closeButtonBlock = ^{
         XKSTRONG
@@ -343,7 +352,18 @@ static dispatch_once_t onceToken;
         self.isDelete = YES;
         if ([model.music_id isEqualToString:self.currentMusicID]) {
             if (self.musicModels.count > 1) {
-                [self playNextMusic];
+                __block NSInteger currentIndex = 0;
+                [self.musicModels enumerateObjectsUsingBlock:^(XKMusicModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj.music_id isEqualToString:self.model.music_id]) {
+                        currentIndex = idx;
+                        *stop = YES;
+                    }
+                }];
+                /// 如果删除的正在播放的音乐是最后一首 那么就播放上一首 否则 播放下一曲(播放下一曲的时候 不要将currentIndex+1了 因为在移除了当前的之后 下一曲的下标就是当前的下标)
+                (currentIndex == self.musicModels.count - 1) ? (currentIndex -= 1) :(currentIndex = currentIndex);
+                [XKMusicHelper removeMusicModelWithMusicID:model.music_id];
+                [self setupMusicModels:[XKMusicHelper musicModels]];
+                [self playMusicWithIndex:currentIndex musicModels:self.musicModels];
             } else {
                 [[XKMusicPlayer sharedInstance] pause];
                 [modalPresentationViewController hideWithAnimated:YES completion:^(BOOL finished) {
@@ -351,19 +371,12 @@ static dispatch_once_t onceToken;
                     [XKPlayerController destroyInstance];
                 }];
             }
-            /// 这里要注意 删除的时候 要先做切音乐的操作 然后再刷数据源 如果先更了数据源 执行下一曲操作的时候 索引跟之前的对不上 会出现音乐乱切的问题
-            [XKMusicHelper removeMusicModelWithMusicID:model.music_id];
-            self.musicModels = [XKMusicHelper musicModels];
         } else {
             [XKMusicHelper removeMusicModelWithMusicID:model.music_id];
-            self.musicModels = [XKMusicHelper musicModels];
+            [self setupMusicModels:[XKMusicHelper musicModels]];
             self.musicListView.musicModels = self.musicModels;
+            self.musicListView.playStyle = self.playStyle;
         }
-        /// 如果随机模式 这里先用musicModels生成随机的音乐模型数组
-        if (self.playStyle == XKPlayerPlayStyleRandom) {
-            self.outOrderMusicModels = [self randomArray:self.musicModels];
-        }
-        self.musicListView.playStyle = self.playStyle;
         self.isDelete = NO;
     };
     modalPresentationViewController.animationStyle = QMUIModalPresentationAnimationStyleSlide;

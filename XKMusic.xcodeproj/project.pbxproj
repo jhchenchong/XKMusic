@@ -106,6 +106,7 @@
 		B7C0010E206B875F009D92B6 /* XKMusicListView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C0010D206B875F009D92B6 /* XKMusicListView.m */; };
 		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
 		B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */; };
+		B7D285B8207220DC00488510 /* MessageThrottle.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B7207220DC00488510 /* MessageThrottle.m */; };
 		B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */; };
 		B7D906D12058F5C600BAF211 /* XKPrivatecontentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D02058F5C600BAF211 /* XKPrivatecontentModel.m */; };
 		B7D906D42058F6F000BAF211 /* XKDisPrivatecontentComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906D32058F6F000BAF211 /* XKDisPrivatecontentComponent.m */; };
@@ -339,6 +340,8 @@
 		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
 		B7D285B22071EEDF00488510 /* UITabBarController+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+Animation.h"; sourceTree = "<group>"; };
 		B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+Animation.m"; sourceTree = "<group>"; };
+		B7D285B6207220DC00488510 /* MessageThrottle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageThrottle.h; sourceTree = "<group>"; };
+		B7D285B7207220DC00488510 /* MessageThrottle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageThrottle.m; sourceTree = "<group>"; };
 		B7D906CC2058F53B00BAF211 /* XKPrivatecontentApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentApi.h; sourceTree = "<group>"; };
 		B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKPrivatecontentApi.m; sourceTree = "<group>"; };
 		B7D906CF2058F5C600BAF211 /* XKPrivatecontentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKPrivatecontentModel.h; sourceTree = "<group>"; };
@@ -892,6 +895,7 @@
 		B7768A8B204AA060006E8304 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				B7D285B5207220DC00488510 /* MessageThrottle */,
 				B74DC85F20522A9B0092025A /* LKImageKit */,
 				B74D2B1D204D238900AD1C01 /* WMPageController */,
 				B7FF36A8204CD9BC005CD83E /* XKComponentTableView */,
@@ -1111,6 +1115,15 @@
 				B7C0010D206B875F009D92B6 /* XKMusicListView.m */,
 			);
 			path = XKMusicListView;
+			sourceTree = "<group>";
+		};
+		B7D285B5207220DC00488510 /* MessageThrottle */ = {
+			isa = PBXGroup;
+			children = (
+				B7D285B6207220DC00488510 /* MessageThrottle.h */,
+				B7D285B7207220DC00488510 /* MessageThrottle.m */,
+			);
+			path = MessageThrottle;
 			sourceTree = "<group>";
 		};
 		B7D906CB2058F50600BAF211 /* Privatecontent */ = {
@@ -1605,6 +1618,7 @@
 				B74DC8A820522A9B0092025A /* LKImageLogManager.m in Sources */,
 				B7606AEC205FC14A00DC2575 /* XKPlayerController.m in Sources */,
 				B74DC8B320522A9B0092025A /* LKImageSmartCache.m in Sources */,
+				B7D285B8207220DC00488510 /* MessageThrottle.m in Sources */,
 				B74DC8A520522A9B0092025A /* LKImageManager.m in Sources */,
 				B7FF36BB204CD9BC005CD83E /* XKHeaderComponent.m in Sources */,
 				B7B888F8204CC3CF00A7A231 /* XKCustomCollectionViewCell.m in Sources */,
