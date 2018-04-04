@@ -2,47 +2,44 @@
 //  XKMusicCoverView.m
 //  XKMusic
 //
-//  Created by 浪漫恋星空 on 2018/3/21.
+//  Created by 浪漫恋星空 on 2018/4/2.
 //  Copyright © 2018年 浪漫恋星空. All rights reserved.
 //
 
 #import "XKMusicCoverView.h"
-#import "XKDiskView.h"
 
-@interface XKMusicCoverView ()<UIScrollViewDelegate>
 
-/// 顶部分割线
+@interface XKMusicCoverView ()<UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UIView *sepLineView;
-/// 唱片背景
 @property (nonatomic, strong) UIView *diskBgView;
-/// 唱片视图
-@property (nonatomic, strong) XKDiskView *leftDiskView;
-@property (nonatomic, strong) XKDiskView *centerDiskView;
-@property (nonatomic, strong) XKDiskView *rightDiskView;
-@property (nonatomic, assign) NSInteger currentIndex;
 
-/// 指针
+@property (nonatomic, copy) NSArray<XKMusicModel *> *models;
+
 @property (nonatomic, strong) UIImageView *needleView;
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
-/// 是否正在动画
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) BOOL isAnimation;
-@property (nonatomic, strong) NSArray *musics;
 @property (nonatomic, copy) dispatch_block_t finished;
-/// 是否是由用户点击切换歌曲 
-@property (nonatomic, assign) BOOL isChanged;
+@property (nonatomic, assign) BOOL isChange;
+
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 
 @implementation XKMusicCoverView
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+    self = [super initWithFrame:frame];
+    if (self) {
+        
         self.clipsToBounds = YES;
         
         [self addSubview:self.sepLineView];
         [self addSubview:self.diskBgView];
-        [self addSubview:self.diskScrollView];
+        [self addSubview:self.collectionView];
         [self addSubview:self.needleView];
         
         [self.sepLineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -60,102 +57,81 @@
             make.top.mas_equalTo(-78);
         }];
         
-        
         self.diskBgView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
         self.diskBgView.layer.borderWidth = 10;
         self.diskBgView.layer.cornerRadius = (SCREEN_WIDTH - 75) * 0.5;
-        
-        [self.diskScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-        
-        self.isAnimation = YES;
-        
-        [self.diskScrollView addSubview:self.leftDiskView];
-        [self.diskScrollView addSubview:self.centerDiskView];
-        [self.diskScrollView addSubview:self.rightDiskView];
-        
-        self.diskScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, 0);
-        
-        [self setScrollViewContentOffsetCenter];
     }
-    return self;}
-
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-
-    
-    CGFloat diskW = CGRectGetWidth(self.diskScrollView.frame);
-    CGFloat diskH = CGRectGetHeight(self.diskScrollView.frame);
-    
-    // 设置frame
-    self.leftDiskView.frame   = CGRectMake(0, 0, diskW, diskH);
-    self.centerDiskView.frame = CGRectMake(diskW, 0, diskW, diskH);
-    self.rightDiskView.frame  = CGRectMake(2 * diskW, 0, diskW, diskH);
+    return self;
 }
 
-- (void)networkStateChanged:(NSNotification *)notify {
-    self.currentIndex = self.currentIndex;
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.models.count * 100;
 }
 
-- (void)setupMusicList:(NSArray *)musics index:(NSInteger)currentIndex {
-    [self resetCover];
-    self.musics = musics;
-    [self setCurrentIndex:currentIndex needChange:YES];
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    XKMusicCoverViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"XKMusicCoverViewCell" forIndexPath:indexPath];
+    NSInteger itemIndex = indexPath.item % self.models.count;
+    cell.imageURL = self.models[itemIndex].music_cover;
+    return cell;
 }
 
-- (void)resetMusicList:(NSArray *)musics index:(NSInteger)currentIndex {
-    self.musics = musics;
-    [self setCurrentIndex:currentIndex needChange:NO];
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return self.frame.size;
 }
 
-- (void)scrollChangeIsNext:(BOOL)isNext finished:(dispatch_block_t)finished {
-    self.isChanged = YES;
-    self.finished = finished;
-    
-    CGFloat pointX = isNext ? 2 * SCREEN_WIDTH : 0;
-    CGPoint offset = CGPointMake(pointX, 0);
-    
-    [self pausedWithAnimated:YES];
-    [self.diskScrollView setContentOffset:offset animated:YES];
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    ((XKMusicCoverViewCell *) cell).diskView.diskImgView.transform = CGAffineTransformIdentity;
 }
 
-- (void)setCurrentIndex:(NSInteger)currentIndex needChange:(BOOL)needChange {
-    if (currentIndex >= 0) {
-        self.currentIndex = currentIndex;
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    XKBLOCK_EXEC(self.didTapCellBlock);
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self scrollViewDidEndScrollingAnimation:self.collectionView];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    if (self.index == [self currentIndex]) {
         
-        NSInteger count = self.musics.count;
-        NSInteger leftIndex = (currentIndex + count - 1) % count;
-        NSInteger rightIndex = (currentIndex + 1) % count;
-        
-        XKMusicModel *leftM = self.musics[leftIndex];
-        XKMusicModel *centerM = self.musics[currentIndex];
-        XKMusicModel *rightM = self.musics[rightIndex];
-        
-        self.centerDiskView.imgurl = centerM.music_cover;
-        
-        if (needChange) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self setScrollViewContentOffsetCenter];
-                
-                self.leftDiskView.imgurl = leftM.music_cover;
-                self.rightDiskView.imgurl = rightM.music_cover;
-                
-                if (self.isChanged) {
-                    !self.finished ? : self.finished();
-                    self.isChanged = NO;
-                }
-            });
-        } else {
-            self.leftDiskView.imgurl  = leftM.music_cover;
-            self.rightDiskView.imgurl = rightM.music_cover;
+    } else {
+        if (self.isChange) {
+            !self.finished ? : self.finished();
+            self.isChange = NO;
+        }
+        XKMusicModel *model = self.models[[self currentIndex] % self.models.count];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
+            [self.delegate scrollDidChangeModel:model];
         }
     }
+    self.index = [self currentIndex];
+    [self playedWithAnimated:YES];
 }
 
-- (void)setScrollViewContentOffsetCenter {
-    [self.diskScrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0)];
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self pausedWithAnimated:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scrollDidScroll)]) {
+        [self.delegate scrollDidScroll];
+    }
+}
+
+- (void)setupMusicModels:(NSArray<XKMusicModel *> *)models index:(NSInteger)currentIndex {
+    [self resetCover];
+    self.isAnimation = NO;
+    self.models = models;
+    [self.collectionView reloadData];
+    [self makeScrollViewScrollToIndex:currentIndex];
+    self.index = [self currentIndex];
+}
+
+- (void)resetMusicModels:(NSArray<XKMusicModel *> *)models {
+    self.models = models;
+}
+
+- (NSInteger)currentIndex {
+    NSInteger index = 0;
+    index = (self.collectionView.contentOffset.x + self.collectionView.frame.size.width * 0.5) / self.collectionView.frame.size.width;
+    return MAX(0, index);
 }
 
 - (void)playedWithAnimated:(BOOL)animated {
@@ -179,7 +155,6 @@
     if (!self.isAnimation) {
         return;
     }
-    
     self.isAnimation = NO;
     [self setAnchorPoint:CGPointMake(25.0/97, 25.0/153) forView:self.needleView];
     
@@ -196,13 +171,15 @@
 }
 
 - (void)resetCover {
-    self.centerDiskView.diskImgView.transform = CGAffineTransformIdentity;
+    XKMusicCoverViewCell *cell = (XKMusicCoverViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:[self currentIndex] inSection:0]];
+    cell.diskView.diskImgView.transform = CGAffineTransformIdentity;
     [self.displayLink invalidate];
     self.displayLink = nil;
 }
 
 - (void)animation {
-    self.centerDiskView.diskImgView.transform = CGAffineTransformRotate(self.centerDiskView.diskImgView.transform, M_PI_4 / 100);
+    XKMusicCoverViewCell *cell = (XKMusicCoverViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:[self currentIndex] inSection:0]];
+    cell.diskView.diskImgView.transform = CGAffineTransformRotate(cell.diskView.diskImgView.transform, M_PI_4 / 100);
 }
 
 - (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view {
@@ -217,76 +194,45 @@
     view.center = CGPointMake (view.center.x - transition.x, view.center.y - transition.y);
 }
 
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
-    if (scrollW == 0) {
-       return;
+- (void)scrollToIndex:(NSInteger)targetIndex {
+    if (targetIndex >= self.models.count * 100) {
+        targetIndex = self.models.count * 100 * 0.5;
     }
-    CGFloat offsetX = scrollView.contentOffset.x;
-    
-    if (offsetX == 2 * scrollW) {
-        
-    } else if (offsetX == 0) {
-        
-    } else if (offsetX <= 0.5 * scrollW) { // 左滑
-        NSInteger idx = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
-        XKMusicModel *model = self.musics[idx];
-        
-        if ([self.delegate respondsToSelector:@selector(scrollWillChangeModel:)]) {
-            [self.delegate scrollWillChangeModel:model];
-        }
-    } else if (offsetX >= 1.5 * scrollW) { // 右滑
-        NSInteger idx = (self.currentIndex + 1) % self.musics.count;
-        XKMusicModel *model = self.musics[idx];
-        
-        if ([self.delegate respondsToSelector:@selector(scrollWillChangeModel:)]) {
-            [self.delegate scrollWillChangeModel:model];
-        }
-    }
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:targetIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+- (void)makeScrollViewScrollToIndex:(NSInteger)index {
+    [self scrollToIndex:(NSInteger)(self.models.count * 100 * 0.5 + index)];
+}
+
+- (void)scrollChangeIsNext:(BOOL)isNext finished:(dispatch_block_t)finished {
+    self.finished = finished;
+    self.isChange = YES;
     [self pausedWithAnimated:YES];
-    if ([self.delegate respondsToSelector:@selector(scrollDidScroll)]) {
-        [self.delegate scrollDidScroll];
+    NSInteger index = 0;
+    isNext ? (index = self.index + 1) : (index = self.index - 1);
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:isNext ? UICollectionViewScrollPositionLeft : UICollectionViewScrollPositionRight animated:YES];
+}
+
+- (UICollectionView *)collectionView {
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.minimumLineSpacing = 0;
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        _collectionView.backgroundColor = [UIColor clearColor];
+        _collectionView.pagingEnabled = YES;
+        _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
+        _collectionView.scrollsToTop = NO;
+        [XKMusicCoverViewCell registerToCollectionView:_collectionView];
     }
+    return _collectionView;
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self scrollViewDidEnd:scrollView];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self scrollViewDidEnd:scrollView];
-}
-
-- (void)scrollViewDidEnd:(UIScrollView *)scrollView {
-    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
-    CGFloat offsetX = scrollView.contentOffset.x;
-    if (offsetX == 2 * scrollW) {
-        NSInteger currentIndex = (self.currentIndex + 1) % self.musics.count;
-        [self setCurrentIndex:currentIndex needChange:YES];
-        XKMusicModel *model = self.musics[self.currentIndex];
-        if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
-            [self.delegate scrollDidChangeModel:model];
-        }
-    } else if (offsetX == 0) {
-        NSInteger currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
-        [self setCurrentIndex:currentIndex needChange:YES];
-        XKMusicModel *model = self.musics[self.currentIndex];
-        if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
-            [self.delegate scrollDidChangeModel:model];
-        }
-    } else {
-        [self setScrollViewContentOffsetCenter];
-    }
-    if ([self.delegate respondsToSelector:@selector(scrollDidEnd:)]) {
-        [self.delegate scrollDidEnd:scrollView];
-    }
-}
-
-#pragma mark - 懒加载
 - (UIView *)sepLineView {
     if (!_sepLineView) {
         _sepLineView = [[UIView alloc] init];
@@ -303,45 +249,49 @@
     return _diskBgView;
 }
 
-- (UIScrollView *)diskScrollView {
-    if (!_diskScrollView) {
-        _diskScrollView = [[UIScrollView alloc] init];
-        _diskScrollView.delegate = self;
-        _diskScrollView.pagingEnabled = YES;
-        _diskScrollView.backgroundColor = [UIColor clearColor];
-        _diskScrollView.showsHorizontalScrollIndicator = NO;
-    }
-    return _diskScrollView;
-}
-
-- (XKDiskView *)leftDiskView {
-    if (!_leftDiskView) {
-        _leftDiskView = [[XKDiskView alloc] init];
-    }
-    return _leftDiskView;
-}
-
-- (XKDiskView *)centerDiskView {
-    if (!_centerDiskView) {
-        _centerDiskView = [[XKDiskView alloc] init];
-    }
-    return _centerDiskView;
-}
-
-- (XKDiskView *)rightDiskView {
-    if (!_rightDiskView) {
-        _rightDiskView = [[XKDiskView alloc] init];
-    }
-    return _rightDiskView;
-}
-
 - (UIImageView *)needleView {
     if (!_needleView) {
         _needleView = [[UIImageView alloc] init];
         _needleView.image = [UIImage imageNamed:@"cm2_play_needle_play"];
         [_needleView sizeToFit];
+        [self setAnchorPoint:CGPointMake(25.0/97, 25.0/153) forView:_needleView];
+        _needleView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
     }
     return _needleView;
+}
+
+@end
+
+
+@interface XKMusicCoverViewCell()
+
+@property (nonatomic, strong) XKDiskView *diskView;
+
+@end
+
+@implementation XKMusicCoverViewCell
+
+- (void)setupCell {
+    self.backgroundColor = [UIColor clearColor];
+}
+
+- (void)buildSubview {
+    [self.contentView addSubview:self.diskView];
+    [self.diskView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.mas_equalTo(self);
+    }];
+}
+
+- (void)setImageURL:(NSString *)imageURL {
+    _imageURL = imageURL;
+    self.diskView.imgurl = imageURL;
+}
+
+- (XKDiskView *)diskView {
+    if (!_diskView) {
+        _diskView = [[XKDiskView alloc] init];
+    }
+    return _diskView;
 }
 
 @end

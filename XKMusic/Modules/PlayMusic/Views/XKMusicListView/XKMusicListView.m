@@ -125,6 +125,10 @@
     XKBLOCK_EXEC(self.didSelectRowAtIndexPathBlock,indexPath)
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
+
 - (void)setPlayStyle:(XKPlayerPlayStyle)playStyle {
     NSInteger count = self.musicModels.count;
     switch (playStyle) {
@@ -159,7 +163,6 @@
     if (musicModels.count == 0) {
         return;
     }
-    NSLog(@"刷新了。。。");
     _musicModels = musicModels;
     [self.tableView reloadData];
     if (self.shouldScroll == YES) {

@@ -22,7 +22,6 @@
 		B73700A12061F67500BC844C /* XKMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A02061F67500BC844C /* XKMusicPlayer.m */; };
 		B73700A5206229B000BC844C /* XKSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A4206229B000BC844C /* XKSliderView.m */; };
 		B73700A9206231E200BC844C /* XKMusicControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700A8206231E200BC844C /* XKMusicControlView.m */; };
-		B73700AF206248A500BC844C /* XKMusicCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700AE206248A500BC844C /* XKMusicCoverView.m */; };
 		B73700B220624A3A00BC844C /* XKMusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700B120624A3A00BC844C /* XKMusicModel.m */; };
 		B73700B620624B5600BC844C /* XKDiskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700B520624B5600BC844C /* XKDiskView.m */; };
 		B73700BA2062611000BC844C /* XKDailyRecommendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B73700B92062611000BC844C /* XKDailyRecommendModel.m */; };
@@ -121,6 +120,7 @@
 		B7DC9982205F5C5C002DB5C5 /* XKSongListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9981205F5C5C002DB5C5 /* XKSongListController.m */; };
 		B7DC9985205F5CB7002DB5C5 /* XKLeaderboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC9984205F5CB7002DB5C5 /* XKLeaderboardController.m */; };
 		B7DC998C205FA655002DB5C5 /* AppDelegate+AnimationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DC998B205FA655002DB5C5 /* AppDelegate+AnimationButton.m */; };
+		B7EED64E20731D6300DC5E43 /* XKMusicCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EED64D20731D6300DC5E43 /* XKMusicCoverView.m */; };
 		B7FF369A204CD6DD005CD83E /* XKRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF3699204CD6DD005CD83E /* XKRootViewController.m */; };
 		B7FF36B7204CD9BC005CD83E /* XKComponentController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AC204CD9BC005CD83E /* XKComponentController.m */; };
 		B7FF36B8204CD9BC005CD83E /* XKCollectionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF36AE204CD9BC005CD83E /* XKCollectionComponent.m */; };
@@ -165,8 +165,6 @@
 		B73700A4206229B000BC844C /* XKSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSliderView.m; sourceTree = "<group>"; };
 		B73700A7206231E200BC844C /* XKMusicControlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKMusicControlView.h; sourceTree = "<group>"; };
 		B73700A8206231E200BC844C /* XKMusicControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicControlView.m; sourceTree = "<group>"; };
-		B73700AD206248A500BC844C /* XKMusicCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKMusicCoverView.h; sourceTree = "<group>"; };
-		B73700AE206248A500BC844C /* XKMusicCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicCoverView.m; sourceTree = "<group>"; };
 		B73700B020624A3A00BC844C /* XKMusicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKMusicModel.h; sourceTree = "<group>"; };
 		B73700B120624A3A00BC844C /* XKMusicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicModel.m; sourceTree = "<group>"; };
 		B73700B420624B5600BC844C /* XKDiskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDiskView.h; sourceTree = "<group>"; };
@@ -371,6 +369,8 @@
 		B7DC998A205FA655002DB5C5 /* AppDelegate+AnimationButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+AnimationButton.h"; sourceTree = "<group>"; };
 		B7DC998B205FA655002DB5C5 /* AppDelegate+AnimationButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+AnimationButton.m"; sourceTree = "<group>"; };
 		B7DC998D205FACA4002DB5C5 /* XKConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKConst.h; sourceTree = "<group>"; };
+		B7EED64C20731D6300DC5E43 /* XKMusicCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKMusicCoverView.h; sourceTree = "<group>"; };
+		B7EED64D20731D6300DC5E43 /* XKMusicCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKMusicCoverView.m; sourceTree = "<group>"; };
 		B7FF3698204CD6DD005CD83E /* XKRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKRootViewController.h; sourceTree = "<group>"; };
 		B7FF3699204CD6DD005CD83E /* XKRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKRootViewController.m; sourceTree = "<group>"; };
 		B7FF36A9204CD9BC005CD83E /* XKComponentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKComponentTableView.h; sourceTree = "<group>"; };
@@ -503,8 +503,8 @@
 		B73700AC2062486500BC844C /* XKMusicCoverView */ = {
 			isa = PBXGroup;
 			children = (
-				B73700AD206248A500BC844C /* XKMusicCoverView.h */,
-				B73700AE206248A500BC844C /* XKMusicCoverView.m */,
+				B7EED64C20731D6300DC5E43 /* XKMusicCoverView.h */,
+				B7EED64D20731D6300DC5E43 /* XKMusicCoverView.m */,
 			);
 			path = XKMusicCoverView;
 			sourceTree = "<group>";
@@ -1656,7 +1656,7 @@
 				B74DC8C720528EFF0092025A /* XKCustomHotSearchTagsView.m in Sources */,
 				B74DC8B020522A9B0092025A /* LKImageMonitor.m in Sources */,
 				B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */,
-				B73700AF206248A500BC844C /* XKMusicCoverView.m in Sources */,
+				B7EED64E20731D6300DC5E43 /* XKMusicCoverView.m in Sources */,
 				B7DC997D205F5B08002DB5C5 /* XKDailyRecommendController.m in Sources */,
 				B74D2B2B204D238900AD1C01 /* WMPageController.m in Sources */,
 				B7FF36B8204CD9BC005CD83E /* XKCollectionComponent.m in Sources */,

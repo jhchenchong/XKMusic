@@ -8,13 +8,13 @@
 
 #import "XKPlayerController.h"
 #import "XKMusicControlView.h"
-#import "XKMusicCoverView.h"
 #import "XKMusicPlayer.h"
 #import "XKPlayerController+KTVHTTPCache.h"
 #import "XKLyricModel.h"
 #import "XKMusicLyricView.h"
 #import "XKLikeMusicApi.h"
 #import "XKMusicListView.h"
+#import "XKMusicCoverView.h"
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -183,11 +183,6 @@ static dispatch_once_t onceToken;
     [self.bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.mas_equalTo(0);
     }];
-    [self.coverView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.mas_equalTo(kTopHeight);
-        make.bottom.equalTo(self.controlView.mas_top).offset(20);
-    }];
     [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.mas_equalTo(0);
         make.height.mas_equalTo(170);
@@ -206,7 +201,6 @@ static dispatch_once_t onceToken;
     NSArray *likeMusicIDs = (NSArray *)([[NSUserDefaults standardUserDefaults] objectForKey:kLikeMusicIDKey]);
     self.model.isLike = [likeMusicIDs containsObject:self.model.music_id];
     [self.controlView setupInitialData];
-    [self.coverView resetCover];
     self.titleView.title = self.model.music_name;
     self.titleView.subtitle = self.model.music_artist;
     self.bgImageView.URL = self.model.music_cover;
@@ -233,7 +227,6 @@ static dispatch_once_t onceToken;
         case XKMusicPlayerStatusBuffering:
             self.isPlaying = NO;
             [self.controlView showLoadingAnim];
-            [self.coverView playedWithAnimated:YES];
             break;
         case XKMusicPlayerStatusPlaying:
             self.isPlaying = YES;
@@ -412,7 +405,7 @@ static dispatch_once_t onceToken;
     [XKMusicPlayer sharedInstance].progress = time;
 }
 
-#pragma mark -- XKMusicCoverViewDelegate
+#pragma mark -- XKMusicNewCoverViewDelegate
 
 - (void)scrollDidScroll {
     self.isCoverScroll = YES;
@@ -422,12 +415,6 @@ static dispatch_once_t onceToken;
     self.isCoverScroll = NO;
     self.model = model;
     [self fetchMusicInfo];
-}
-
-- (void)scrollDidEnd:(UIScrollView *)scrollView {
-    if (self.isPlaying) {
-        [self.coverView playedWithAnimated:YES];
-    }
 }
 
 #pragma mark -- 公共方法
@@ -447,9 +434,8 @@ static dispatch_once_t onceToken;
     self.playMusicModels = models;
     XKMusicModel *model = models[index];
     if (![model.music_id isEqualToString:self.currentMusicID]) {
-        [self.coverView pausedWithAnimated:YES];
         self.model = model;
-        [self.coverView setupMusicList:models index:index];
+        [self.coverView setupMusicModels:models index:index];
         [self fetchMusicInfo];
     }
 }
@@ -462,13 +448,11 @@ static dispatch_once_t onceToken;
         self.model = model;
         NSArray *likeMusicIDs = (NSArray *)([[NSUserDefaults standardUserDefaults] objectForKey:kLikeMusicIDKey]);
         self.model.isLike = [likeMusicIDs containsObject:self.model.music_id];
-        [self.coverView setupMusicList:models index:index];
+        [self.coverView setupMusicModels:models index:index];
         self.titleView.title = self.model.music_name;
         self.titleView.subtitle = self.model.music_artist;
         self.bgImageView.URL = self.model.music_cover;
         self.controlView.is_love = self.model.isLike;
-        /// 这行代码千万不要动！！！
-        [self.coverView pausedWithAnimated:NO];
     }
 }
 
@@ -534,7 +518,7 @@ static dispatch_once_t onceToken;
             *stop = YES;
         }
     }];
-    [self.coverView resetMusicList:models index:currentIndex];
+    [self.coverView resetMusicModels:models];
 }
 
 - (NSArray *)randomArray:(NSArray *)arr {
@@ -598,7 +582,7 @@ static dispatch_once_t onceToken;
                     *stop = YES;
                 }
             }];
-            [self.coverView resetMusicList:musicModels index:currentIndex];
+            [self.coverView setupMusicModels:musicModels index:currentIndex];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self fetchMusicInfo];
             });
@@ -708,15 +692,13 @@ static dispatch_once_t onceToken;
 
 - (XKMusicCoverView *)coverView {
     if (!_coverView) {
-        _coverView = [[XKMusicCoverView alloc] init];;
+        _coverView = [[XKMusicCoverView alloc] initWithFrame:CGRectMake(0, kTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - 190)];
         _coverView.delegate = self;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
         XKWEAK
-        [tap.rac_gestureSignal subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
+        _coverView.didTapCellBlock = ^{
             XKSTRONG
             [self showLyricView];
-        }];
-        [_coverView addGestureRecognizer:tap];
+        };
     }
     return _coverView;
 }
