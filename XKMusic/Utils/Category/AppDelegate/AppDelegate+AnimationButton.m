@@ -30,7 +30,7 @@ static char *AnimationButtonKey = "AnimationButtonKey";
     
     [self.animationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.window).offset(statusBarFrame.size.height);
-        make.right.equalTo(self.window).offset(-4);
+        make.right.equalTo(self.window).offset(-5);
         make.width.height.mas_equalTo(44);
     }];
     [[self.animationButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {

@@ -28,6 +28,11 @@
         [XKPlayerVC loadMusicWithIndex:0 musicModels:[XKMusicHelper musicModels]];
     }
     [XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"];
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
     return YES;
 }
 

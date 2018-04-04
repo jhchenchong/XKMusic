@@ -16,6 +16,7 @@
 @property (nonatomic, assign) BOOL isWillDraging;
 @property (nonatomic, assign) BOOL isScrolling;
 @property (nonatomic, copy) void(^PlaySelectedLineBlock)(NSTimeInterval time);
+@property (nonatomic, copy) void(^DidUpdatedLyricBlock)(NSTimeInterval totalTime, NSTimeInterval currentTime, NSString *lyric);
 
 - (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime;
 

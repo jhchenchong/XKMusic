@@ -103,6 +103,8 @@
 		B7C00107206B2FD4009D92B6 /* XKLikeMusicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C00106206B2FD4009D92B6 /* XKLikeMusicApi.m */; };
 		B7C0010A206B3711009D92B6 /* XKMusicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C00109206B3711009D92B6 /* XKMusicHelper.m */; };
 		B7C0010E206B875F009D92B6 /* XKMusicListView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C0010D206B875F009D92B6 /* XKMusicListView.m */; };
+		B7C347172074708E0011CFED /* XKPlayerController+LockScreenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C347162074708E0011CFED /* XKPlayerController+LockScreenInfo.m */; };
+		B7C3471A2074A9EA0011CFED /* XKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C347192074A9EA0011CFED /* XKHelper.m */; };
 		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
 		B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */; };
 		B7D285B8207220DC00488510 /* MessageThrottle.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B7207220DC00488510 /* MessageThrottle.m */; };
@@ -334,6 +336,10 @@
 		B7C00109206B3711009D92B6 /* XKMusicHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicHelper.m; sourceTree = "<group>"; };
 		B7C0010C206B875F009D92B6 /* XKMusicListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKMusicListView.h; sourceTree = "<group>"; };
 		B7C0010D206B875F009D92B6 /* XKMusicListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKMusicListView.m; sourceTree = "<group>"; };
+		B7C347152074708E0011CFED /* XKPlayerController+LockScreenInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XKPlayerController+LockScreenInfo.h"; sourceTree = "<group>"; };
+		B7C347162074708E0011CFED /* XKPlayerController+LockScreenInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XKPlayerController+LockScreenInfo.m"; sourceTree = "<group>"; };
+		B7C347182074A9EA0011CFED /* XKHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKHelper.h; sourceTree = "<group>"; };
+		B7C347192074A9EA0011CFED /* XKHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKHelper.m; sourceTree = "<group>"; };
 		B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegateHelper.h; sourceTree = "<group>"; };
 		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
 		B7D285B22071EEDF00488510 /* UITabBarController+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+Animation.h"; sourceTree = "<group>"; };
@@ -433,6 +439,8 @@
 			children = (
 				B724AF45206636B700D79368 /* XKPlayerController+KTVHTTPCache.h */,
 				B724AF46206636B700D79368 /* XKPlayerController+KTVHTTPCache.m */,
+				B7C347152074708E0011CFED /* XKPlayerController+LockScreenInfo.h */,
+				B7C347162074708E0011CFED /* XKPlayerController+LockScreenInfo.m */,
 			);
 			path = XKPlayerController;
 			sourceTree = "<group>";
@@ -748,6 +756,8 @@
 				B7232E1120629C0900DA1D41 /* XKRandomHelper.m */,
 				B7C00108206B3711009D92B6 /* XKMusicHelper.h */,
 				B7C00109206B3711009D92B6 /* XKMusicHelper.m */,
+				B7C347182074A9EA0011CFED /* XKHelper.h */,
+				B7C347192074A9EA0011CFED /* XKHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1480,6 +1490,11 @@
 					B7768A6B204A9400006E8304 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1605,6 +1620,7 @@
 				B74DC8B620522A9B0092025A /* LKImageGrayProcessor.m in Sources */,
 				B73700B620624B5600BC844C /* XKDiskView.m in Sources */,
 				B74DC8A720522A9B0092025A /* LKImageDecoderManager.m in Sources */,
+				B7C3471A2074A9EA0011CFED /* XKHelper.m in Sources */,
 				B7B155EF205A4F700053918B /* XKDJProgramModel.m in Sources */,
 				B7FF36BA204CD9BC005CD83E /* XKBaseComponent.m in Sources */,
 				B7A8CF4F204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m in Sources */,
@@ -1652,6 +1668,7 @@
 				B7964F3920561B3D00EFACE4 /* XKVideoController.m in Sources */,
 				B7964F45205651E000EFACE4 /* XKAnimatingRequestAccessory.m in Sources */,
 				B7B155F5205A5F080053918B /* XKDJProgramCell.m in Sources */,
+				B7C347172074708E0011CFED /* XKPlayerController+LockScreenInfo.m in Sources */,
 				B7964F4120564DD100EFACE4 /* XKBannerModel.m in Sources */,
 				B74DC8C720528EFF0092025A /* XKCustomHotSearchTagsView.m in Sources */,
 				B74DC8B020522A9B0092025A /* LKImageMonitor.m in Sources */,

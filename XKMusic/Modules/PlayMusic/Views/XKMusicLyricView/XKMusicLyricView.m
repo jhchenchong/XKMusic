@@ -193,6 +193,7 @@
             if (!self.isScrolling) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.lyricIndex + 5) inSection:0];
                 [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+                XKBLOCK_EXEC(self.DidUpdatedLyricBlock,totalTime,currentTime,self.lyricModels[self.lyricIndex].content);
             }
         }
     }

@@ -14,6 +14,10 @@
 @property (nonatomic, copy) NSString *currentMusicID;
 /// 是否正在播放
 @property (nonatomic, assign) BOOL isPlaying;
+/// 当前播放音乐的信息
+@property (nonatomic, strong, readonly) XKMusicModel *model;
+/// 是否正在拖拽
+@property (nonatomic, assign) BOOL isDraging;
 
 + (instancetype)sharedInstance;
 + (void)destroyInstance;

@@ -10,11 +10,14 @@
 #import "XKMusicControlView.h"
 #import "XKMusicPlayer.h"
 #import "XKPlayerController+KTVHTTPCache.h"
+#import "XKPlayerController+LockScreenInfo.h"
 #import "XKLyricModel.h"
 #import "XKMusicLyricView.h"
 #import "XKLikeMusicApi.h"
 #import "XKMusicListView.h"
 #import "XKMusicCoverView.h"
+#import "XKHelper.h"
+#import <UIImageView+WebCache.h>
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 
@@ -40,8 +43,6 @@
 @property (nonatomic, assign) XKPlayerPlayStyle playStyle;
 /// 是否自动播放
 @property (nonatomic, assign) BOOL isAutoPlay;
-/// 是否正在拖拽
-@property (nonatomic, assign) BOOL isDraging;
 /// 是否在快进快退
 @property (nonatomic, assign) BOOL isSeeking;
 /// 是否转盘在滑动
@@ -52,10 +53,14 @@
 @property (nonatomic, assign) BOOL isExist;
 /// 是否正在执行删除操作
 @property (nonatomic, assign) BOOL isDelete;
+/// 是否回调了第一句歌词
+@property (nonatomic, assign) BOOL isFirstLyric;
 /// 总时间
 @property (nonatomic, assign) NSTimeInterval duration;
 /// 当前时间
 @property (nonatomic, assign) NSTimeInterval currentTime;
+
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
@@ -210,7 +215,10 @@ static dispatch_once_t onceToken;
     [XKMusicPlayer sharedInstance].musicUrlString = musicUrlString;
     self.lyricView.lyricModels = nil;
     [self.controlView setupPlayBtn];
+    self.isFirstLyric = NO;
     [self fetchLyricInfo];
+    [self createRemoteCommandCenter];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.model.music_cover]];
 }
 
 - (void)fetchLyricInfo {
@@ -265,6 +273,9 @@ static dispatch_once_t onceToken;
         self.currentTime = currentTime;
         self.controlView.totalTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:totalTime];
         self.controlView.currentTime = [NSString qmui_timeStringWithMinsAndSecsFromSecs:currentTime];
+    }
+    if (!self.isFirstLyric) {
+        [self showDefaultLockScreenMediaInfoWithMusicModel:self.model totalTime:totalTime currentTime:currentTime image:self.imageView.image];
     }
     self.isUpdatingControlView = YES;
     [self.lyricView scrollLyricWithCurrentTime:currentTime totalTime:totalTime];
@@ -719,8 +730,15 @@ static dispatch_once_t onceToken;
         _lyricView.PlaySelectedLineBlock = ^(NSTimeInterval time) {
             [XKMusicPlayer sharedInstance].progress = time + 1;
         };
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
         XKWEAK
+        _lyricView.DidUpdatedLyricBlock = ^(NSTimeInterval totalTime, NSTimeInterval currentTime, NSString *lyric) {
+            XKSTRONG
+            self.isFirstLyric = YES;
+            if ([XKHelper isShowLockScreenMediaInfo]) {
+                [self showLockScreenMediaInfoWithMusicModel:self.model totalTime:totalTime currentTime:currentTime lyric:lyric image:self.imageView.image];
+            }
+        };
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
         [tap.rac_gestureSignal subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) {
             XKSTRONG
             [self showCoverView];
@@ -755,6 +773,13 @@ static dispatch_once_t onceToken;
         };
     }
     return _musicListView;
+}
+
+- (UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] init];
+    }
+    return _imageView;
 }
 
 @end
