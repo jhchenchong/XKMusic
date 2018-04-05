@@ -13,7 +13,7 @@
 + (NSString *)showStringForCount:(NSInteger)count {
     if (count < 100000) {
         return [NSString stringWithFormat:@"%ld", count];
-    }else {
+    } else {
         count = count/10000;
         return [NSString stringWithFormat:@"%ld万", count];
     }
