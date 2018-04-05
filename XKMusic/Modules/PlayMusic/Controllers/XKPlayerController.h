@@ -8,6 +8,7 @@
 
 #import <QMUIKit/QMUIKit.h>
 #import "XKMusicModel.h"
+#import "XKMusicPlayer.h"
 
 @interface XKPlayerController : QMUICommonViewController
 

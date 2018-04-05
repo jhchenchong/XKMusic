@@ -8,7 +8,6 @@
 
 #import "XKPlayerController.h"
 #import "XKMusicControlView.h"
-#import "XKMusicPlayer.h"
 #import "XKPlayerController+KTVHTTPCache.h"
 #import "XKPlayerController+LockScreenInfo.h"
 #import "XKLyricModel.h"

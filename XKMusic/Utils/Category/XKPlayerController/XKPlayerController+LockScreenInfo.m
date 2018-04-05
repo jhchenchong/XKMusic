@@ -31,25 +31,19 @@
         [self playNextMusic];
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-//    if (@available(iOS 9.1, *)) {
-//        [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//            MPChangePlaybackPositionCommandEvent *playbackPositionEvent = (MPChangePlaybackPositionCommandEvent *)event;
-////            playbackPositionEvent.positionTime
-//            
-////            [self.player seekToTime:CMTimeMake(totlaTime.value*playbackPositionEvent.positionTime/CMTimeGetSeconds(totlaTime), totlaTime.timescale) completionHandler:^(BOOL finished) {
-////            }];
-//            return MPRemoteCommandHandlerStatusSuccess;
-//        }];
-//    } else {
-//        
-//    }
+    if (@available(iOS 9.1, *)) {
+        [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+            MPChangePlaybackPositionCommandEvent *playbackPositionEvent = (MPChangePlaybackPositionCommandEvent *)event;
+            [XKMusicPlayer sharedInstance].progress = playbackPositionEvent.positionTime;
+            return MPRemoteCommandHandlerStatusSuccess;
+        }];
+    }
 }
 
 - (void)showLockScreenMediaInfoWithMusicModel:(XKMusicModel *)model totalTime:(CGFloat)totalTime currentTime:(CGFloat)currentTime lyric:(NSString *)lyric image:(UIImage *)image {
     NSMutableDictionary * songDict = [[NSMutableDictionary alloc] init];
     [songDict setObject:model.music_name forKey:MPMediaItemPropertyTitle];
-    [songDict setObject:model.music_artist forKey:MPMediaItemPropertyArtist];
-    [songDict setObject:lyric forKey:MPMediaItemPropertyAlbumTitle];
+    [songDict setObject:lyric?lyric:model.music_artist forKey:MPMediaItemPropertyAlbumTitle];
     [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
     [songDict setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     if (image) {
