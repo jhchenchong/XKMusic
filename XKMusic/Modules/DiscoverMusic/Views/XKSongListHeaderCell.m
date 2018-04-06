@@ -93,10 +93,22 @@
     return button;
 }
 
+- (void)setModel:(XKSongListInfoModel *)model {
+    _model = model;
+    self.coverImageView.URL = model.cover;
+    [self.playCountButton setTitle:[NSString showStringForCount:model.playcount] forState:UIControlStateNormal];
+    self.songListNameLabel.text = model.name;
+    self.userIconImageView.URL = model.creatorIcon;
+    [self.creatorButton setTitle:model.creatorname forState:UIControlStateNormal];
+    [self.collectionButton setTitle:[NSString showStringForCount:model.subscribedCount] forState:UIControlStateNormal];
+    [self.commentButton setTitle:[NSString showStringForCount:model.commentCount] forState:UIControlStateNormal];
+    [self.shareButton setTitle:[NSString showStringForCount:model.shareCount] forState:UIControlStateNormal];
+    
+}
+
 - (LKImageView *)coverImageView {
     if (!_coverImageView) {
         _coverImageView = [[LKImageView alloc] init];
-        _coverImageView.image = UIImageMake(@"cm2_daily_banner1.jpg");
     }
     return _coverImageView;
 }
@@ -106,7 +118,7 @@
         _playCountButton = [[QMUIButton alloc] init];
         _playCountButton.userInteractionEnabled = NO;
         _playCountButton.imagePosition = QMUIButtonImagePositionLeft;
-        [_playCountButton setTitle:@"123万" forState:UIControlStateNormal];
+        [_playCountButton setTitle:@"0" forState:UIControlStateNormal];
         _playCountButton.titleLabel.font = UIFontMake(12);
         [_playCountButton setTitleColor:UIColorWhite forState:UIControlStateNormal];
         
@@ -127,7 +139,6 @@
         _songListNameLabel.textColor = UIColorWhite;
         _songListNameLabel.font = UIFontBoldMake(17);
         _songListNameLabel.numberOfLines = 2;
-        _songListNameLabel.text = @"你是我自罚三杯也不肯开口的秘密";
     }
     return _songListNameLabel;
 }
@@ -135,7 +146,8 @@
 - (LKImageView *)userIconImageView {
     if (!_userIconImageView) {
         _userIconImageView = [[LKImageView alloc] init];
-        _userIconImageView.image = UIImageMake(@"cm2_blogo_qq");
+        _userIconImageView.image = [UIImage qmui_imageWithColor:UIColorGray];
+        _userIconImageView.layer.cornerRadius = KAUTOSCALE(15);
     }
     return _userIconImageView;
 }
@@ -145,7 +157,6 @@
         _creatorButton = [[QMUIButton alloc] init];
         _creatorButton.imagePosition = QMUIButtonImagePositionRight;
         _creatorButton.spacingBetweenImageAndTitle = 10;
-        [_creatorButton setTitle:@"浪漫恋星空" forState:UIControlStateNormal];
         [_creatorButton setTitleColor:UIColorWhite forState:UIControlStateNormal];
         [_creatorButton setImage:UIImageMake(@"cm2_list_detail_icn_arr") forState:UIControlStateNormal];
         _creatorButton.titleLabel.font = UIFontMake(14);
@@ -156,21 +167,21 @@
 
 - (QMUIButton *)collectionButton {
     if (!_collectionButton) {
-        _collectionButton = [self configButtonWithImageName:@"cm2_list_detail_icn_fav_new" title:@"收藏" buttonType:XKSonglistHeaderButtonTypeCollection];
+        _collectionButton = [self configButtonWithImageName:@"cm2_list_detail_icn_fav_new" title:@"0" buttonType:XKSonglistHeaderButtonTypeCollection];
     }
     return _collectionButton;
 }
 
 - (QMUIButton *)commentButton {
     if (!_commentButton) {
-        _commentButton = [self configButtonWithImageName:@"cm2_list_detail_icn_cmt" title:@"评论" buttonType:XKSonglistHeaderButtonTypeComment];
+        _commentButton = [self configButtonWithImageName:@"cm2_list_detail_icn_cmt" title:@"0" buttonType:XKSonglistHeaderButtonTypeComment];
     }
     return _commentButton;
 }
 
 - (QMUIButton *)shareButton {
     if (!_shareButton) {
-        _shareButton = [self configButtonWithImageName:@"cm2_list_detail_icn_share" title:@"分享" buttonType:XKSonglistHeaderButtonTypeShare];
+        _shareButton = [self configButtonWithImageName:@"cm2_list_detail_icn_share" title:@"0" buttonType:XKSonglistHeaderButtonTypeShare];
     }
     return _shareButton;
 }

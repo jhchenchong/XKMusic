@@ -8,10 +8,11 @@
 
 #import "XKSongListDetailController.h"
 #import "XKPlaylistDetailModel.h"
-#import <UIImageView+WebCache.h>
 #import "XKDailyRecommendHeaderView.h"
 #import "UIImage+Blur.h"
 #import "XKSongListHeaderCell.h"
+#import "XKSongListInfoModel.h"
+#import "CBAutoScrollLabel.h"
 
 #define CELLHEIGHT KAUTOSCALE(250)
 #define IMAGEVIEWHEIGHT (kTopHeight + CELLHEIGHT)
@@ -20,6 +21,9 @@
 
 @property (nonatomic, strong) XKPersonalizedModel *model;
 @property (nonatomic, strong) UIImageView *bgImageView;
+
+@property (nonatomic, strong) XKSongListInfoModel *infoModel;
+@property (nonatomic, strong) CBAutoScrollLabel *titleLabel;
 
 @end
 
@@ -51,13 +55,14 @@
 
 - (void)setNavigationItemsIsInEditMode:(BOOL)isInEditMode animated:(BOOL)animated {
     [super setNavigationItemsIsInEditMode:isInEditMode animated:animated];
-    self.titleView.title = @"歌单";
+    self.navigationItem.titleView = self.titleLabel;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[XKPlaylistDetailModel signalForPlaylistDetailModelWithID:[NSString stringWithFormat:@"%ld", self.model.ID]] subscribeNext:^(XKPlaylistDetailModel *x) {
-        
+        self.infoModel = [XKSongListInfoModel modelWithName:x.name desc:x.desc playcount:x.playCount cover:self.model.picUrl creatorname:x.creator.nickname creatorIcon:x.creator.avatarUrl subscribedCount:x.subscribedCount commentCount:x.commentCount shareCount:x.shareCount];
+        [self.tableView reloadData];
     } error:^(NSError * _Nullable error) {
         NSLog(@"%@", error);
     }];
@@ -94,6 +99,9 @@
         return cell;
     } else {
         XKSongListHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListHeaderCell"];
+        if (self.infoModel) {
+            cell.model = self.infoModel;
+        }
         return cell;
     }
 }
@@ -140,9 +148,13 @@
         }
         
         if (offset > CELLHEIGHT * 0.6) {
-            self.titleView.title = @"浪漫恋星空";
+            if ([self.titleLabel.text isEqualToString:@"歌单"]) {
+                self.titleLabel.text = self.infoModel.name;
+            }
         } else {
-            self.titleView.title = @"歌单";
+            if (![self.titleLabel.text isEqualToString:@"歌单"]) {
+                self.titleLabel.text = @"歌单";
+            }
         }
     } else {
         if (offset == -kTopHeight) {
@@ -169,11 +181,24 @@
         _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
         [_bgImageView sd_setImageWithURL:[NSURL URLWithString:self.model.picUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self setImgWithFadeAnimationUIImage:[image blurredImageWithRadius:100 iterations:10 tintColor:[image qmui_averageColor]]];
+                [self setImgWithFadeAnimationUIImage:[image blurredImageWithRadius:100 iterations:10 tintColor:UIColorBlack]];
             });
         }];
     }
     return _bgImageView;
+}
+
+- (CBAutoScrollLabel *)titleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [[CBAutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, KAUTOSCALE(150), [NSString oneLineOfTextHeightWithStringFont:UIFontBoldMake(17)])];
+        _titleLabel.text = @"歌单";
+        _titleLabel.textColor = UIColorWhite;
+        _titleLabel.font = UIFontBoldMake(17);
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.scrollSpeed = 20;
+        [_titleLabel observeApplicationNotifications];
+    }
+    return _titleLabel;
 }
 
 @end

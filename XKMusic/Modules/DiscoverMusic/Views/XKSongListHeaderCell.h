@@ -7,9 +7,11 @@
 //
 
 #import "XKCustomCell.h"
+#import "XKSongListInfoModel.h"
 
 @interface XKSongListHeaderCell : XKCustomCell
 
 @property (nonatomic, copy) void(^DidClickHeaderCellButtonBlock)(XKSonglistHeaderButtonType type);
+@property (nonatomic, strong) XKSongListInfoModel *model;
 
 @end

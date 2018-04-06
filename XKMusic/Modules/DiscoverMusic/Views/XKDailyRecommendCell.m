@@ -8,7 +8,6 @@
 
 #import "XKDailyRecommendCell.h"
 #import "XKDailyRecommendModel.h"
-#import <UIImageView+WebCache.h>
 
 @interface XKDailyRecommendCell ()
 

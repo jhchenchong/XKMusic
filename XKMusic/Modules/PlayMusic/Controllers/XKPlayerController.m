@@ -16,7 +16,6 @@
 #import "XKMusicListView.h"
 #import "XKMusicCoverView.h"
 #import "XKHelper.h"
-#import <UIImageView+WebCache.h>
 
 @interface XKPlayerController ()<XKMusicControlViewDelegate, XKMusicCoverViewDelegate, XKMusicPlayerDelegate>
 

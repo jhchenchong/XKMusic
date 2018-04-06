@@ -22,6 +22,7 @@
 #import <KTVHTTPCache/KTVHTTPCache.h>
 #import "UITabBarController+Animation.h"
 #import "MessageThrottle.h"
+#import <UIImageView+WebCache.h>
 
 #import "XKToolsMacro.h"
 #import "XKConst.h"

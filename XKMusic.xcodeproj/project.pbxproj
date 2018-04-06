@@ -91,6 +91,9 @@
 		B7964F5E2056850500EFACE4 /* NSString+Count.m in Sources */ = {isa = PBXBuildFile; fileRef = B7964F5D2056850500EFACE4 /* NSString+Count.m */; };
 		B7A154F22077148C004B277D /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154F12077148C004B277D /* UIImage+Blur.m */; };
 		B7A154FA20774CD3004B277D /* XKSongListHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */; };
+		B7A154FD20776678004B277D /* XKSongListInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154FC20776678004B277D /* XKSongListInfoModel.m */; };
+		B7A1550020776F07004B277D /* XKSongListDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154FF20776F07004B277D /* XKSongListDetailCell.m */; };
+		B7A15504207776C0004B277D /* CBAutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A15503207776C0004B277D /* CBAutoScrollLabel.m */; };
 		B7A8CF4C204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8CF4B204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m */; };
 		B7A8CF4F204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8CF4E204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m */; };
 		B7B155EC205A4F2F0053918B /* XKDJProgramApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B155EB205A4F2F0053918B /* XKDJProgramApi.m */; };
@@ -317,6 +320,12 @@
 		B7A154F12077148C004B277D /* UIImage+Blur.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
 		B7A154F820774CD3004B277D /* XKSongListHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSongListHeaderCell.h; sourceTree = "<group>"; };
 		B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSongListHeaderCell.m; sourceTree = "<group>"; };
+		B7A154FB20776678004B277D /* XKSongListInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSongListInfoModel.h; sourceTree = "<group>"; };
+		B7A154FC20776678004B277D /* XKSongListInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSongListInfoModel.m; sourceTree = "<group>"; };
+		B7A154FE20776F07004B277D /* XKSongListDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSongListDetailCell.h; sourceTree = "<group>"; };
+		B7A154FF20776F07004B277D /* XKSongListDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSongListDetailCell.m; sourceTree = "<group>"; };
+		B7A15502207776C0004B277D /* CBAutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAutoScrollLabel.h; sourceTree = "<group>"; };
+		B7A15503207776C0004B277D /* CBAutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBAutoScrollLabel.m; sourceTree = "<group>"; };
 		B7A8CF4A204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDisMusicSongListRecommendedComponent.h; sourceTree = "<group>"; };
 		B7A8CF4B204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDisMusicSongListRecommendedComponent.m; sourceTree = "<group>"; };
 		B7A8CF4D204E82900083D3CA /* XKDisMusicSongListRecommendedCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDisMusicSongListRecommendedCell.h; sourceTree = "<group>"; };
@@ -929,6 +938,7 @@
 		B7768A8B204AA060006E8304 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				B7A15501207776C0004B277D /* CBAutoScrollLabel */,
 				B7D285B5207220DC00488510 /* MessageThrottle */,
 				B74DC85F20522A9B0092025A /* LKImageKit */,
 				B74D2B1D204D238900AD1C01 /* WMPageController */,
@@ -1055,6 +1065,15 @@
 				B7A154F12077148C004B277D /* UIImage+Blur.m */,
 			);
 			path = UIImage;
+			sourceTree = "<group>";
+		};
+		B7A15501207776C0004B277D /* CBAutoScrollLabel */ = {
+			isa = PBXGroup;
+			children = (
+				B7A15502207776C0004B277D /* CBAutoScrollLabel.h */,
+				B7A15503207776C0004B277D /* CBAutoScrollLabel.m */,
+			);
+			path = CBAutoScrollLabel;
 			sourceTree = "<group>";
 		};
 		B7A8CF49204E72050083D3CA /* Components */ = {
@@ -1393,6 +1412,8 @@
 				B70BAA812063B6C200E0ED66 /* XKToolbar.m */,
 				B7A154F820774CD3004B277D /* XKSongListHeaderCell.h */,
 				B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */,
+				B7A154FE20776F07004B277D /* XKSongListDetailCell.h */,
+				B7A154FF20776F07004B277D /* XKSongListDetailCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1415,6 +1436,8 @@
 				B73700B92062611000BC844C /* XKDailyRecommendModel.m */,
 				B73EF4E32075C14200BDFB4C /* XKPlaylistDetailModel.h */,
 				B73EF4E42075C14200BDFB4C /* XKPlaylistDetailModel.m */,
+				B7A154FB20776678004B277D /* XKSongListInfoModel.h */,
+				B7A154FC20776678004B277D /* XKSongListInfoModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1676,6 +1699,7 @@
 				B7606AEC205FC14A00DC2575 /* XKPlayerController.m in Sources */,
 				B73EF4E52075C14200BDFB4C /* XKPlaylistDetailModel.m in Sources */,
 				B74DC8B320522A9B0092025A /* LKImageSmartCache.m in Sources */,
+				B7A154FD20776678004B277D /* XKSongListInfoModel.m in Sources */,
 				B7D285B8207220DC00488510 /* MessageThrottle.m in Sources */,
 				B74DC8A520522A9B0092025A /* LKImageManager.m in Sources */,
 				B7FF36BB204CD9BC005CD83E /* XKHeaderComponent.m in Sources */,
@@ -1727,6 +1751,7 @@
 				B7D906D72058F96000BAF211 /* XKPrivatecontentCell.m in Sources */,
 				B73700A5206229B000BC844C /* XKSliderView.m in Sources */,
 				B74DC8BB20522A9B0092025A /* LKImageNetworkFileLoader.m in Sources */,
+				B7A15504207776C0004B277D /* CBAutoScrollLabel.m in Sources */,
 				B74DC8BD20522A9B0092025A /* LKImageLocalFileLoader.m in Sources */,
 				B7B155F8205A66C80053918B /* XKAdjustSectionsController.m in Sources */,
 				B7FF36B9204CD9BC005CD83E /* XKActionHeaderComponent.m in Sources */,
@@ -1753,6 +1778,7 @@
 				B724AF5220668D0300D79368 /* XKLyricParser.m in Sources */,
 				B7FF36D5204CE1DB005CD83E /* XKMyMusicController.m in Sources */,
 				B7D906D42058F6F000BAF211 /* XKDisPrivatecontentComponent.m in Sources */,
+				B7A1550020776F07004B277D /* XKSongListDetailCell.m in Sources */,
 				B70BAA822063B6C200E0ED66 /* XKToolbar.m in Sources */,
 				B74D2B3F204D367200AD1C01 /* XKDisMusicHeaderView.m in Sources */,
 				B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */,
