@@ -13,6 +13,7 @@
 #import "XKSongListHeaderCell.h"
 #import "XKSongListInfoModel.h"
 #import "CBAutoScrollLabel.h"
+#import "XKSongListDetailCell.h"
 
 #define CELLHEIGHT KAUTOSCALE(250)
 #define IMAGEVIEWHEIGHT (kTopHeight + CELLHEIGHT)
@@ -24,6 +25,8 @@
 
 @property (nonatomic, strong) XKSongListInfoModel *infoModel;
 @property (nonatomic, strong) CBAutoScrollLabel *titleLabel;
+
+@property (nonatomic, copy) NSArray<XKCellDataAdapter *> *adapters;
 
 @end
 
@@ -60,18 +63,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self requestData];
+}
+
+- (void)requestData {
     [[XKPlaylistDetailModel signalForPlaylistDetailModelWithID:[NSString stringWithFormat:@"%ld", self.model.ID]] subscribeNext:^(XKPlaylistDetailModel *x) {
         self.infoModel = [XKSongListInfoModel modelWithName:x.name desc:x.desc playcount:x.playCount cover:self.model.picUrl creatorname:x.creator.nickname creatorIcon:x.creator.avatarUrl subscribedCount:x.subscribedCount commentCount:x.commentCount shareCount:x.shareCount];
+        NSMutableArray *arrayM = @[].mutableCopy;
+        for (Tracks *tracks in x.tracks) {
+            XKMusicModel *model = [[XKMusicModel alloc] init];
+            model.music_id = [NSString stringWithFormat:@"%ld", (long)tracks.ID];
+            model.music_name = tracks.name;
+            model.music_artist = tracks.artists[0].name;
+            model.albumname = tracks.album.name;
+            [arrayM addObject:model];
+        }
+        self.adapters = arrayM.copy;
         [self.tableView reloadData];
     } error:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
 }
 
 - (void)initSubviews {
     [super initSubviews];
     self.tableView.backgroundColor = UIColorClear;
-    [XKCustomCell registerToTableView:self.tableView];
+    [XKSongListDetailCell registerToTableView:self.tableView];
     [XKSongListHeaderCell registerToTableView:self.tableView];
     [XKDailyRecommendHeaderView registerToTableView:self.tableView];
     [self.view insertSubview:self.bgImageView belowSubview:self.tableView];
@@ -89,13 +106,12 @@
     if (section == 0) {
         return 1;
     }
-    return 30;
+    return self.adapters.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        XKCustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKCustomCell"];
-        cell.textLabel.text = @"浪漫恋星空";
+        XKSongListDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListDetailCell"];
         return cell;
     } else {
         XKSongListHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListHeaderCell"];
@@ -110,7 +126,7 @@
     if (indexPath.section == 0) {
         return CELLHEIGHT;
     }
-    return 44;
+    return 60;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

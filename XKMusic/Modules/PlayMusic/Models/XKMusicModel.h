@@ -14,6 +14,7 @@
 @property (nonatomic, copy) NSString *music_name;
 @property (nonatomic, copy) NSString *music_artist;
 @property (nonatomic, copy) NSString *music_cover;
+@property (nonatomic, copy) NSString *albumname;
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL isLike;
 
