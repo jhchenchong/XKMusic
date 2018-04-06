@@ -7,7 +7,6 @@
 //
 
 #import "XKDisMusicSongListRecommendedComponent.h"
-#import "XKPersonalizedModel.h"
 #import "XKPersonalizedCell.h"
 
 @interface XKDisMusicSongListRecommendedComponent()

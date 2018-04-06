@@ -17,6 +17,7 @@
 #import "XKDailyRecommendController.h"
 #import "XKSongListController.h"
 #import "XKLeaderboardController.h"
+#import "XKSongListDetailController.h"
 
 @interface XKDisMusicController ()<XKActionHeaderComponentDelegate, SDCycleScrollViewDelegate>
 
@@ -148,6 +149,13 @@
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     [QMUITips showInfo:[NSString stringWithFormat:@"点击了第%ld张轮播图", (long)index + 1]];
+}
+
+- (void)tableComponent:(id<XKTableComponent>)component didTapItemAtIndex:(NSUInteger)index {
+    if ([component isKindOfClass:[XKDisMusicSongListRecommendedComponent class]]) {
+        XKSongListDetailController *songListDetailController = [[XKSongListDetailController alloc] initWithPersonalizedModel:self.disMusicSongListRecommendedComponent.models[index]];
+        [self.navigationController pushViewController:songListDetailController animated:YES];
+    }
 }
 
 - (UIView *)tableFootView {

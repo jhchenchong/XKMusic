@@ -7,8 +7,11 @@
 //
 
 #import "XKCollectionComponent.h"
+#import "XKPersonalizedModel.h"
 
 /// 推荐歌单
 @interface XKDisMusicSongListRecommendedComponent : XKCollectionComponent
+
+@property (nonatomic, copy, readonly) NSArray<XKPersonalizedModel *> *models;
 
 @end
