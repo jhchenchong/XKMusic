@@ -90,6 +90,7 @@
 		B7964F5A20566EBF00EFACE4 /* cm2_shareapp_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = B7964F5920566EBF00EFACE4 /* cm2_shareapp_cover.png */; };
 		B7964F5E2056850500EFACE4 /* NSString+Count.m in Sources */ = {isa = PBXBuildFile; fileRef = B7964F5D2056850500EFACE4 /* NSString+Count.m */; };
 		B7A154F22077148C004B277D /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154F12077148C004B277D /* UIImage+Blur.m */; };
+		B7A154FA20774CD3004B277D /* XKSongListHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */; };
 		B7A8CF4C204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8CF4B204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m */; };
 		B7A8CF4F204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8CF4E204E82900083D3CA /* XKDisMusicSongListRecommendedCell.m */; };
 		B7B155EC205A4F2F0053918B /* XKDJProgramApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B155EB205A4F2F0053918B /* XKDJProgramApi.m */; };
@@ -314,6 +315,8 @@
 		B7964F5D2056850500EFACE4 /* NSString+Count.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Count.m"; sourceTree = "<group>"; };
 		B7A154F02077148C004B277D /* UIImage+Blur.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
 		B7A154F12077148C004B277D /* UIImage+Blur.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
+		B7A154F820774CD3004B277D /* XKSongListHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKSongListHeaderCell.h; sourceTree = "<group>"; };
+		B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKSongListHeaderCell.m; sourceTree = "<group>"; };
 		B7A8CF4A204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDisMusicSongListRecommendedComponent.h; sourceTree = "<group>"; };
 		B7A8CF4B204E72730083D3CA /* XKDisMusicSongListRecommendedComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKDisMusicSongListRecommendedComponent.m; sourceTree = "<group>"; };
 		B7A8CF4D204E82900083D3CA /* XKDisMusicSongListRecommendedCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKDisMusicSongListRecommendedCell.h; sourceTree = "<group>"; };
@@ -1388,6 +1391,8 @@
 				B70BAA7720633EF100E0ED66 /* XKDailyRecommendHeaderView.m */,
 				B70BAA802063B6C200E0ED66 /* XKToolbar.h */,
 				B70BAA812063B6C200E0ED66 /* XKToolbar.m */,
+				B7A154F820774CD3004B277D /* XKSongListHeaderCell.h */,
+				B7A154F920774CD3004B277D /* XKSongListHeaderCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1752,6 +1757,7 @@
 				B74D2B3F204D367200AD1C01 /* XKDisMusicHeaderView.m in Sources */,
 				B7232E0C2062864500DA1D41 /* XKDailyRecommendApi.m in Sources */,
 				B7964F482056525F00EFACE4 /* YTKBaseRequest+AnimatingAccessory.m in Sources */,
+				B7A154FA20774CD3004B277D /* XKSongListHeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

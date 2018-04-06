@@ -18,15 +18,22 @@ typedef NS_ENUM(NSUInteger, XKPlayerPlayStyle) {
 };
 
 typedef NS_ENUM(NSUInteger, XKPlayerChangeStyle) {
-    XKPlayerChangeStyleNext,      // 下一曲
-    XKPlayerChangeStylePrev       // 上一曲
+    XKPlayerChangeStyleNext, // 下一曲
+    XKPlayerChangeStylePrev // 上一曲
 };
 
 typedef NS_ENUM(NSUInteger, XKToolbarButtonType) {
-    XKToolbarButtonTypeNext,      // 下一首播放
-    XKToolbarButtonTypeAdd,       // 收藏到歌单
-    XKToolbarButtonTypeDownload,  // 下载
-    XKToolbarButtonTypeDelete     // 删除
+    XKToolbarButtonTypeNext,     // 下一首播放
+    XKToolbarButtonTypeAdd,      // 收藏到歌单
+    XKToolbarButtonTypeDownload, // 下载
+    XKToolbarButtonTypeDelete    // 删除
+};
+
+typedef NS_ENUM(NSUInteger, XKSonglistHeaderButtonType) {
+    XKSonglistHeaderButtonTypeCollection, // 收藏
+    XKSonglistHeaderButtonTypeComment,    // 评论
+    XKSonglistHeaderButtonTypeShare,      // 分享
+    XKSonglistHeaderButtonTypeDownload    // 下载
 };
 
 static NSString *const kAnimationButtnStateChanged = @"kAnimationButtnStateChanged";

@@ -11,8 +11,9 @@
 #import <UIImageView+WebCache.h>
 #import "XKDailyRecommendHeaderView.h"
 #import "UIImage+Blur.h"
+#import "XKSongListHeaderCell.h"
 
-#define CELLHEIGHT SCREEN_HEIGHT / 3
+#define CELLHEIGHT KAUTOSCALE(250)
 #define IMAGEVIEWHEIGHT (kTopHeight + CELLHEIGHT)
 
 @interface XKSongListDetailController ()
@@ -66,7 +67,7 @@
     [super initSubviews];
     self.tableView.backgroundColor = UIColorClear;
     [XKCustomCell registerToTableView:self.tableView];
-    [self.tableView registerClass:[QMUITableViewCell class] forCellReuseIdentifier:@"QMUITableViewCell"];
+    [XKSongListHeaderCell registerToTableView:self.tableView];
     [XKDailyRecommendHeaderView registerToTableView:self.tableView];
     [self.view insertSubview:self.bgImageView belowSubview:self.tableView];
 }
@@ -92,9 +93,7 @@
         cell.textLabel.text = @"浪漫恋星空";
         return cell;
     } else {
-        QMUITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"QMUITableViewCell"];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = 0;
+        XKSongListHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListHeaderCell"];
         return cell;
     }
 }
@@ -138,6 +137,12 @@
             self.bgImageView.qmui_top = -CELLHEIGHT;
         } else {
             self.bgImageView.qmui_top = -offset;
+        }
+        
+        if (offset > CELLHEIGHT * 0.6) {
+            self.titleView.title = @"浪漫恋星空";
+        } else {
+            self.titleView.title = @"歌单";
         }
     } else {
         if (offset == -kTopHeight) {
