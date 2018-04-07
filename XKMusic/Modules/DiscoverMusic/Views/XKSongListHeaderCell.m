@@ -71,7 +71,7 @@
     }];
     [@[self.collectionButton, self.commentButton, self.shareButton, self.downloadButton] mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:KAUTOSCALE(60) leadSpacing:20 tailSpacing:20];
     [@[self.collectionButton, self.commentButton, self.shareButton, self.downloadButton] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(KAUTOSCALE(60));
+        make.height.mas_equalTo(KAUTOSCALE(64));
         make.bottom.mas_equalTo(KAUTOSCALE(-12));
     }];
 }

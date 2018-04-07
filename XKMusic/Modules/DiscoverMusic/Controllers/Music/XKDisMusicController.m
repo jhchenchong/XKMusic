@@ -154,6 +154,7 @@
 - (void)tableComponent:(id<XKTableComponent>)component didTapItemAtIndex:(NSUInteger)index {
     if ([component isKindOfClass:[XKDisMusicSongListRecommendedComponent class]]) {
         XKSongListDetailController *songListDetailController = [[XKSongListDetailController alloc] initWithPersonalizedModel:self.disMusicSongListRecommendedComponent.models[index]];
+        songListDetailController.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:songListDetailController animated:YES];
     }
 }

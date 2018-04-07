@@ -114,6 +114,7 @@
 		B7C347172074708E0011CFED /* XKPlayerController+LockScreenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C347162074708E0011CFED /* XKPlayerController+LockScreenInfo.m */; };
 		B7C3471A2074A9EA0011CFED /* XKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C347192074A9EA0011CFED /* XKHelper.m */; };
 		B7C445CD2060B4E300FB4045 /* XKAppDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */; };
+		B7CD78CF20785DE20035113B /* XKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7CD78CE20785DE20035113B /* XKLoadingView.m */; };
 		B7D285B42071EEDF00488510 /* UITabBarController+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */; };
 		B7D285B8207220DC00488510 /* MessageThrottle.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D285B7207220DC00488510 /* MessageThrottle.m */; };
 		B7D906CE2058F53B00BAF211 /* XKPrivatecontentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D906CD2058F53B00BAF211 /* XKPrivatecontentApi.m */; };
@@ -366,6 +367,8 @@
 		B7C347192074A9EA0011CFED /* XKHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKHelper.m; sourceTree = "<group>"; };
 		B7C445CB2060B4E300FB4045 /* XKAppDelegateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegateHelper.h; sourceTree = "<group>"; };
 		B7C445CC2060B4E300FB4045 /* XKAppDelegateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegateHelper.m; sourceTree = "<group>"; };
+		B7CD78CD20785DE20035113B /* XKLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKLoadingView.h; sourceTree = "<group>"; };
+		B7CD78CE20785DE20035113B /* XKLoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKLoadingView.m; sourceTree = "<group>"; };
 		B7D285B22071EEDF00488510 /* UITabBarController+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+Animation.h"; sourceTree = "<group>"; };
 		B7D285B32071EEDF00488510 /* UITabBarController+Animation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+Animation.m"; sourceTree = "<group>"; };
 		B7D285B6207220DC00488510 /* MessageThrottle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageThrottle.h; sourceTree = "<group>"; };
@@ -876,6 +879,7 @@
 		B7768A85204AA05F006E8304 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B7CD78CB20785A280035113B /* CustomViews */,
 				B724AF4F20668CD100D79368 /* LyricParser */,
 				B737009E2061F66800BC844C /* XKMusicPlayer */,
 				B7964F42205651B400EFACE4 /* Accessory */,
@@ -1179,6 +1183,23 @@
 				B7C0010D206B875F009D92B6 /* XKMusicListView.m */,
 			);
 			path = XKMusicListView;
+			sourceTree = "<group>";
+		};
+		B7CD78CB20785A280035113B /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				B7CD78CC20785A430035113B /* XKLoadingView */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		B7CD78CC20785A430035113B /* XKLoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				B7CD78CD20785DE20035113B /* XKLoadingView.h */,
+				B7CD78CE20785DE20035113B /* XKLoadingView.m */,
+			);
+			path = XKLoadingView;
 			sourceTree = "<group>";
 		};
 		B7D285B5207220DC00488510 /* MessageThrottle */ = {
@@ -1766,6 +1787,7 @@
 				B7964F5E2056850500EFACE4 /* NSString+Count.m in Sources */,
 				B7FF36DB204CE272005CD83E /* XKAccountController.m in Sources */,
 				B70BAA7820633EF100E0ED66 /* XKDailyRecommendHeaderView.m in Sources */,
+				B7CD78CF20785DE20035113B /* XKLoadingView.m in Sources */,
 				B7964F55205665A100EFACE4 /* XKPersonalizedApi.m in Sources */,
 				B7964F512056657100EFACE4 /* XKPersonalizedModel.m in Sources */,
 				B73EF4E22075C0E700BDFB4C /* XKPlaylistDetailApi.m in Sources */,

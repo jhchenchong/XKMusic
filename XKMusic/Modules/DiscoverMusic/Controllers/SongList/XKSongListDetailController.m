@@ -14,6 +14,8 @@
 #import "XKSongListInfoModel.h"
 #import "CBAutoScrollLabel.h"
 #import "XKSongListDetailCell.h"
+#import "XKToolbar.h"
+#import "XKLoadingView.h"
 
 #define CELLHEIGHT KAUTOSCALE(250)
 #define IMAGEVIEWHEIGHT (kTopHeight + CELLHEIGHT)
@@ -27,6 +29,10 @@
 @property (nonatomic, strong) CBAutoScrollLabel *titleLabel;
 
 @property (nonatomic, copy) NSArray<XKCellDataAdapter *> *adapters;
+
+@property (nonatomic, strong) NSMutableSet<NSNumber *> *selectedItemIndexes;
+@property (nonatomic, strong) XKToolbar *toolbar;
+@property (nonatomic, strong) XKLoadingView *loadingView;
 
 @end
 
@@ -61,13 +67,30 @@
     self.navigationItem.titleView = self.titleLabel;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self resetHeaderView];
+    self.tableView.editing = NO;
+    [self.selectedItemIndexes removeAllObjects];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight);
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [XKAppDelegateHelper showAnimationButton];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self fetchInfoModel];
     [self requestData];
 }
 
 - (void)requestData {
     [[XKPlaylistDetailModel signalForPlaylistDetailModelWithID:[NSString stringWithFormat:@"%ld", self.model.ID]] subscribeNext:^(XKPlaylistDetailModel *x) {
+        [self.loadingView dismiss];
         self.infoModel = [XKSongListInfoModel modelWithName:x.name desc:x.desc playcount:x.playCount cover:self.model.picUrl creatorname:x.creator.nickname creatorIcon:x.creator.avatarUrl subscribedCount:x.subscribedCount commentCount:x.commentCount shareCount:x.shareCount];
         NSMutableArray *arrayM = @[].mutableCopy;
         for (Tracks *tracks in x.tracks) {
@@ -78,11 +101,19 @@
             model.albumname = tracks.album.name;
             [arrayM addObject:model];
         }
-        self.adapters = arrayM.copy;
+        self.adapters = [arrayM.rac_sequence.signal map:^id _Nullable(XKMusicModel *value) {
+            return [XKSongListDetailCell dataAdapterWithData:value];
+        }].toArray;
         [self.tableView reloadData];
     } error:^(NSError * _Nullable error) {
-        
+        [self.loadingView dismiss];
     }];
+}
+
+- (void)fetchInfoModel {
+    self.infoModel = [[XKSongListInfoModel alloc] init];
+    self.infoModel.name = self.model.name;
+    self.infoModel.cover = self.model.picUrl;
 }
 
 - (void)initSubviews {
@@ -92,10 +123,27 @@
     [XKSongListHeaderCell registerToTableView:self.tableView];
     [XKDailyRecommendHeaderView registerToTableView:self.tableView];
     [self.view insertSubview:self.bgImageView belowSubview:self.tableView];
+    [self.view addSubview:self.toolbar];
+    [self.loadingView showInView:self.view];
 }
 
 - (void)layoutTableView {
     self.tableView.frame = CGRectMake(0, kTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - kTopHeight);
+}
+
+- (void)resetHeaderView {
+    XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[self.tableView headerViewForSection:1];
+    [headerView resetHeaderView];
+}
+
+- (void)handleToolbarButtonEnble {
+    if (self.tableView.editing == YES) {
+        if (self.selectedItemIndexes.count == 0) {
+            [self.toolbar toolbarButtonEnabled:NO];
+        } else {
+            [self.toolbar toolbarButtonEnabled:YES];
+        }
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -111,7 +159,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        XKSongListDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListDetailCell"];
+        XKSongListDetailCell *cell = (XKSongListDetailCell *)[tableView dequeueReusableCellAndLoadDataWithAdapter:self.adapters[indexPath.row] indexPath:indexPath];
+        if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
+            cell.selected = YES;
+        } else {
+            cell.selected = NO;
+        }
         return cell;
     } else {
         XKSongListHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"XKSongListHeaderCell"];
@@ -136,11 +189,50 @@
         headerView.playAllBlock = ^{
             
         };
+        XKWEAK
         headerView.SelectedBlock = ^(BOOL isClick) {
-            
+            XKSTRONG
+            if (isClick) {
+                NSArray<NSIndexPath *> *indexPaths = [self.tableView indexPathsForRowsInRect:CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.contentSize.height)];
+                [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (obj.section != 0) {
+                        [self.selectedItemIndexes addObject:@(obj.row)];
+                    }
+                }];
+            } else {
+                [self.selectedItemIndexes removeAllObjects];
+            }
+            [self handleToolbarButtonEnble];
+            [self.tableView reloadData];
         };
         headerView.MultipleButtonBlock = ^(BOOL isClick) {
-            
+            XKSTRONG
+            self.tableView.editing = isClick;
+            [self.selectedItemIndexes removeAllObjects];
+            if (isClick == NO) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight);
+                } completion:^(BOOL finished) {
+                    [self.tabBarController hideTabBar:NO animated:YES];
+                }];
+            } else {
+                [self handleToolbarButtonEnble];
+                NSArray <XKCustomCell *> *cells = [tableView visibleCells];
+                __block NSIndexPath *indexPath = nil;
+                [cells enumerateObjectsUsingBlock:^(XKCustomCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[XKSongListDetailCell class]]) {
+                        indexPath = ((XKSongListDetailCell *)obj).indexPath;
+                        *stop = YES;
+                    }
+                }];
+                NSInteger row = 0;
+                (indexPath.row == 0) ? (row = indexPath.row) : (row = indexPath.row + 1);
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:indexPath.section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                [self.tabBarController hideTabBar:YES animated:YES];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.toolbar.frame = CGRectMake(0, SCREEN_HEIGHT - TabBarHeight, SCREEN_WIDTH, TabBarHeight);
+                }];
+            }
         };
         return headerView;
     }
@@ -153,6 +245,44 @@
     }
     return 50;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        if (self.tableView.editing == YES) {
+            XKDailyRecommendHeaderView *headerView = (XKDailyRecommendHeaderView *)[tableView headerViewForSection:indexPath.section];
+            if ([self.selectedItemIndexes containsObject:@(indexPath.row)]) {
+                [self.selectedItemIndexes removeObject:@(indexPath.row)];
+                headerView.isSelected = NO;
+            } else {
+                [self.selectedItemIndexes addObject:@(indexPath.row)];
+                if (self.selectedItemIndexes.count == [self.tableView indexPathsForRowsInRect:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.contentSize.height)].count - 1) {
+                    headerView.isSelected = YES;
+                }
+            }
+            [self handleToolbarButtonEnble];
+            [self.tableView reloadData];
+        } else {
+            //        NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
+            //        [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
+            //        [[XKPlayerController sharedInstance] playMusicWithIndex:indexPath.row musicModels:musicModels];
+            //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
+            //        });
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return NO;
+    }
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offset = scrollView.contentOffset.y;
@@ -215,6 +345,44 @@
         [_titleLabel observeApplicationNotifications];
     }
     return _titleLabel;
+}
+
+- (NSMutableSet<NSNumber *> *)selectedItemIndexes {
+    if (!_selectedItemIndexes) {
+        _selectedItemIndexes = [[NSMutableSet alloc] init];
+    }
+    return _selectedItemIndexes;
+}
+
+- (XKToolbar *)toolbar {
+    if (!_toolbar) {
+        _toolbar = [[XKToolbar alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TabBarHeight)];
+        _toolbar.ClickButtonBlock = ^(XKToolbarButtonType type) {
+            switch (type) {
+                case XKToolbarButtonTypeNext:
+                    [QMUITips showInfo:@"下一首播放"];
+                    break;
+                case XKToolbarButtonTypeAdd:
+                    [QMUITips showInfo:@"收藏到歌单"];
+                    break;
+                case XKToolbarButtonTypeDownload:
+                    [QMUITips showInfo:@"下载"];
+                    break;
+                case XKToolbarButtonTypeDelete:
+                    [QMUITips showInfo:@"删除下载"];
+                    break;
+            }
+        };
+    }
+    return _toolbar;
+}
+
+- (XKLoadingView *)loadingView {
+    if (!_loadingView) {
+        _loadingView = [[XKLoadingView alloc] initWithFrame:CGRectMake(0, 0, KAUTOSCALE(40), KAUTOSCALE(40))];
+        _loadingView.center = CGPointMake(self.view.center.x, self.view.center.y + 100);
+    }
+    return _loadingView;
 }
 
 @end

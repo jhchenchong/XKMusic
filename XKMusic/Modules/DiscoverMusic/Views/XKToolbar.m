@@ -42,7 +42,7 @@
         [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.bottom.mas_equalTo(0);
         }];
-        [@[self.nextButton, self.addButton, self.downloadButton, self.deleteButton] mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:65 leadSpacing:30 tailSpacing:30];
+        [@[self.nextButton, self.addButton, self.downloadButton, self.deleteButton] mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:KAUTOSCALE(75) leadSpacing:KAUTOSCALE(20) tailSpacing:KAUTOSCALE(20)];
         [@[self.nextButton, self.addButton, self.downloadButton, self.deleteButton] mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(40);
             make.centerY.mas_equalTo(self.mas_centerY).offset(-iPhoneX_BOTTOM_HEIGHT / 2);

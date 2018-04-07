@@ -7,6 +7,7 @@
 //
 
 #import "XKSongListDetailCell.h"
+#import "XKMusicModel.h"
 
 @interface XKSongListDetailCell ()
 
@@ -15,6 +16,8 @@
 @property (nonatomic, strong) QMUIButton *moreButton;
 
 @property (nonatomic, strong) QMUIButton *numberButton;
+
+@property (nonatomic, assign) BOOL flag;
 
 @end
 
@@ -52,6 +55,29 @@
             }
         }
     }
+    if(_flag == editing) return;
+    if (editing == YES) {
+        [self.numberButton setTitle:@"" forState:UIControlStateNormal];
+        [self.numberButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(0);
+            make.centerY.mas_equalTo(self.contentView.mas_centerY);
+            make.height.width.mas_equalTo(0);
+        }];
+    } else {
+        [self.numberButton setTitle:[NSString stringWithFormat:@"%02ld", (long)(self.indexPath.row + 1)] forState:UIControlStateNormal];
+        [self.numberButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(15);
+            make.centerY.mas_equalTo(self.contentView.mas_centerY);
+            make.height.width.mas_equalTo(28);
+        }];
+    }
+    _flag = editing;
+}
+
+- (void)setupCell {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.multipleSelectionBackgroundView = [[UIView alloc] init];
+    self.tintColor = [XKColorHelper appMainColor];
 }
 
 - (void)buildSubview {
@@ -64,20 +90,31 @@
     [self.numberButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.width.mas_equalTo(20);
+        make.height.width.mas_equalTo(28);
     }];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(12);
         make.left.mas_equalTo(self.numberButton.mas_right).offset(20);
+        make.width.mas_lessThanOrEqualTo(SCREEN_WIDTH - 100);
     }];
     [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(-12);
         make.left.mas_equalTo(self.numberButton.mas_right).offset(20);
+        make.width.mas_lessThanOrEqualTo(SCREEN_WIDTH - 100);
     }];
     [self.moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
     }];
+}
+
+- (void)loadContent {
+    if (self.dataAdapter.data) {
+        XKMusicModel *model = (XKMusicModel *)self.dataAdapter.data;
+        self.titleLabel.text = model.music_name;
+        self.detailLabel.text = [NSString stringWithFormat:@"%@ - %@", model.music_artist, model.albumname];
+        [self.numberButton setTitle:[NSString stringWithFormat:@"%02ld", (long)(self.indexPath.row + 1)] forState:UIControlStateNormal];
+    }
 }
 
 - (QMUIButton *)numberButton {

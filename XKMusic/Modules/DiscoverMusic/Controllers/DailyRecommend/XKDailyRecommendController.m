@@ -12,6 +12,7 @@
 #import "XKDailyRecommendHeaderView.h"
 #import "XKToolbar.h"
 #import "XKMusicModel.h"
+#import "XKLoadingView.h"
 
 @interface XKDailyRecommendController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *selectedItemIndexes;
 
 @property (nonatomic, strong) XKToolbar *toolbar;
+@property (nonatomic, strong) XKLoadingView *loadingView;
 
 
 @end
@@ -66,6 +68,7 @@
 - (void)initSubviews {
     [super initSubviews];
     [self.view addSubview:self.toolbar];
+    [self.loadingView showInView:self.view];
 }
 
 - (void)initTableView {
@@ -77,6 +80,7 @@
 
 - (void)requestData {
     [[XKDailyRecommendModel signalForDailyRecommendModels] subscribeNext:^(NSArray<XKDailyRecommendModel *> *x) {
+        [self.loadingView dismiss];
         self.adapters = [[x.rac_sequence.signal map:^id _Nullable(XKDailyRecommendModel * _Nullable value) {
             return [XKDailyRecommendCell dataAdapterWithData:value cellHeight:60];
         }] toArray];
@@ -116,7 +120,7 @@
     return self.adapters.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XKDailyRecommendCell *cell = (XKDailyRecommendCell *)[tableView dequeueReusableCellAndLoadDataWithAdapter:self.adapters[indexPath.row] indexPath:indexPath];
     cell.ClickMoreButtonBlock = ^(XKDailyRecommendCell *dailyRecommendCell) {
         [QMUITips showInfo:[NSString stringWithFormat:@"%ld", dailyRecommendCell.indexPath.row]];
@@ -320,6 +324,14 @@
         };
     }
     return _toolbar;
+}
+
+- (XKLoadingView *)loadingView {
+    if (!_loadingView) {
+        _loadingView = [[XKLoadingView alloc] initWithFrame:CGRectMake(0, 0, KAUTOSCALE(40), KAUTOSCALE(40))];
+        _loadingView.center = CGPointMake(self.view.center.x, 260 + kTopHeight);
+    }
+    return _loadingView;
 }
 
 @end
