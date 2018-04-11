@@ -23,7 +23,7 @@
     self.window.rootViewController = [[XKRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
-    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.10.219:3000";
+    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
     if ([XKMusicHelper musicModels] && [XKMusicHelper musicModels].count != 0) {
         [XKPlayerVC loadMusicWithIndex:0 musicModels:[XKMusicHelper musicModels]];
     }
