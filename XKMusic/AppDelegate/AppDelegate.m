@@ -23,11 +23,14 @@
     self.window.rootViewController = [[XKRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
+    /// 本地的接口地址 详情查看 readme
     [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
     if ([XKMusicHelper musicModels] && [XKMusicHelper musicModels].count != 0) {
         [XKPlayerVC loadMusicWithIndex:0 musicModels:[XKMusicHelper musicModels]];
     }
-    [XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"];
+#warning ......todo
+    /// 这里需要换成自己的账户名和密码
+//    [XKLoginModel signalForLoginWithPhone:@"网易云账户" password:@"网易云密码"];
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
