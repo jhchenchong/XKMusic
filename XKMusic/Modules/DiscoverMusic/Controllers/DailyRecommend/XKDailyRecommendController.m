@@ -148,12 +148,10 @@
             [QMUITips showError:@"没有数据别乱点哦🙂🙂🙂" inView:self.view.window hideAfterDelay:1];
             return;
         }
+        
+        [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
         [[XKPlayerController sharedInstance] playMusicWithIndex:0 musicModels:musicModels];
         [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
-        /// 稍微延迟一下再去执行push动画 第一次进入的动画效果看起来要流畅不少
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
-        });
     };
     headerView.SelectedBlock = ^(BOOL isClick) {
         XKSTRONG
@@ -219,11 +217,9 @@
         [self.tableView reloadData];
     } else {
         NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
+        [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
         [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
         [[XKPlayerController sharedInstance] playMusicWithIndex:indexPath.row musicModels:musicModels];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
-        });
     }
 }
 

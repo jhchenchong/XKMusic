@@ -262,12 +262,9 @@
             [self handleToolbarButtonEnble];
             [self.tableView reloadData];
         } else {
-            //        NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
-            //        [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
-            //        [[XKPlayerController sharedInstance] playMusicWithIndex:indexPath.row musicModels:musicModels];
-            //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
-            //        });
+//            [self.navigationController pushViewController:[XKPlayerController sharedInstance] animated:YES];
+//            NSArray<XKMusicModel *> *musicModels = [self fetchMusicModels];
+//            [[XKPlayerController sharedInstance] setupMusicModels:musicModels];
         }
     }
 }

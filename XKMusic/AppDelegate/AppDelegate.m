@@ -24,13 +24,13 @@
     [self.window makeKeyAndVisible];
     [self configAnimationButton];
     /// 本地的接口地址 详情查看 readme
-    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.3.5:3000";
+    [YTKNetworkConfig sharedConfig].baseUrl = @"http://192.168.31.56:3000";
     if ([XKMusicHelper musicModels] && [XKMusicHelper musicModels].count != 0) {
         [XKPlayerVC loadMusicWithIndex:0 musicModels:[XKMusicHelper musicModels]];
     }
-#warning ......todo
+//#warning ......todo
     /// 这里需要换成自己的账户名和密码
-//    [XKLoginModel signalForLoginWithPhone:@"网易云账户" password:@"网易云密码"];
+    [XKLoginModel signalForLoginWithPhone:@"18780269064" password:@"chenchong921209"];
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
